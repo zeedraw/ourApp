@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="@drawable/da_tabs"
+    >
+    <CheckedTextView
+        android:id="@+id/main"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="首页"
+        android:textColor="@color/colorGrey1"
+        android:drawableTop="@drawable/edu45"
+        />
+    <CheckedTextView
+        android:id="@+id/mes"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="消息"
+        android:textColor="@color/colorGrey1"
+        android:drawableTop="@drawable/edu45"
+        />
+    <CheckedTextView
+        android:id="@+id/mine"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="我的"
+        android:textColor="@color/colorGrey1"
+        android:drawableTop="@drawable/edu45"
+        />
+
+</LinearLayout>
