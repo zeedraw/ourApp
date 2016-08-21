@@ -48,6 +48,8 @@ public class MissonInfo extends AppCompatActivity {
                 Intent intent=new Intent();
                 intent.setComponent(comp);
                 startActivity(intent);
+                MissonInfo.this.finish();
+
 
             }
         });

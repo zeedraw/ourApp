@@ -2,6 +2,8 @@ package com.example.administrator.ourapp;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -271,6 +273,32 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //            viewPager.setCurrentItem(index);
 //        }
 //    }
+
+    //以下三个方法对应MineFrag中的点击事件
+    public void Myaccount_click(View view)
+{
+    ComponentName comp=new ComponentName(MainActivity.this,MyAccount.class);
+    Intent intent=new Intent();
+    intent.setComponent(comp);
+    startActivity(intent);
+}
+
+    public void Mysetting_click(View view)
+    {
+        ComponentName comp=new ComponentName(MainActivity.this,MySetting.class);
+        Intent intent=new Intent();
+        intent.setComponent(comp);
+        startActivity(intent);
+
+    }
+
+    public  void Mymssion_click(View view)
+    {
+        ComponentName comp=new ComponentName(MainActivity.this,MyMission.class);
+        Intent intent=new Intent();
+        intent.setComponent(comp);
+        startActivity(intent);
+    }
 
 
 

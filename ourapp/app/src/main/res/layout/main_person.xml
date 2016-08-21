@@ -12,7 +12,9 @@
         android:layout_height="120dp"
         android:orientation="horizontal"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        android:onClick="Myaccount_click"
+        android:layout_marginBottom="8dp">
 
         <LinearLayout
             android:layout_width="135dp"
@@ -64,9 +66,14 @@
     </LinearLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="Mymssion_click">
 
 
 
@@ -75,12 +82,13 @@
             android:layout_height="@dimen/view_height_custom"
             android:gravity="center_vertical"
             android:text="我的任务"
+            android:layout_gravity="center_vertical"
             android:textColor="#000000"
             android:textSize="@dimen/text_size_medium"
-            android:layout_marginLeft="16dp"
+
             android:drawableLeft="@drawable/small_button"
             android:drawablePadding="8dp"
-            android:layout_margin="8dp"/>
+            />
 
     </LinearLayout>
 
@@ -88,7 +96,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="Mysetting_click">
 
         <TextView
             android:layout_width="240dp"
@@ -97,11 +109,10 @@
             android:text="设置"
             android:textColor="#000000"
             android:textSize="@dimen/text_size_medium"
-
+            android:layout_gravity="center_vertical"
             android:drawableLeft="@drawable/small_button"
             android:drawablePadding="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_margin="8dp"/>
+            />
     </LinearLayout>
 
 </LinearLayout>

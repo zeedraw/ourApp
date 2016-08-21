@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MissonInfo"></activity>
+        <activity android:name=".MyAccount"></activity>
+        <activity android:name=".MyMission"></activity>
+        <activity android:name=".MySetting"></activity>
     </application>
 
 </manifest>
