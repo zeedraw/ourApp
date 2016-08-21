@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Ourapp</string>
+
+    <string name="occupation">职业未知</string>
+    <string name="education">学历未知</string>
+    <string name="location">所在地未知</string>
+    <string name="phone_number">联系方式未知</string>
+    <string name="user_name">未知用户</string>
+    <string name="personal_introduction">暂无个人介绍</string>
 </resources>
