@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:id="@+id/cancel"
+            android:text="取消"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:background="#0792e8"
+            android:layout_alignParentLeft="true"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="账号设置"
+            style="@style/titlebar"
+            android:layout_toRightOf="@+id/cancel"
+            android:layout_toLeftOf="@+id/save"
+            android:textSize="@dimen/text_size_large"
+
+            />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:id="@+id/save"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:background="#0792e8"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="更改手机"
+        android:textSize="@dimen/text_size_medium"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="修改密码"
+        android:textSize="@dimen/text_size_medium"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"/>
+
+</LinearLayout>

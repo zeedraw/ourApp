@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <LinearLayout
+            android:layout_width="135dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/portrait"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_medium" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_small"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                    android:drawablePadding="5dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_heigh_costom"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="@dimen/view_heigh_costom"
+            android:gravity="center_vertical"
+            android:text="我的任务"
+            android:textColor="#000000"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginLeft="16dp"
+            android:drawableLeft="@drawable/small_button"
+            android:drawablePadding="8dp"
+            android:layout_margin="8dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_heigh_costom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="@dimen/view_heigh_costom"
+            android:gravity="center_vertical"
+            android:text="设置"
+            android:textColor="#000000"
+            android:textSize="@dimen/text_size_medium"
+
+            android:drawableLeft="@drawable/small_button"
+            android:drawablePadding="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_margin="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>
