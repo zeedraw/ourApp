@@ -7,7 +7,7 @@
    <include layout="@layout/header"
        android:id="@+id/headerlayout"
        android:layout_alignParentTop="true"
-       android:layout_height="65dp"
+       android:layout_height="@dimen/view_height_custom"
        android:layout_width="match_parent"
         />
     <!--<LinearLayout-->
