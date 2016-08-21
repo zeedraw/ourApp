@@ -5,15 +5,7 @@
     android:weightSum="1"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="设置"
-        android:gravity="center"
-        android:background="#0792e8"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/text_size_large"
-        />
+    <include layout="@layout/header"></include>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"

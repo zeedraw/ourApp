@@ -31,7 +31,7 @@
         android:gravity="center_vertical"
         android:padding="6pt"
         android:textSize="@dimen/text_size_medium"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#000000"/>
     <Button
         android:id="@+id/rbt"
         android:layout_width="0dp"
@@ -40,6 +40,6 @@
         android:visibility="invisible"
         android:background="@color/colorwhite"
         android:textSize="@dimen/text_size_medium"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#000000"/>
     </LinearLayout>
 </LinearLayout>
