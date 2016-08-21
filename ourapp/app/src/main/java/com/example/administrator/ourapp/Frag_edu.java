@@ -1,11 +1,14 @@
 package com.example.administrator.ourapp;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,28 +25,7 @@ public class Frag_edu extends Fragment {
     @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        adapter=new BaseAdapter() {
-//            @Override
-//            public int getCount() {
-//                return 14;//测试个数
-//            }
-//
-//            @Override
-//            public Object getItem(int i) {
-//                return null;
-//            }
-//
-//            @Override
-//            public long getItemId(int i) {
-//                return i;
-//            }
-//
-//            @Override
-//            public View getView(int i, View view, ViewGroup viewGroup) {
-//
-//
-//            }
-    //};
+
     }
 
     @Override
@@ -75,6 +57,16 @@ public class Frag_edu extends Fragment {
         };
 
         listView.setAdapter(adapter);
+        //listview的监听事件
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ComponentName comp=new ComponentName(getActivity(),MissonInfo.class);
+                Intent intent=new Intent();
+                intent.setComponent(comp);
+                startActivity(intent);
+            }
+        });
         return rootView;
 
     }

@@ -14,7 +14,7 @@ public class MineFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fra1, container, false);
+        View view=inflater.inflate(R.layout.main_person, container, false);
         return view;
     }
 }

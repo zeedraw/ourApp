@@ -5,10 +5,12 @@
     android:layout_height="65dp"
     android:background="@drawable/da_tabs">
     <Button
+        android:id="@+id/lbt"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:visibility="invisible"
+        android:background="@color/colorwhite"
         />
     <TextView
         android:id="@+id/title"
@@ -20,9 +22,11 @@
         android:textSize="12pt"
         android:padding="6pt" />
     <Button
+        android:id="@+id/rbt"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:background="@color/colorwhite"/>
 
 </LinearLayout>

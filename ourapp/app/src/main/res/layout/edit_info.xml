@@ -23,7 +23,7 @@
             android:textColor="#FFFFFF"
             android:gravity="center"
             android:background="#0792e8"
-            android:laalignParentLeft="true"
+            android:layout_alignParentLeft="true"
 
             android:textIsSelectable="false" />
 

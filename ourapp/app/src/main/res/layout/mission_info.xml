@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#ffffff">
+    <include layout="@layout/header"
+        android:id="@+id/info_mission_header"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/info_publish_time"
+        android:layout_alignParentBottom="true"></LinearLayout>
     <TextView
-        android:id="@+id/person_info"
+        android:id="@+id/info_person_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="用户名"
@@ -13,31 +20,36 @@
         android:textColor="#000000"
         android:textSize="20dp"
         android:drawableLeft="@drawable/personimg"
+        android:layout_below="@id/info_mission_header"
         />
     <TextView
-        android:id="@+id/mission_title"
+        android:id="@+id/info_mission_title"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="标题"
         android:textColor="#000000"
         android:textSize="30dp"
+        android:layout_below="@id/info_person_info"
         />
     <TextView
+        android:id="@+id/info_mission_info"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:text="任务简介"
+        android:layout_height="170dp"
+        android:text="任务详情"
         android:textColor="#000000"
         android:textSize="20dp"
+        android:layout_below="@id/info_mission_title"
         />
     <TextView
-        android:id="@+id/publish_time"
+        android:id="@+id/info_publish_time"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:text="发布时间"
         android:textColor="#000000"
         android:textSize="15dp"
+        android:layout_below="@id/info_mission_info"
+
 
         />
 
-
-</LinearLayout>
+</RelativeLayout>
