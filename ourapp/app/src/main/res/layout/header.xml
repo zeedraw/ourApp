@@ -2,31 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
-    android:background="@drawable/da_tabs">
+    android:layout_height="48dp"
+    android:background="#0792e8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_custom"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
     <Button
         android:id="@+id/lbt"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/view_height_custom"
         android:layout_weight="1"
         android:visibility="invisible"
         android:background="@color/colorwhite"
+        android:textSize="@dimen/text_size_medium"
+        android:text="#FFFFFF"
         />
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:textColor="#000000"
+        android:layout_height="@dimen/view_height_custom"
+        android:layout_weight="3.5"
         android:textAlignment="center"
-        android:textSize="12pt"
-        android:padding="6pt" />
+        android:padding="6pt"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="#FFFFFF"/>
     <Button
         android:id="@+id/rbt"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/view_height_custom"
         android:layout_weight="1"
         android:visibility="invisible"
-        android:background="@color/colorwhite"/>
-
+        android:background="@color/colorwhite"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="#FFFFFF"/>
+    </LinearLayout>
 </LinearLayout>
