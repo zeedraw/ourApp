@@ -13,7 +13,7 @@ public class Frg_task_ing extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.task_applying, container, false);
+        View view=inflater.inflate(R.layout.task_ing, container, false);
         return view;
     }
 }

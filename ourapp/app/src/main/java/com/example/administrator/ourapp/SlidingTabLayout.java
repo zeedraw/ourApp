@@ -17,6 +17,7 @@
 package com.example.administrator.ourapp;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -74,6 +75,12 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private int mTabViewLayoutId;
     private int mTabViewTextViewId;
 
+    // 定义两种需要添加的选项卡颜色
+    private int mDefaultTextColor;
+    private int mSelectedTextColor;
+    private int mDefaultTextSize;
+    private int mSelectedTextSize;
+    // =============================== 以上 =========
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
 
@@ -90,6 +97,20 @@ public class SlidingTabLayout extends HorizontalScrollView {
     public SlidingTabLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
+        // 获取选项卡颜色，如果未定义的话，则使用主题默认的颜色
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.SlidingTabLayout);
+        int defaultTextColor = a.getColor(
+                R.styleable.SlidingTabLayout_android_textColorPrimary, 0);
+        mDefaultTextColor = a.getColor(
+                R.styleable.SlidingTabLayout_textColorTabDefault, defaultTextColor);
+        mSelectedTextColor = a.getColor(
+                R.styleable.SlidingTabLayout_textColorTabSelected ,defaultTextColor);
+        mDefaultTextSize = 13;
+        mSelectedTextSize = 14;
+        a.recycle();
+        // =============================== 以上 =========
+
         // Disable the Scroll Bar
         setHorizontalScrollBarEnabled(false);
         // Make sure that the Tab Strips fills this View
@@ -100,6 +121,21 @@ public class SlidingTabLayout extends HorizontalScrollView {
         mTabStrip = new SlidingTabStrip(context);
         addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
+
+    // 在每次选项改变时更新选项卡文本颜色的新方法
+    private void updateSelectedTitle(int position) {
+        final PagerAdapter adapter = mViewPager.getAdapter();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            final View tabView = mTabStrip.getChildAt(i);
+            if (TextView.class.isInstance(tabView)) {
+                TextView titleView = (TextView)tabView;
+                boolean isSelected = i == position;
+                titleView.setTextColor(isSelected ? mSelectedTextColor : mDefaultTextColor);
+                titleView.setTextSize(isSelected ? mSelectedTextSize : mDefaultTextSize);
+            }
+        }
+    }
+    // =============================== 以上 =========
 
     /**
      * Set the custom {@link TabColorizer} to be used.
@@ -241,6 +277,12 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         View selectedChild = mTabStrip.getChildAt(tabIndex);
         if (selectedChild != null) {
+
+            // 调用在每次选项改变时更新文本颜色的新方案
+            updateSelectedTitle(tabIndex);
+            // =============================== 以上 =========
+
+
             int targetScrollX = selectedChild.getLeft() + positionOffset;
 
             if (tabIndex > 0 || positionOffset > 0) {

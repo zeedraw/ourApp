@@ -155,4 +155,15 @@
         <color name="navy">#000080</color> <!--海军色 -->
         <color name="black">#000000</color> <!--黑色 -->
 
+
+
+
+
+    <!--定义的颜色-->
+    <color name="accentGreen" >#d0f8ce</color>
+    <color name="darkGreen" >#0a7e07</color>
+    <color name="primaryGreen">#259b24</color>
+    <color name="tabTextDefault" >#88000000</color>
+    <color name="tabTextSelected" >#000000</color>
+
 </resources>
