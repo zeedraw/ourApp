@@ -1,5 +1,6 @@
 package com.example.administrator.ourapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -36,6 +37,7 @@ public class my_task extends AppCompatActivity {
         pager.setAdapter(adapter);
         tab.setCustomTabView(R.layout.tab, 0);
         tab.setViewPager(pager);
+
     }//onCreate
 
 

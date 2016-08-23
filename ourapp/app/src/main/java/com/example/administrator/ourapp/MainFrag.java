@@ -50,11 +50,12 @@ public class MainFrag extends Fragment {
 
         rootView=inflater.inflate(R.layout.main_frag,container,false);
         viewPager = (ViewPager)rootView.findViewById(R.id.vPager);
-         tab = (SlidingTabLayout)rootView.findViewById(R.id.main_tabs);
+        tab = (SlidingTabLayout)rootView.findViewById(R.id.main_tabs);
 
 //        initCursorPos();
 //        InitTextView();
         MainFragAdapter adapter = new MainFragAdapter(getActivity().getSupportFragmentManager(), fragments);
+//        tab.setSelectedIndicatorColors(R.color.white);//滑动条颜色
         //设定适配器
         viewPager.setAdapter(adapter);
         tab.setCustomTabView(R.layout.tab, 0);

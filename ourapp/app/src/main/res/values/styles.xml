@@ -12,6 +12,10 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+
+        <!--选项卡的颜色属性-->
+        <item name="textColorTabDefault">@color/tabTextDefault</item>
+        <item name="textColorTabSelected">@color/tabTextSelected</item>
     </style>
 
     <style name="custombackground">
