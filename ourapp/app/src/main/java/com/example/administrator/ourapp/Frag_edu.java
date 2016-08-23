@@ -18,7 +18,6 @@ import android.widget.TextView;
 public class Frag_edu extends Fragment {
     private BaseAdapter adapter;
     private ListView listView;
-    private TextView textView;
 
     @Override
     public void onCreate( Bundle savedInstanceState) {

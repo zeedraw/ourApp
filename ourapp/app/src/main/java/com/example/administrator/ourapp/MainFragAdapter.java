@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class FragAdapter extends FragmentPagerAdapter {
+public class MainFragAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> mFragments;
-
-    public FragAdapter(FragmentManager fm, List<Fragment> fragments) {
+    private String mTabTitle[] = new String[]{"教育","活动","交通","景点"};
+    public MainFragAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         mFragments=fragments;
     }
@@ -28,6 +28,10 @@ public class FragAdapter extends FragmentPagerAdapter {
     public int getCount() {
 
         return mFragments.size();
+    }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return  mTabTitle[position];
     }
 
 }

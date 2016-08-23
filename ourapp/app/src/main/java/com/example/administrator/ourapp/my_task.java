@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by dell-pc on 2016/8/21.
  */
-public class my_task extends ActionBarActivity {
+public class my_task extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

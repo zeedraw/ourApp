@@ -1,37 +1,24 @@
 package com.example.administrator.ourapp;
 
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
     CheckedTextView tv_main,tv_mes,tv_mine;//下方的3个tab
     TextView title;//上方标题
     FragmentManager mfragManager;
     FragmentTransaction mTransaction;
-    String saveState;
+    Button r_button;
 
 
     @Override
@@ -65,6 +52,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 .add(R.id.frag_container,new MainFrag(),"main")
                 .commit();
 
+        r_button=(Button)findViewById(R.id.rbt);
+
     }
 
 
@@ -78,6 +67,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mes.setChecked(false);
             tv_mine.setChecked(false);
             title.setText(tv_main.getText());
+            r_button.setVisibility(View.INVISIBLE);
             mTransaction=mfragManager.beginTransaction();
             mTransaction.show(mfragManager.findFragmentByTag("main"))
                     .hide(mfragManager.findFragmentByTag("mes"))
@@ -91,6 +81,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mes.setChecked(true);
             tv_mine.setChecked(false);
             title.setText(tv_mes.getText());
+
+            r_button.setText("添加");
+            r_button.setVisibility(View.VISIBLE);
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
                     .show(mfragManager.findFragmentByTag("mes"))
@@ -103,6 +96,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mes.setChecked(false);
             tv_mine.setChecked(true);
             title.setText(tv_mine.getText());
+            r_button.setVisibility(View.INVISIBLE);
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
                     .hide(mfragManager.findFragmentByTag("mes"))
@@ -134,27 +128,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public  void Mymssion_click(View view)
     {
-        ComponentName comp=new ComponentName(MainActivity.this,MyMission.class);
+        ComponentName comp=new ComponentName(MainActivity.this,my_task.class);
         Intent intent=new Intent();
         intent.setComponent(comp);
         startActivity(intent);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(tv_main.isChecked()){
-            saveState="main";
-        }
-        else if(tv_mes.isChecked()){
-            saveState="mes";
-        }
-        else {
-            saveState="mine";
-        }
-        outState.putString("saveStr",saveState);
 
-    }
 }
 
 
