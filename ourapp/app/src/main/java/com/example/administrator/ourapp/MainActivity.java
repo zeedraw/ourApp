@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,7 +15,7 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
-    CheckedTextView tv_main,tv_mes,tv_mine;//下方的3个tab
+    CheckedTextView tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
     TextView title;//上方标题
     FragmentManager mfragManager;
     FragmentTransaction mTransaction;
@@ -39,6 +40,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tv_mine=(CheckedTextView)findViewById(R.id.mine);
         tv_mine.setOnClickListener(this);
         tv_main.setChecked(true);
+        tv_fre=(CheckedTextView)findViewById(R.id.fre);
+        tv_fre.setOnClickListener(this);
+
 
         //设置activity的标题
         title=(TextView)findViewById(R.id.title);
@@ -49,8 +53,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
          mTransaction=mfragManager.beginTransaction();
         mTransaction.add(R.id.frag_container,new MineFrag(),"mine")
                 .add(R.id.frag_container,new MesFrag(),"mes")
+                .add(R.id.frag_container,new FreFrag(),"fre")
                 .add(R.id.frag_container,new MainFrag(),"main")
                 .commit();
+
+
+
 
         r_button=(Button)findViewById(R.id.rbt);
 
@@ -66,12 +74,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setChecked(true);
             tv_mes.setChecked(false);
             tv_mine.setChecked(false);
+            tv_fre.setChecked(false);
             title.setText(tv_main.getText());
             r_button.setVisibility(View.INVISIBLE);
             mTransaction=mfragManager.beginTransaction();
             mTransaction.show(mfragManager.findFragmentByTag("main"))
                     .hide(mfragManager.findFragmentByTag("mes"))
-                    .hide(mfragManager.findFragmentByTag("mine")).commit();
+                    .hide(mfragManager.findFragmentByTag("mine"))
+                    .hide(mfragManager.findFragmentByTag("fre")).commit();
 
         }
 
@@ -80,14 +90,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setChecked(false);
             tv_mes.setChecked(true);
             tv_mine.setChecked(false);
+            tv_fre.setChecked(false);
             title.setText(tv_mes.getText());
 
-            r_button.setText("添加");
-            r_button.setVisibility(View.VISIBLE);
+
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
                     .show(mfragManager.findFragmentByTag("mes"))
-                    .hide(mfragManager.findFragmentByTag("mine")).commit();
+                    .hide(mfragManager.findFragmentByTag("mine"))
+                    .hide(mfragManager.findFragmentByTag("fre")).commit();
 
         }
         else if (view==tv_mine)
@@ -95,12 +106,32 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setChecked(false);
             tv_mes.setChecked(false);
             tv_mine.setChecked(true);
+            tv_fre.setChecked(false);
             title.setText(tv_mine.getText());
             r_button.setVisibility(View.INVISIBLE);
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
                     .hide(mfragManager.findFragmentByTag("mes"))
-                    .show(mfragManager.findFragmentByTag("mine")).commit();
+                    .show(mfragManager.findFragmentByTag("mine"))
+                    .hide(mfragManager.findFragmentByTag("fre")).commit();
+        }
+
+        else if(view==tv_fre)
+        {
+            tv_fre.setChecked(true);
+            tv_main.setChecked(false);
+            tv_mine.setChecked(false);
+            tv_mes.setChecked(false);
+            title.setText(tv_fre.getText());
+            r_button.setText("添加");
+            r_button.setVisibility(View.VISIBLE);
+
+            mTransaction=mfragManager.beginTransaction();
+            mTransaction.hide(mfragManager.findFragmentByTag("main"))
+                    .hide(mfragManager.findFragmentByTag("mes"))
+                    .hide(mfragManager.findFragmentByTag("mine"))
+                    .show(mfragManager.findFragmentByTag("fre")).commit();
+
         }
 
 

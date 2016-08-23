@@ -27,7 +27,6 @@ public class Frag_edu extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-      //  final View re=inflater.inflate(R.layout.mission_abstract,container,false);
         View rootView=inflater.inflate(R.layout.frag_edu,container,false);
         listView=(ListView)rootView.findViewById(R.id.listview_edu);
         adapter=new BaseAdapter() {
@@ -49,6 +48,7 @@ public class Frag_edu extends Fragment {
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
                 view=LayoutInflater.from(getContext()).inflate(R.layout.mission_abstract,null);
+
                 return view;//要添加的组件
             }
         };

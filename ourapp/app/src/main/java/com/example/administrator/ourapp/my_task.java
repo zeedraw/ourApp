@@ -8,8 +8,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.List;
  * Created by dell-pc on 2016/8/21.
  */
 public class my_task extends AppCompatActivity {
+    Button rt_button,pub_button;
+    TextView missionTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +42,28 @@ public class my_task extends AppCompatActivity {
         pager.setAdapter(adapter);
         tab.setCustomTabView(R.layout.tab, 0);
         tab.setViewPager(pager);
+
+        rt_button=(Button)findViewById(R.id.lbt);
+        rt_button.setText("返回");
+        rt_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        rt_button.setVisibility(View.VISIBLE);
+
+        pub_button=(Button)findViewById(R.id.rbt);
+        pub_button.setText("发布");
+        pub_button.setVisibility(View.VISIBLE);
+
+        missionTitle=(TextView)findViewById(R.id.title);
+        missionTitle.setText("我的任务");
+
+
+
+
+
     }//onCreate
 
 
