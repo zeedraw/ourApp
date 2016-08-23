@@ -3,7 +3,6 @@ package com.example.administrator.ourapp;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -61,7 +59,7 @@ public class Frag_edu extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ComponentName comp=new ComponentName(getActivity(),MissonInfo.class);
+                ComponentName comp=new ComponentName(getActivity(),MissionInfo.class);
                 Intent intent=new Intent();
                 intent.setComponent(comp);
                 startActivity(intent);
