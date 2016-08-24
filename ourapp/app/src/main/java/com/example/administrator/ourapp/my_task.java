@@ -22,7 +22,7 @@ import java.util.List;
  * Created by dell-pc on 2016/8/21.
  */
 public class my_task extends AppCompatActivity {
-    Button rt_button,pub_button;
+    TextView rt_button,pub_button;
     TextView missionTitle;
 
     @Override
@@ -43,7 +43,7 @@ public class my_task extends AppCompatActivity {
         tab.setCustomTabView(R.layout.tab, 0);
         tab.setViewPager(pager);
 
-        rt_button=(Button)findViewById(R.id.lbt);
+        rt_button=(TextView)findViewById(R.id.lbt);
         rt_button.setText("返回");
         rt_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,7 @@ public class my_task extends AppCompatActivity {
         });
         rt_button.setVisibility(View.VISIBLE);
 
-        pub_button=(Button)findViewById(R.id.rbt);
+        pub_button=(TextView)findViewById(R.id.rbt);
         pub_button.setText("发布");
         pub_button.setVisibility(View.VISIBLE);
 

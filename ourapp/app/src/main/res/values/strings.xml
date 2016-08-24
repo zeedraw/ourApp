@@ -7,4 +7,12 @@
     <string name="phone_number">联系方式未知</string>
     <string name="user_name">未知用户</string>
     <string name="personal_introduction">暂无个人介绍</string>
+    <string name="Authentication_identity">尚未认证</string>
+    <string name="task_title">任务名称</string>
+    <string name="task_brief_introduction">任务简介</string>
+    <string name="task_location">任务地点</string>
+    <string name="task_start_time">2016.08.24</string>
+    <string name="task_end_time">2016.08.30</string>
+    <string name="task_person_amount">15人</string>
+    <string name="task_details">经历了三天的阳光明媚，天公已经很成全我的九黄之旅了。早早的，小肥羊的电话惊醒了我的美梦，忍着周身的酸痛接起电话，他让我和小女多穿点，并告知外面已下起了雨。天就像吸饱了水一样，飞着雨点，并透着丝丝寒气。这样的天气，真想留在酒店里，拥着暖暖的被窝，甜甜地睡个觉！可是，要上松潘啊！见识了九寨沟的风和日丽，终于要领略它的寒风习习，下雨便成冬了！</string>
 </resources>

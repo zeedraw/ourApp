@@ -1,55 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--此为任务详情页-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:orientation="vertical"
+    android:background="@color/white">
+
     <include layout="@layout/header"
-        android:id="@+id/info_mission_header"
-        />
-    <LinearLayout
+        android:id="@+id/info_mission_header" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/info_publish_time"
-        android:layout_alignParentBottom="true"></LinearLayout>
-    <TextView
-        android:id="@+id/info_person_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="用户名"
-        android:gravity="center_vertical|left"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:drawableLeft="@drawable/personimg"
-        android:layout_below="@id/info_mission_header"
-        />
-    <TextView
-        android:id="@+id/info_mission_title"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="标题"
-        android:textColor="#000000"
-        android:textSize="30dp"
-        android:layout_below="@id/info_person_info"
-        />
-    <TextView
-        android:id="@+id/info_mission_info"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:text="任务详情"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:layout_below="@id/info_mission_title"
-        />
-    <TextView
-        android:id="@+id/info_publish_time"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="发布时间"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        android:layout_below="@id/info_mission_info"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <include layout = "@layout/friend_lv_item" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height_custom"
+                android:layout_marginTop="@dimen/widget_margin_medium"
+                android:gravity="center_vertical"
+                android:text="@string/task_title"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_task_brief_info"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                android:drawablePadding="@dimen/widget_margin_micro"
+                android:text="@string/task_brief_introduction"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginBottom="@dimen/widget_margin_micro"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_task_brief_info"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                android:drawablePadding="@dimen/widget_margin_micro"
+                android:text="@string/task_location"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginBottom="@dimen/widget_margin_micro"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_task_brief_info"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                android:drawablePadding="@dimen/widget_margin_micro"
+                android:text="@string/task_location"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginBottom="@dimen/widget_margin_micro"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_task_brief_info">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/view_task_brief_info"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                    android:drawablePadding="@dimen/widget_margin_micro"
+                    android:text="@string/task_start_time"
+
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_marginBottom="@dimen/widget_margin_micro" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 至 "
+                    android:textSize="@dimen/text_size_small"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/view_task_brief_info"
+                    android:gravity="center_vertical"
+                    android:text="@string/task_end_time"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_marginBottom="@dimen/widget_margin_micro" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_task_brief_info"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                android:drawablePadding="@dimen/widget_margin_micro"
+                android:text="@string/task_person_amount"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginBottom="@dimen/widget_margin_micro"
+                />
+
+            <!--下面的LinearLayout显示当前任务进度-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height_custom">
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height_small"
+                android:text="任务详情"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/widget_margin_medium"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:editable="false"
+                android:lines="7"
+                android:autoLink="all"
+                android:text="@string/task_details"
+                android:textSize="@dimen/text_size_small"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height_custom"
+                android:text="问答"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_size_medium"/>
+
+            <!--<TextView-->
+                <!--android:layout_width="280dp"-->
+                <!--android:layout_height="@dimen/view_height_custom"-->
+                <!--android:layout_marginTop="@dimen/widget_margin_large"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:gravity="center"-->
+                <!--android:text="我要报名"-->
+                <!--android:textSize="@dimen/text_size_large"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:background="@color/titlebar"/>-->
 
 
-        />
 
-</RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

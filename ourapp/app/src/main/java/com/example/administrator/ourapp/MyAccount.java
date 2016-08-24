@@ -13,7 +13,7 @@ import android.widget.TextView;
  * Created by Administrator on 2016/8/21.
  */
 public class MyAccount extends AppCompatActivity {
-    Button rt_button,edit_button;
+    TextView rt_button,edit_button;
     TextView title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class MyAccount extends AppCompatActivity {
 
     private void initWidget()
     {
-        rt_button=(Button)findViewById(R.id.lbt);
-        edit_button=(Button)findViewById(R.id.rbt);
+        rt_button=(TextView)findViewById(R.id.lbt);
+        edit_button=(TextView)findViewById(R.id.rbt);
         title=(TextView)findViewById(R.id.title);
 
         rt_button.setText("返回");

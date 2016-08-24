@@ -19,7 +19,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     TextView title;//上方标题
     FragmentManager mfragManager;
     FragmentTransaction mTransaction;
-    Button r_button;
+    TextView r_button;
 
 
     @Override
@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-        r_button=(Button)findViewById(R.id.rbt);
+        r_button=(TextView)findViewById(R.id.rbt);
 
     }
 
