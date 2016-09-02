@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import cn.bmob.v3.Bmob;
+
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
     CheckedTextView tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
@@ -25,9 +29,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //第一：默认初始化Bmob
+        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
         setContentView(R.layout.maininterface);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
         initWidget();
+
+
 
 
     }
