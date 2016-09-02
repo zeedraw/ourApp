@@ -12,7 +12,7 @@ import android.widget.TextView;
  * Created by Administrator on 2016/8/21.
  */
 public class MySetting extends AppCompatActivity {
-    Button rt_button;
+    TextView rt_button;
     TextView title;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MySetting extends AppCompatActivity {
 
     private void initWidget()
     {
-        rt_button=(Button)findViewById(R.id.lbt);
+        rt_button=(TextView) findViewById(R.id.lbt);
         title=(TextView)findViewById(R.id.title);
         rt_button.setText("返回");
         rt_button.setVisibility(View.VISIBLE);

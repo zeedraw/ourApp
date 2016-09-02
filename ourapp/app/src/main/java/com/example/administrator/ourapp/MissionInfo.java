@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -14,7 +13,7 @@ import android.widget.TextView;
  */
 public class MissionInfo extends AppCompatActivity {
 
-    Button return_bt,commit_bt;//标题上的左右按钮
+    TextView return_bt,commit_bt;//标题上的左右按钮
     TextView info_title;//标题
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -25,14 +24,14 @@ public class MissionInfo extends AppCompatActivity {
 
     private void initWidget(){
 
-        return_bt=(Button)findViewById(R.id.lbt);
-        commit_bt=(Button)findViewById(R.id.rbt);
+        return_bt=(TextView)findViewById(R.id.lbt);
+        commit_bt=(TextView)findViewById(R.id.rbt);
+        //在textview左侧添加drawable
+//        return_bt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_keyboard_arrow_left_black_24dp, 0, 0, 0);
         return_bt.setText("返回");
 //        return_bt.setTextSize(21);
-        return_bt.setVisibility(View.VISIBLE);
         commit_bt.setText("报名");
 //        commit_bt.setTextSize(21);
-        commit_bt.setVisibility(View.VISIBLE);
 
         info_title=(TextView)findViewById(R.id.title);
         info_title.setText("任务详情");
@@ -48,7 +47,7 @@ public class MissionInfo extends AppCompatActivity {
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComponentName comp=new ComponentName(MissionInfo.this,SignUp.class);
+                ComponentName comp=new ComponentName(MissionInfo.this,apply.class);
                 Intent intent=new Intent();
                 intent.setComponent(comp);
                 startActivity(intent);

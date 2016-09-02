@@ -30,7 +30,7 @@
         <activity android:name=".MyAccount"></activity>
         <activity android:name=".MyMission"></activity>
         <activity android:name=".MySetting"></activity>
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".apply"></activity>
         <activity android:name=".my_task"></activity>
     </application>
 
