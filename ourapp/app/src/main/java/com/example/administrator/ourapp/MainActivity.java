@@ -2,6 +2,7 @@ package com.example.administrator.ourapp;
 
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -16,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
@@ -34,6 +39,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.maininterface);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
         initWidget();
+
+        MyUser manager=new MyUser();
+        manager.setPassword("zx2724628");
+        manager.setUsername("zeedraw");
+        manager.signUp(new SaveListener<MyUser>() {
+            @Override
+            public void done(MyUser myUser, BmobException e) {
+                if (e==null)
+                {
+                    Toast.makeText(getApplicationContext(),"管理员创建成功",Toast.LENGTH_SHORT);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT);
+                }
+            }
+
+        });
+        MyUser.logOut();
 
 
 
@@ -122,6 +146,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     .hide(mfragManager.findFragmentByTag("mes"))
                     .show(mfragManager.findFragmentByTag("mine"))
                     .hide(mfragManager.findFragmentByTag("fre")).commit();
+
+            r_button.setText("登出");
+            r_button.setVisibility(View.VISIBLE);
+            r_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this)
+                            .setCancelable(false)
+                            .setTitle("提醒")
+                            .setMessage("确定登出？");
+                    setPositive(builder);
+                    setNegative(builder)
+                            .create()
+                            .show();
+                }
+            });
         }
 
         else if(view==tv_fre)
@@ -147,7 +187,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-    //以下三个方法对应MineFrag中的点击事件
+    //以下四个方法对应MineFrag中的点击事件
     public void Myaccount_click(View view)
 {
     ComponentName comp=new ComponentName(MainActivity.this,MyAccount.class);
@@ -167,10 +207,44 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public  void Mymssion_click(View view)
     {
-        ComponentName comp=new ComponentName(MainActivity.this,my_task.class);
-        Intent intent=new Intent();
-        intent.setComponent(comp);
-        startActivity(intent);
+        MyUser user= BmobUser.getCurrentUser(MyUser.class);
+        if (user!=null) {
+            ComponentName comp = new ComponentName(MainActivity.this, my_task.class);
+            Intent intent = new Intent();
+            intent.setComponent(comp);
+            startActivity(intent);
+        }
+
+        else {
+            Intent intent=new Intent(MainActivity.this,Login.class);
+            startActivity(intent);
+        }
+    }
+
+    public void Myteam_click(View view)
+    {
+
+    }
+
+    private AlertDialog.Builder setPositive(AlertDialog.Builder builder)
+    {
+        return builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                BmobUser.logOut();
+
+            }
+        });
+    }
+
+    private AlertDialog.Builder setNegative(AlertDialog.Builder builder)
+    {
+        return builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
     }
 
 

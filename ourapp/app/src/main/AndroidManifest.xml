@@ -32,6 +32,7 @@
         <activity android:name=".MySetting"></activity>
         <activity android:name=".apply"></activity>
         <activity android:name=".my_task"></activity>
+        <activity android:name=".Login"></activity>
     </application>
 
 </manifest>
