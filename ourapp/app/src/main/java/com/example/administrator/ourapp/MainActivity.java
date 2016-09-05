@@ -6,16 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.administrator.ourapp.location.LocationTest;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -140,28 +140,30 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mine.setChecked(true);
             tv_fre.setChecked(false);
             title.setText(tv_mine.getText());
-            r_button.setVisibility(View.INVISIBLE);
+
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
                     .hide(mfragManager.findFragmentByTag("mes"))
                     .show(mfragManager.findFragmentByTag("mine"))
                     .hide(mfragManager.findFragmentByTag("fre")).commit();
-
-            r_button.setText("登出");
-            r_button.setVisibility(View.VISIBLE);
-            r_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this)
-                            .setCancelable(false)
-                            .setTitle("提醒")
-                            .setMessage("确定登出？");
-                    setPositive(builder);
-                    setNegative(builder)
-                            .create()
-                            .show();
-                }
-            });
+            if(BmobUser.getCurrentUser(MyUser.class)!=null) {
+                r_button.setVisibility(View.INVISIBLE);
+                r_button.setText("登出");
+                r_button.setVisibility(View.VISIBLE);
+                r_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                                .setCancelable(false)
+                                .setTitle("提醒")
+                                .setMessage("确定登出？");
+                        setPositive(builder);
+                        setNegative(builder)
+                                .create()
+                                .show();
+                    }
+                });
+            }
         }
 
         else if(view==tv_fre)

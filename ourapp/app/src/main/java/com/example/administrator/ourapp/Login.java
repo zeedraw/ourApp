@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +22,7 @@ import cn.bmob.v3.listener.SaveListener;
 public class Login extends AppCompatActivity {
     private EditText username,password;
     private Button login,signup;
-    private TextView rt;
+    private TextView rt,title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,16 @@ public class Login extends AppCompatActivity {
         password=(EditText)findViewById(R.id.login_password);
         login=(Button)findViewById(R.id.login);
         signup=(Button)findViewById(R.id.signup);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Login.this,SignUp.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        title=(TextView)findViewById(R.id.title);
+        title.setText("登录");
         rt=(TextView) findViewById(R.id.lbt);
         rt.setText("返回");
         rt.setVisibility(View.VISIBLE);
@@ -39,6 +50,7 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -33,6 +33,7 @@
         <activity android:name=".apply"></activity>
         <activity android:name=".my_task"></activity>
         <activity android:name=".Login"></activity>
+        <activity android:name=".SignUp"></activity>
     </application>
 
 </manifest>
