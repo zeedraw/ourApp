@@ -17,6 +17,7 @@ public class MyUser extends BmobUser {
     private Double rating;//评分
     private BmobRelation friends;//好友
     private Boolean isIdentified;//是否被认证 true被认证 false没被认证
+    private String name;
 
     //认证资质
     private String identification;//“edu”教育,”act”活动,”trans”交通,”scene"景点
@@ -59,6 +60,12 @@ public class MyUser extends BmobUser {
         this.identification = identification;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+
     public String getAge() {
         return age;
     }
@@ -94,4 +101,7 @@ public class MyUser extends BmobUser {
     public Boolean getSex() {
         return sex;
     }
+
+    public String getName(){return name;}
+
 }
