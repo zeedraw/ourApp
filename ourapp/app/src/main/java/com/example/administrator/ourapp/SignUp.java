@@ -1,243 +1,112 @@
 package com.example.administrator.ourapp;
 
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.administrator.ourapp.location.LocationTest;
-
+import java.sql.Time;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
-import wheel.widget.OnWheelChangedListener;
-import wheel.widget.WheelView;
-import wheel.widget.adapters.ArrayWheelAdapter;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * Created by Administrator on 2016/9/5.
+ * Created by Administrator on 2016/9/7.
  */
-public class SignUp extends LocationTest implements OnWheelChangedListener,View.OnClickListener,DatePickerDialog.OnDateSetListener,View.OnFocusChangeListener {
-    private WheelView mViewProvince;
-    private WheelView mViewCity;
-    private WheelView mViewDistrict;//wheelview组件
-    private Button mBtnConfirm,location_setting,bd_setting,signup_bt,verify_bt;
-    private TimeButton sendsms_bt;
-    private TextView location_tv,bd_tv,pwconfirm_mes, phone_mes,title,rt,user_mes,
-                pw_mes,bd_mes,location_mes,sms_mes;
-    private AlertDialog.Builder builder;
-    private LinearLayout root;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
-    private EditText user_et,pw_et,pwconfirm_et,phone_et,intro_et,sms_et;
+public class SignUp extends AppCompatActivity implements View.OnFocusChangeListener, View.OnClickListener {
+    private EditText name_ed,pw_ed,pwconfirm_ed,phonenum_ed,code_ed;
+    private TextView name_tv,pw_tv,pwconfirm_tv,phonenum_tv,code_tv,rt,title;
+    private Button signup_bt;
+    private TimeButton sendcode_bt;
     private RadioGroup sex_rg;
-    private Spinner qualification;
+    private boolean isCode=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
         initWidget();
-    }
 
+    }
     private void initWidget()
     {
-        user_et=(EditText)findViewById(R.id.user_info);
-        user_mes=(TextView)findViewById(R.id.user_mes);
-        user_et.setOnFocusChangeListener(this);
+        name_ed=(EditText)findViewById(R.id.name_ed);
+        name_ed.setOnFocusChangeListener(this);
+        name_tv=(TextView)findViewById(R.id.name_tv);
 
+        sex_rg=(RadioGroup)findViewById(R.id.sex_rg);
 
-        pw_et=(EditText)findViewById(R.id.pw_info);
-        pw_et.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        pw_et.setOnFocusChangeListener(this);
-        pw_mes=(TextView)findViewById(R.id.pw_mes);
+        pw_ed=(EditText)findViewById(R.id.pw_ed);
+        pw_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        pw_ed.setOnFocusChangeListener(this);
+        pw_tv=(TextView)findViewById(R.id.pw_tv);
 
+        pwconfirm_ed=(EditText)findViewById(R.id.pwconfirm_ed);
+        pwconfirm_ed.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        pwconfirm_ed.setOnFocusChangeListener(this);
+        pwconfirm_tv=(TextView)findViewById(R.id.pwconfirm_tv);
 
-        pwconfirm_et=(EditText)findViewById(R.id.pwcofirm_info);
-        pwconfirm_et.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        pwconfirm_mes=(TextView)findViewById(R.id.pwconfirm_mes);
-        pwconfirm_et.setOnFocusChangeListener(this);
+        phonenum_ed=(EditText)findViewById(R.id.phonenum_ed);
+        sendcode_bt=(TimeButton)findViewById(R.id.sendcode_bt);
+        sendcode_bt.setOnClickListener(this);
+        phonenum_tv=(TextView)findViewById(R.id.phonenum_tv);
 
-        sex_rg=(RadioGroup)findViewById(R.id.sex_info);
+        code_ed=(EditText)findViewById(R.id.code_ed);
+        code_tv=(TextView)findViewById(R.id.code_tv);
 
-        bd_tv=(TextView)findViewById(R.id.bd_info);
-        bd_mes=(TextView)findViewById(R.id.bd_mes);
-        bd_setting=(Button)findViewById(R.id.bd_setting);
-        bd_setting.setOnClickListener(this);
-
-        qualification=(Spinner)findViewById(R.id.quli_spinner);
-
-        location_tv=(TextView)findViewById(R.id.location_tv);
-        location_mes=(TextView)findViewById(R.id.location_mes);
-        location_setting=(Button)findViewById(R.id.location_setting);
-        location_setting.setOnClickListener(this);
-
-        phone_et=(EditText)findViewById(R.id.phone_info);
-        phone_mes =(TextView)findViewById(R.id.phone_mes);
-        phone_et.setOnFocusChangeListener(this);
-        sendsms_bt=(TimeButton)findViewById(R.id.sendsms_bt);
-        sendsms_bt.setOnClickListener(this);
-
-        intro_et=(EditText)findViewById(R.id.intro_info);
+        signup_bt=(Button)findViewById(R.id.signup_bt);
+        signup_bt.setOnClickListener(this);
 
         title=(TextView)findViewById(R.id.title);
         title.setText("注册");
 
         rt=(TextView)findViewById(R.id.lbt);
-        rt.setOnClickListener(this);
         rt.setText("返回");
-        rt.setVisibility(View.VISIBLE);
-
-        signup_bt=(Button)findViewById(R.id.signup_bt);
-        signup_bt.setOnClickListener(this);
+        rt.setOnClickListener(this);
 
 
-
-        preferences=getSharedPreferences("ourApp",MODE_PRIVATE);
-        editor=preferences.edit();
-    }
-
-    //初始化wheelview组件
-    private void setUpViews() {
-        mViewProvince = (WheelView)root.findViewById(R.id.id_province);
-        mViewCity = (WheelView)root.findViewById(R.id.id_city);
-        mViewDistrict = (WheelView)root.findViewById(R.id.id_district);
-
-    }
-    //为wheelview组件设置监听器
-    private void setUpListener() {
-        // 添加change事件
-        mViewProvince.addChangingListener(this);
-        // 添加change事件
-        mViewCity.addChangingListener(this);
-        // 添加change事件
-        mViewDistrict.addChangingListener(this);
-
-    }
-    //为wheelview组件初始化数据
-    private void setUpData() {
-        initProvinceDatas();
-        mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(SignUp.this, mProvinceDatas));
-        // 设置可见条目数量
-        mViewProvince.setVisibleItems(7);
-        mViewCity.setVisibleItems(7);
-        mViewDistrict.setVisibleItems(7);
-        updateCities();
-        updateAreas();
-        mViewProvince.setCurrentItem(preferences.getInt("province",0));
-        mViewCity.setCurrentItem(preferences.getInt("city",0));
-        mViewDistrict.setCurrentItem(preferences.getInt("district",0));
     }
 
     @Override
-    public void onChanged(WheelView wheel, int oldValue, int newValue) {
-        // TODO Auto-generated method stub
-        if (wheel == mViewProvince) {
-            updateCities();
-            editor.putInt("province",mViewProvince.getCurrentItem());
-        } else if (wheel == mViewCity) {
-            updateAreas();
-            editor.putInt("city",mViewCity.getCurrentItem());
-        } else if (wheel == mViewDistrict) {
-            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
-            editor.putInt("district",mViewDistrict.getCurrentItem());
-        }
-        editor.commit();
-    }
+    public void onFocusChange(View view, boolean b) {
+        if(!b)
+        {
+            if (view==name_ed)
+            {
+                isName();
+            }
+            if (view==pw_ed)
+            {
+                isPassword();
+            }
+            if (view==pwconfirm_ed)
+            {
+                isConfirm();
+            }
 
-    /**
-     * 根据当前的市，更新区WheelView的信息
-     */
-    private void updateAreas() {
-        int pCurrent = mViewCity.getCurrentItem();
-        mCurrentCityName = mCitisDatasMap.get(mCurrentProviceName)[pCurrent];
-        String[] areas = mDistrictDatasMap.get(mCurrentCityName);
-
-        if (areas == null) {
-            areas = new String[] { "" };
         }
-        mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
-        mViewDistrict.setCurrentItem(0);
-    }
-
-    /**
-     * 根据当前的省，更新市WheelView的信息
-     */
-    private void updateCities() {
-       int pCurrent = mViewProvince.getCurrentItem();
-        mCurrentProviceName = mProvinceDatas[pCurrent];
-        String[] cities = mCitisDatasMap.get(mCurrentProviceName);
-        if (cities == null) {
-            cities = new String[] { "" };
-        }
-        mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(this, cities));
-        mViewCity.setCurrentItem(0);
-        updateAreas();
     }
 
     @Override
     public void onClick(View view) {
-
-        if (view==location_setting)
+        if(view==sendcode_bt)
         {
-            root=(LinearLayout)getLayoutInflater().inflate(R.layout.locationwheel,null);
-
-            builder=new AlertDialog.Builder(SignUp.this);
-
-            builder.setView(root).setCancelable(false).setPositiveButton("确定",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                location_tv.setText(
-                        mCurrentProviceName+"-"+mCurrentCityName
-                                +"-"+mCurrentDistrictName);
-            }
-        });
-            builder.create().show();
-
-            setUpViews();
-            setUpListener();
-            setUpData();
-        }
-        if (view==bd_setting)
-        {
-            DatePickerDialog dpl=new DatePickerDialog(this,this,1990,0,1);
-            dpl.setTitle("请设置你的生日");
-            dpl.show();
-        }
-        if (view==rt)
-        {
-            sendsms_bt.onDestroy();
-            finish();
-        }
-
-        //注册的监听事件
-        if(view==signup_bt)
-        {
-            signUp();
-        }
-
-        //发送sms
-        if(view==sendsms_bt)
-        {
-            if(isPhone())
+                if(isPhonenum())
             {
-                sendsms_bt.onCreat();
-                BmobSMS.requestSMSCode(phone_et.getText().toString(), "注册验证", new QueryListener<Integer>() {
+                sendcode_bt.onCreat();//TimeButton的计时时间
+                BmobSMS.requestSMSCode(phonenum_ed.getText().toString(), "注册验证", new QueryListener<Integer>() {
                     @Override
                     public void done(Integer smsId, BmobException e) {
                         if (e == null) {//验证码发送成功
@@ -248,156 +117,150 @@ public class SignUp extends LocationTest implements OnWheelChangedListener,View.
                 });
             }
         }
-    }
 
-    //焦点改变
-    @Override
-    public void onFocusChange(View view, boolean b) {
-        if (!b)
+        if (view==rt)
         {
-            if (view==user_et)
-            {
-                isName();
-            }
-            else if(view==pw_et)
-            {
-                isPassword();
-            }
-            else if(view==pwconfirm_et)
-            {
-                isConfirmPw();
-            }
-            else if(view==phone_et)
-            {
-                isPhone();
-            }
+            finish();
         }
-    }
-
-    //datepickerdialog按确认后回调
-    @Override
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        if (i1<10) {
-            if (i2<10) {
-                bd_tv.setText(i + "-0" + (i1 + 1) + "-0" + i2);
-            }
-            else {
-                bd_tv.setText(i + "-0" + (i1 + 1) + "-" + i2);
-            }
-        }
-        else {
-            if (i2<10) {
-                bd_tv.setText(i + "-" + (i1 + 1) + "-0" + i2);
-            }
-            else
-            {
-                bd_tv.setText(i + "-" + (i1 + 1) + "-" + i2);
-            }
-
-        }
-    }
-    private boolean isName(){
-        if(user_et.getText().toString().length()!=0)
+        if (view==signup_bt)
         {
-            user_mes.setText("1");
-            return true;
+            if(!isCode) {
+                isCode();
+            }
+            if (isName()&&isPassword()&&isConfirm()&&isPhonenum()&&isCode)
+            {
+                MyUser newuser=new MyUser();
+                newuser.setUsername(phonenum_ed.getText().toString());
+                newuser.setPassword(pw_ed.getText().toString());
+                newuser.setName(name_ed.getText().toString());
+                newuser.setMobilePhoneNumber(phonenum_ed.getText().toString());
+                newuser.setMobilePhoneNumberVerified(true);
+                newuser.signUp(new SaveListener<MyUser>() {
+                    @Override
+                    public void done(MyUser myUser, BmobException e) {
+                        AlertDialog.Builder builder=new AlertDialog.Builder(SignUp.this);
+                        builder.setCancelable(false);
+                        if (e==null)
+                        {
+                            builder.setMessage("注册成功");
+                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                }
+                            });
+
+                        }
+                        else
+                        {
+                            builder.setMessage("注册失败"+e.getMessage());
+                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
+                        }
+                        builder.create().show();
+                    }
+                });
+            }
+
+        }
+
+    }
+
+    private boolean isName()
+    {
+        if (name_ed.getText().toString().length()==0)
+        {
+            name_tv.setText("昵称不能为空");
+            return false;
         }
         else
         {
-            user_mes.setText("昵称不能为空");
-            return false;
+            name_tv.setText("");
+            return true;
         }
     }
 
     private boolean isPassword()
     {
-        if (pw_et.getText().toString().length()==0)
+        if (pw_ed.getText().toString().length()==0)
         {
-            pw_mes.setText("密码不能为空");
-            return false;
-        }
-        else{
-            pw_mes.setText("");
-            return true;
-        }
-    }
-
-    private boolean isConfirmPw()
-    {
-        if (pwconfirm_et.getText().toString().length()==0)
-        {
-            pwconfirm_mes.setText("不能为空");
-            return false;
-        }
-        else if (!(pwconfirm_et.getText().toString().equals(pw_et.getText().toString())))
-        {
-            pwconfirm_mes.setText("与原密码不同");
+            pw_tv.setText("密码不能为空");
             return false;
         }
         else
         {
-            pwconfirm_mes.setText("");
+            pw_tv.setText("");
             return true;
         }
     }
 
-    private boolean isBorndate()
+    private boolean isConfirm()
     {
-        if (bd_tv.getText().toString().length()==0)
+        if (pwconfirm_ed.getText().toString().length()==0)
         {
-            bd_mes.setText("请设置生日");
+            pwconfirm_tv.setText("该项不能为空");
+            return false;
+        }
+        else if(!(pw_ed.getText().toString().equals(pwconfirm_ed.getText().toString())))
+        {
+            pwconfirm_tv.setText("与原密码不同");
             return false;
         }
         else
         {
-            bd_mes.setText("");
+            pwconfirm_tv.setText("");
             return true;
         }
     }
 
-    private boolean isLocation()
-    {
-        if(location_tv.getText().toString().length()==0)
-        {
-            location_mes.setText("请设置所在地");
-            return false;
-        }
-        else
-        {
-            location_mes.setText("");
-            return true;
-        }
-    }
-
-    //判断email格式是否正确
-    private boolean isPhone() {
+        private boolean isPhonenum() {
         String str = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
         Pattern p = Pattern.compile(str);
-        Matcher m = p.matcher(phone_et.getText().toString());
-        if (phone_et.getText().toString().length()==0)
+        Matcher m = p.matcher(phonenum_ed.getText().toString());
+        if (phonenum_ed.getText().toString().length()==0)
         {
-            phone_mes.setText("手机号不能为空");
+            phonenum_tv.setText("手机号不能为空");
             return false;
         }
         else if(!m.matches())
         {
-            phone_mes.setText("请输入正确的手机号");
+            phonenum_tv.setText("请输入正确的手机号");
             return false;
         }
         else {
-            phone_mes.setText("");
+            phonenum_tv.setText("");
             return true;
         }
     }
 
-    //注册
-    private void signUp()
+    private void isCode()
     {
-        if (isName()&&isPassword()&&isConfirmPw()&&isBorndate()&&isLocation()&&isPhone())
-        {
 
+                if (code_ed.getText().toString().length()==0)
+        {
+            code_tv.setText("验证码不能为空");
+            isCode=false;
+        }
+        else {
+            BmobSMS.verifySmsCode(phonenum_ed.getText().toString(), code_ed.getText().toString(), new UpdateListener() {
+
+                @Override
+                public void done(BmobException ex) {
+                    if (ex == null) {//短信验证码已验证成功
+                        Log.i("smile", "验证通过");
+                        code_tv.setText("");
+                        isCode=true;
+                    }
+                    else {
+                        Log.i("smile", code_ed.getText().toString()+"验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
+                        code_tv.setText("验证失败");
+                        isCode = false;
+                    }
+                }
+            });
         }
     }
-
-
 }

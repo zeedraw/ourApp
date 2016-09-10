@@ -3,6 +3,7 @@ package com.example.administrator.ourapp;
 import android.provider.ContactsContract;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
 
 /**
@@ -18,12 +19,21 @@ public class MyUser extends BmobUser {
     private BmobRelation friends;//好友
     private Boolean isIdentified;//是否被认证 true被认证 false没被认证
     private String name;
+    private BmobFile userimage;
 
     //认证资质
     private String identification;//“edu”教育,”act”活动,”trans”交通,”scene"景点
     private String description;//资格描述
 
     //getter setter方法
+
+
+
+    public void setUserimage(BmobFile userimage) {
+        this.userimage = userimage;
+
+    }
+
     public void setAge(String age) {
         this.age = age;
     }
@@ -65,6 +75,9 @@ public class MyUser extends BmobUser {
     }
 
 
+    public BmobFile getUserimage() {
+        return userimage;
+    }
 
     public String getAge() {
         return age;

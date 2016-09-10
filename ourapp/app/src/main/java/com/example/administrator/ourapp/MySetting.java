@@ -3,10 +3,13 @@ package com.example.administrator.ourapp;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -14,6 +17,7 @@ import android.widget.TextView;
 public class MySetting extends AppCompatActivity {
     TextView rt_button;
     TextView title;
+    Button loginout_bt;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,5 +41,24 @@ public class MySetting extends AppCompatActivity {
                 MySetting.this.finish();
             }
         });
+
+        loginout_bt=(Button)findViewById(R.id.loginout_bt);
+        loginout_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BmobUser.logOut();
+                ListenerManager.getInstance().sendBroadCast("MineFrag");
+                finish();
+            }
+        });
+
+        if(BmobUser.getCurrentUser(MyUser.class)!=null)
+        {
+            loginout_bt.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            loginout_bt.setVisibility(View.INVISIBLE);
+        }
     }
 }

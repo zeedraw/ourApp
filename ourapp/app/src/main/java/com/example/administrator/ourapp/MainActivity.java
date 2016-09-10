@@ -2,14 +2,17 @@ package com.example.administrator.ourapp;
 
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
@@ -40,24 +44,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
         initWidget();
 
-        MyUser manager=new MyUser();
-        manager.setPassword("zx2724628");
-        manager.setUsername("zeedraw");
-        manager.signUp(new SaveListener<MyUser>() {
-            @Override
-            public void done(MyUser myUser, BmobException e) {
-                if (e==null)
-                {
-                    Toast.makeText(getApplicationContext(),"管理员创建成功",Toast.LENGTH_SHORT);
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT);
-                }
-            }
 
-        });
-        MyUser.logOut();
 
 
 
@@ -124,7 +111,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mine.setChecked(false);
             tv_fre.setChecked(false);
             title.setText(tv_mes.getText());
-
+            r_button.setVisibility(View.INVISIBLE);
 
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
@@ -140,30 +127,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mine.setChecked(true);
             tv_fre.setChecked(false);
             title.setText(tv_mine.getText());
-
+            r_button.setVisibility(View.INVISIBLE);
             mTransaction=mfragManager.beginTransaction();
             mTransaction.hide(mfragManager.findFragmentByTag("main"))
                     .hide(mfragManager.findFragmentByTag("mes"))
                     .show(mfragManager.findFragmentByTag("mine"))
                     .hide(mfragManager.findFragmentByTag("fre")).commit();
-            if(BmobUser.getCurrentUser(MyUser.class)!=null) {
-                r_button.setVisibility(View.INVISIBLE);
-                r_button.setText("登出");
-                r_button.setVisibility(View.VISIBLE);
-                r_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
-                                .setCancelable(false)
-                                .setTitle("提醒")
-                                .setMessage("确定登出？");
-                        setPositive(builder);
-                        setNegative(builder)
-                                .create()
-                                .show();
-                    }
-                });
-            }
+
         }
 
         else if(view==tv_fre)
@@ -228,26 +198,31 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    private AlertDialog.Builder setPositive(AlertDialog.Builder builder)
-    {
-        return builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                BmobUser.logOut();
-
-            }
-        });
+    //获取缓存路径
+    public static String getDiskCacheDir(Context context) {
+        String cachePath = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = context.getExternalCacheDir().getPath();
+        } else {
+            cachePath = context.getCacheDir().getPath();
+        }
+        return cachePath;
     }
 
-    private AlertDialog.Builder setNegative(AlertDialog.Builder builder)
-    {
-        return builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
+    public static String getDiskFileDir(Context context) {
+        String filePath = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            filePath = context.getExternalFilesDir(null).getPath();
+        } else {
+            filePath = context.getFilesDir().getPath();
+        }
+        return filePath;
     }
+
+
+
 
 
 }
