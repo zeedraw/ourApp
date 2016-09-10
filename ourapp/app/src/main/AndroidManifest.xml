@@ -35,6 +35,7 @@
         <activity android:name=".Login"></activity>
         <activity android:name=".SignUp"></activity>
         <activity android:name=".personal_authenticate"></activity>
+        <activity android:name=".EditInfo"></activity>
     </application>
 
 </manifest>

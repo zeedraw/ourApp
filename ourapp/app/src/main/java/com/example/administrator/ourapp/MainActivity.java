@@ -168,7 +168,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     startActivity(intent);
 }
 
-    public void Mysetting_click(View view)
+    public void Myauthenticate_click(View view)
+    {
+        ComponentName comp=new ComponentName(MainActivity.this,personal_authenticate.class);
+        Intent intent=new Intent();
+        intent.setComponent(comp);
+        startActivity(intent);
+
+    }
+
+    public void Mysetting_click (View view)
     {
         ComponentName comp=new ComponentName(MainActivity.this,MySetting.class);
         Intent intent=new Intent();
