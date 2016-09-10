@@ -36,6 +36,7 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/mine_name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/user_name"
@@ -50,6 +51,7 @@
 
 
                 <TextView
+                    android:id="@+id/mine_location_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/location"

@@ -12,13 +12,13 @@ import android.widget.ListView;
 /**
  * Created by Administrator on 2016/8/23.
  */
-public class FreFrag extends Fragment {
+public class FreFrag extends Fragment implements IListener{
         private ListView listView;
     private BaseAdapter baseAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        ListenerManager.getInstance().registerListtener("FreFrag",this);
         View rootview=inflater.inflate(R.layout.fre_frag, container, false);
         listView=(ListView)rootview.findViewById(R.id.mes_listview);
         baseAdapter=new BaseAdapter() {
@@ -46,6 +46,11 @@ public class FreFrag extends Fragment {
         listView.setAdapter(baseAdapter);
 
         return rootview;
+
+    }
+
+    @Override
+    public void upData() {
 
     }
 }
