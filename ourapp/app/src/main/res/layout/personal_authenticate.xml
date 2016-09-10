@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_custom"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="职业"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="#000000"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"/>
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="@dimen/view_height_custom"
+            android:background="@null"
+            />
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="添加"/>
+        <Button
+            android:id="@+id/btn_show"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="显示"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            android:drawableStart="@drawable/fall"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgShow"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_path"/>
+
+</LinearLayout>
