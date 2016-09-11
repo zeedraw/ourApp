@@ -64,6 +64,7 @@ public class EditInfo extends AppCompatActivity {
             }
         });
 
+
         rt_bt=(TextView)findViewById(R.id.lbt);
         rt_bt.setText("返回");
         rt_bt.setOnClickListener(new View.OnClickListener() {
