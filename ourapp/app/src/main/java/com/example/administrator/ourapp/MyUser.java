@@ -28,14 +28,41 @@ public class MyUser extends BmobUser {
     private String realname;
     private String idCard;
     private String schoolname;
-    private List<String> identifyimage;
+    private BmobFile cardfront;
+    private BmobFile cardback;
+    private BmobFile studentcard;
+    private BmobFile halfpicture;
 
-    public List<String> getIdentifyimage() {
-        return identifyimage;
+    public BmobFile getCardback() {
+        return cardback;
     }
 
-    public void setIdentifyimage(List<String> identifyimage) {
-        this.identifyimage = identifyimage;
+    public void setCardback(BmobFile cardback) {
+        this.cardback = cardback;
+    }
+
+    public BmobFile getCardfront() {
+        return cardfront;
+    }
+
+    public void setCardfront(BmobFile cardfront) {
+        this.cardfront = cardfront;
+    }
+
+    public BmobFile getHalfpicture() {
+        return halfpicture;
+    }
+
+    public void setHalfpicture(BmobFile halfpicture) {
+        this.halfpicture = halfpicture;
+    }
+
+    public BmobFile getStudentcard() {
+        return studentcard;
+    }
+
+    public void setStudentcard(BmobFile studentcard) {
+        this.studentcard = studentcard;
     }
 
     public String getRealname() {
