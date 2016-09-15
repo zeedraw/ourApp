@@ -1,8 +1,10 @@
 package com.example.administrator.ourapp;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -14,12 +16,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +34,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -37,9 +45,15 @@ import cn.bmob.v3.listener.UploadFileListener;
 /**
  * Created by Administrator on 2016/9/9.
  */
-public class EditInfo extends AppCompatActivity {
+public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,DialogInterface.OnClickListener{
     private RelativeLayout userimage;
-    private TextView rt_bt,title,save_bt;
+    private TextView rt_bt,title,save_bt,bd_tv,location_tv;
+    private EditText name_et,intro_et;
+    private RadioGroup sex_rg;
+    private RelativeLayout bd_rl,location_rl;
+    private LocationPickerDialog locationPickerDialog;
+    private DatePickerDialog dpl;
+    private MyUser current;
 
     protected static final int CHOOSE_PICTURE = 0;
     protected static final int TAKE_PICTURE = 1;
@@ -51,7 +65,10 @@ public class EditInfo extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_info);
+        current=BmobUser.getCurrentUser(MyUser.class);
         initWidget();
+        initInfo();
+
     }
 
     private void initWidget()
@@ -64,8 +81,37 @@ public class EditInfo extends AppCompatActivity {
             }
         });
 
+        name_et=(EditText)findViewById(R.id.edit_name_et);
+
+        sex_rg=(RadioGroup)findViewById(R.id.edit_sex_rg);
+
+        bd_rl=(RelativeLayout)findViewById(R.id.edit_bd_rl);
+        bd_tv=(TextView)findViewById(R.id.edit_bd_tv);
+        bd_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 dpl=new DatePickerDialog(EditInfo.this,EditInfo.this,1990,0,1);
+            dpl.setTitle("请设置你的生日");
+            dpl.show();
+            }
+        });
+
+
+        location_rl=(RelativeLayout)findViewById(R.id.edit_location_rl);
+        location_tv=(TextView)findViewById(R.id.edit_location_tv);
+        location_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                locationPickerDialog=new LocationPickerDialog(EditInfo.this,EditInfo.this);
+
+                locationPickerDialog.show();
+            }
+        });
+
+        intro_et=(EditText)findViewById(R.id.edit_intro_et);
+
         rt_bt=(TextView)findViewById(R.id.lbt);
-        rt_bt.setText("返回");
+        rt_bt.setText("取消");
         rt_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,60 +126,49 @@ public class EditInfo extends AppCompatActivity {
         personal_icon_iv=(ImageView)findViewById(R.id.personal_icon_iv);
 
         save_bt=(TextView)findViewById(R.id.rbt);
-        save_bt.setText("保存");
+        save_bt.setText("完成");
         save_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    personal_icon_iv.setDrawingCacheEnabled(true);
-                Bitmap bm = ((BitmapDrawable)personal_icon_iv.getDrawable()).getBitmap();
-//                   personal_icon_iv.setDrawingCacheEnabled(false);
+                savaInfo();
 
-                final String imagePath = savePhoto(bm,MainActivity.getDiskFileDir(getApplicationContext()), "user_image");
-                Log.i("z","本地保存成功--"+imagePath);
-
-                final MyUser user=new MyUser();
-                final MyUser current= BmobUser.getCurrentUser(MyUser.class);
-                final BmobFile newbf=new BmobFile(new File(imagePath));
-                //上传新头像
-                newbf.uploadblock(new UploadFileListener() {
-
-                    @Override
-                    public void done(BmobException e) {
-                        if(e==null){
-                            //bmobFile.getFileUrl()--返回的上传文件的完整地址
-                            Log.i("z","上传文件成功:" + newbf.getFileUrl());
-                            current.setUserimage(newbf);
-                            user.setUserimage(newbf);
-                            user.update(current.getObjectId(), new UpdateListener() {
-                                @Override
-                                public void done(BmobException e) {
-                                    if(e==null){
-                                        Log.i("z","更新用户信息成功");
-                                    }else{
-                                        Log.i("z","更新用户信息失败:" + e.getMessage());
-                                    }
-                                }
-                            });
-                        }else{
-                            Log.i("z","上传文件失败：" + e.getMessage());
-                        }
-
-                    }
-
-
-                    @Override
-                    public void onProgress(Integer value) {
-                        super.onProgress(value);
-                    }
-                });
-
-
-
-
-                ListenerManager.getInstance().sendBroadCast("MyAccount");
             }
         });
 
+    }
+
+    private void initInfo()
+    {
+        Bitmap bitmap=null;
+        try
+        {
+            bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getApplicationContext())+"/user_image.png");
+            personal_icon_iv.setImageBitmap(bitmap);
+        } catch (Exception e)
+        {
+            // TODO: handle exception
+        }
+        name_et.setText(current.getName());
+        int sexId=current.getSex()?R.id.edit_male:R.id.female;
+        sex_rg.check(sexId);
+        if (current.getBorndate()!=null)
+        {
+            bd_tv.setText(current.getBorndate());
+        }
+        if (current.getLocation()!=null)
+        {
+            location_tv.setText(current.getLocation());
+        }
+        if (current.getIntroduction()!=null)
+        {
+            intro_et.setText(current.getIntroduction());
+        }
+        Log.i("z","初始化信息成功");
+    }
+    //locationpicker的点击事件
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        location_tv.setText(locationPickerDialog.getBornDate());
     }
 
     /**
@@ -213,7 +248,7 @@ public class EditInfo extends AppCompatActivity {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, CROP_SMALL_PICTURE);
     }
-
+    //设置头像
     protected void setImageToView(Intent data) {
         Bundle extras = data.getExtras();
         if (extras != null) {
@@ -282,7 +317,7 @@ public class EditInfo extends AppCompatActivity {
         return output;
     }
 
-
+//缓存头像到本地/files目录下
     public  String savePhoto(Bitmap photoBitmap, String path,
                                    String photoName) {
         String localPath = null;
@@ -321,6 +356,106 @@ public class EditInfo extends AppCompatActivity {
 
         return localPath;
     }
+
+        //datepickerdialog按确认后回调
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        if (i1<10) {
+             if (i2<10) {
+                bd_tv.setText(i + "-0" + (i1 + 1) + "-0" + i2);
+            }
+            else {
+                bd_tv.setText(i + "-0" + (i1 + 1) + "-" + i2);
+            }
+        }
+        else {
+            if (i2<10) {
+                bd_tv.setText(i + "-" + (i1 + 1) + "-0" + i2);
+            }
+            else
+            {
+                bd_tv.setText(i + "-" + (i1 + 1) + "-" + i2);
+            }
+
+        }
+    }
+
+    private void savaInfo()
+    {
+        Bitmap bm = ((BitmapDrawable)personal_icon_iv.getDrawable()).getBitmap();
+        String imagePath = savePhoto(bm,MainActivity.getDiskFileDir(getApplicationContext()), "user_image");
+        Log.i("z","本地保存成功--"+imagePath);
+        final MyUser user=new MyUser();
+        final BmobFile newbf=new BmobFile(new File(imagePath));
+        //上传新头像
+        newbf.uploadblock(new UploadFileListener() {
+
+            @Override
+            public void doneError(int code, String msg) {
+                super.doneError(code, msg);
+            }
+
+            @Override
+            public void done(BmobException e) {
+
+                if(e==null){
+                    //bmobFile.getFileUrl()--返回的上传文件的完整地址
+                    Log.i("z","上传文件成功:" + newbf.getFileUrl());
+                    //删除原头像
+                    if (current.getUserimage().getUrl()!=null) {
+                        BmobFile oldbf = new BmobFile();
+                        oldbf.setUrl(current.getUserimage().getUrl());
+                        oldbf.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null)
+                                {
+                                    Log.i("z","原头像删除成功");
+                                }
+                                else {
+                                    Log.i("z","原头像删除失败");
+                                }
+                            }
+                        });
+                    }
+
+                    user.setUserimage(newbf);
+                    user.setName(name_et.getText().toString().trim());
+                    user.setSex(sex_rg.getCheckedRadioButtonId()==R.id.edit_male?true:false);
+                    user.setBorndate(bd_tv.getText().toString().trim());
+                    user.setLocation(location_tv.getText().toString().trim());
+                    user.setIntroduction(intro_et.getText().toString());
+                    user.update(current.getObjectId(), new UpdateListener() {
+
+                        @Override
+                        public void done(BmobException e) {
+                            if(e==null){
+                                ListenerManager.getInstance().sendBroadCast(new String[]{"MyAccount","MineFrag"});
+                                Log.i("z","更新用户信息成功");
+                                EditInfo.this.finish();
+                            }else{
+                                Log.i("z","更新用户信息失败:" + e.getMessage());
+                            }
+                        }
+                    });
+                }else{
+                    Log.i("z","上传文件失败：" + e.getMessage());
+                    AlertDialog.Builder builder=new AlertDialog.Builder(EditInfo.this);
+                    builder.setMessage("保存失败").create().show();
+                }
+
+            }
+
+
+            @Override
+            public void onProgress(Integer value) {
+                super.onProgress(value);
+            }
+        });
+
+    }
+
+
 }
 
 

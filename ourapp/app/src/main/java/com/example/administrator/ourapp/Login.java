@@ -16,8 +16,10 @@ import android.widget.TextView;
 import java.io.File;
 import java.net.URI;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -68,8 +70,32 @@ public class Login extends AppCompatActivity {
                     public void done(MyUser myUser, BmobException e) {
                         if(e==null)
                         {
-                            ListenerManager.getInstance().sendBroadCast("MineFrag");
-                            finish();
+                            Log.i("z","缓存用户成功");
+                            BmobFile bf= BmobUser.getCurrentUser(MyUser.class).getUserimage();
+                            File saveFile=new File(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
+                            bf.download(saveFile, new DownloadFileListener() {
+                                @Override
+                                public void done(String s, BmobException e) {
+                                    if (e==null){
+                                    ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag"});
+                                    finish();}
+                                    else
+                                    {
+                                        Log.i("z","下载用户头像成功");
+                                    }
+                                }
+
+                                @Override
+                                public void onProgress(Integer integer, long l) {
+
+                                }
+
+                                @Override
+                                public void doneError(int code, String msg) {
+                                    super.doneError(code, msg);
+                                }
+                            });
+
                         }
                         else
                         {

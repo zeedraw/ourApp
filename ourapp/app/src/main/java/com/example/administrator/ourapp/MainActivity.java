@@ -162,18 +162,34 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     //以下四个方法对应MineFrag中的点击事件
     public void Myaccount_click(View view)
 {
-    ComponentName comp=new ComponentName(MainActivity.this,MyAccount.class);
-    Intent intent=new Intent();
-    intent.setComponent(comp);
-    startActivity(intent);
+    MyUser user= BmobUser.getCurrentUser(MyUser.class);
+    if(user!=null) {
+        ComponentName comp = new ComponentName(MainActivity.this, MyAccount.class);
+        Intent intent = new Intent();
+        intent.setComponent(comp);
+        startActivity(intent);
+    }
+    else
+    {
+        Intent intent=new Intent(MainActivity.this,Login.class);
+        startActivity(intent);
+    }
 }
 
     public void Mysetting_click(View view)
     {
-        ComponentName comp=new ComponentName(MainActivity.this,MySetting.class);
-        Intent intent=new Intent();
-        intent.setComponent(comp);
-        startActivity(intent);
+        MyUser user= BmobUser.getCurrentUser(MyUser.class);
+        if(user!=null) {
+            ComponentName comp = new ComponentName(MainActivity.this, MySetting.class);
+            Intent intent = new Intent();
+            intent.setComponent(comp);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent=new Intent(MainActivity.this,Login.class);
+            startActivity(intent);
+        }
 
     }
 
@@ -195,7 +211,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public void Myteam_click(View view)
     {
+        MyUser user= BmobUser.getCurrentUser(MyUser.class);
+        if (user!=null)
+        {
 
+        }
+        else
+        {
+            Intent intent=new Intent(MainActivity.this,Login.class);
+            startActivity(intent);
+        }
     }
 
     //获取缓存路径

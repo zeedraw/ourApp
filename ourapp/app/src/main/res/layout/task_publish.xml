@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
     <include layout="@layout/header"></include>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <RelativeLayout
-                android:id="@+id/userimage"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="8dp">
-
                 <TextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
-                    android:text="修改头像"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/text_size_medium"
                     android:paddingLeft="10dp"
+                    android:text="任务标签:"
+                    android:textSize="@dimen/text_size_medium"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    />
 
-                <ImageView
-                    android:id="@+id/personal_icon_iv"
-                    android:layout_width="170dp"
+                <TextView
+                    android:layout_width="230dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/portrait"
-                    android:scaleType="center"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="16dp"/>
-
+                    android:background="@null"
+                    android:textSize="@dimen/text_size_medium"
+                    android:layout_marginRight="16dp"
+                    android:maxLength="10"/>
             </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="任务名称:"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            />
+
+        <EditText
+            android:layout_width="230dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginRight="16dp"
+            android:maxLength="10"/>
+    </RelativeLayout>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -54,14 +71,37 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="昵称"
+                    android:text="任务地点:"
                     android:textSize="@dimen/text_size_medium"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="16dp"
                     />
 
                 <EditText
-                    android:id="@+id/edit_name_et"
+                    android:layout_width="230dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:textSize="@dimen/text_size_medium"
+                    android:layout_marginRight="16dp"
+                    android:maxLength="10"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="需求人数:"
+                    android:textSize="@dimen/text_size_medium"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="16dp"
+                    />
+
+                <EditText
                     android:layout_width="230dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -80,34 +120,22 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="性别"
+                    android:text="起始时间:"
                     android:textSize="@dimen/text_size_medium"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    />
 
-                <RadioGroup
-                    android:id="@+id/edit_sex_rg"
+                <TextView
                     android:layout_width="230dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:textSize="@dimen/text_size_medium"
                     android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
-                    <RadioButton
-                        android:id="@+id/edit_male"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="男"
-                        />
-                    <RadioButton
-                        android:id="@+id/edit_female"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="女"/>
-                </RadioGroup>
+                    android:maxLength="10"/>
             </RelativeLayout>
-
             <RelativeLayout
-                android:id="@+id/edit_bd_rl"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="8dp">
@@ -116,80 +144,48 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="生日"
+                    android:text="结束时间："
                     android:textSize="@dimen/text_size_medium"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    />
 
                 <TextView
-                    android:id="@+id/edit_bd_tv"
                     android:layout_width="230dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:background="@null"
-                    android:text=""
                     android:textSize="@dimen/text_size_medium"
-                    android:layout_marginRight="16dp"/>
+                    android:layout_marginRight="16dp"
+                    android:maxLength="10"/>
             </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/edit_location_rl"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="8dp">
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:text="所在地"
-                    android:textSize="@dimen/text_size_medium"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="16dp"/>
-
-                <TextView
-                    android:id="@+id/edit_location_tv"
-                    android:layout_width="230dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="@null"
-                    android:text=""
-                    android:textSize="@dimen/text_size_medium"
-                    android:layout_marginRight="16dp"/>
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="250dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="120dp"
                     android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="个人介绍"
+                    android:text="任务详情:"
                     android:textSize="@dimen/text_size_medium"
                     android:layout_marginLeft="16dp"
                     android:layout_marginBottom="8dp"/>
 
                 <EditText
-                    android:id="@+id/edit_intro_et"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top"
                     android:lines="4"
-                    android:text="@string/personal_introduction"
+                    android:text=""
                     android:textSize="@dimen/text_size_small"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:maxLength="150"/>
+                    android:maxLength="200"/>
             </LinearLayout>
+
+
         </LinearLayout>
-
     </ScrollView>
-
-
-
-
-
 </LinearLayout>

@@ -133,8 +133,11 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
                 newuser.setUsername(phonenum_ed.getText().toString());
                 newuser.setPassword(pw_ed.getText().toString());
                 newuser.setName(name_ed.getText().toString());
+                newuser.setSex(sex_rg.getCheckedRadioButtonId()==R.id.male?true:false);
                 newuser.setMobilePhoneNumber(phonenum_ed.getText().toString());
                 newuser.setMobilePhoneNumberVerified(true);
+                newuser.setIdentifiedStudent(false);
+                newuser.setIdentifiedPublish(false);
                 newuser.signUp(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser myUser, BmobException e) {
@@ -146,6 +149,7 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
                             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag"});
                                     finish();
                                 }
                             });

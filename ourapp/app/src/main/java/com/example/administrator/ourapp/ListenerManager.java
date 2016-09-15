@@ -55,12 +55,11 @@ public class ListenerManager {
     /**
      * 发送广播
      */
-    public void sendBroadCast(String tag)
+    public void sendBroadCast(String tag[])
     {
-//        for (IListener iListener : iListenerList)
-//        {
-//            iListener.upData();
-//        }
-        iListenerMap.get(tag).upData();
+            for (int i=0;i<tag.length;i++)
+            {
+                iListenerMap.get(tag[i]).upData();
+            }
     }
 }

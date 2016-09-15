@@ -11,15 +11,41 @@ import cn.bmob.v3.datatype.BmobRelation;
  */
 //用户表
 public class MyUser extends BmobUser {
-    private String age;
+    private String borndate;
     private Boolean sex;//true为男 false 为女
     private String qualification;//学历
     private String location;//所在地
     private Double rating;//评分
     private BmobRelation friends;//好友
-    private Boolean isIdentified;//是否被认证 true被认证 false没被认证
+    private Boolean isIdentifiedStudent;//是否被认证 true被认证 false没被认证
+    private Boolean isIdentifiedPublish;
     private String name;
     private BmobFile userimage;
+    private String introduction;//自我介绍
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public Boolean getIdentifiedPublish() {
+        return isIdentifiedPublish;
+    }
+
+    public void setIdentifiedPublish(Boolean identifiedPublish) {
+        isIdentifiedPublish = identifiedPublish;
+    }
+
+    public Boolean getIdentifiedStudent() {
+        return isIdentifiedStudent;
+    }
+
+    public void setIdentifiedStudent(Boolean identifiedStudent) {
+        isIdentifiedStudent = identifiedStudent;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 
     //认证资质
     private String identification;//“edu”教育,”act”活动,”trans”交通,”scene"景点
@@ -34,8 +60,8 @@ public class MyUser extends BmobUser {
 
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setBorndate(String borndate) {
+        this.borndate = borndate;
     }
 
     public void setSex(Boolean sex) {
@@ -58,9 +84,6 @@ public class MyUser extends BmobUser {
         this.friends = friends;
     }
 
-    public void setIdentified(Boolean identified) {
-        this.isIdentified = identified;
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -79,8 +102,8 @@ public class MyUser extends BmobUser {
         return userimage;
     }
 
-    public String getAge() {
-        return age;
+    public String getBorndate() {
+        return borndate;
     }
 
     public String getDescription() {
@@ -95,9 +118,6 @@ public class MyUser extends BmobUser {
         return identification;
     }
 
-    public Boolean getIdentified() {
-        return isIdentified;
-    }
 
     public String getLocation() {
         return location;

@@ -47,7 +47,7 @@ public class MySetting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 BmobUser.logOut();
-                ListenerManager.getInstance().sendBroadCast("MineFrag");
+                ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag"});
                 finish();
             }
         });

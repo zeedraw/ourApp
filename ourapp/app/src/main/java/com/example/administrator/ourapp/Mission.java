@@ -12,12 +12,11 @@ public class Mission extends BmobObject {
     private String name;
     private Integer need_people;//需要人数
     private String detail;//任务详情
-    private String abs;//任务简介
     private String location;//任务所在地
     private MyUser pub_user;//发布人
-    private BmobDate pub_time;//发布时间
-    private BmobDate start_time;//任务开始时间
-    private BmobDate end_time;//结束时间
+    private String pub_time;//发布时间
+    private String start_time;//任务开始时间
+    private String end_time;//结束时间
     private Integer cur_people;//即时人数
     private BmobRelation get_user;//接收人
     private String state;//任务状态： onWating等待,onGoing进行中,onFinish完成
@@ -26,13 +25,6 @@ public class Mission extends BmobObject {
     //getter&setter
 
 
-    public String getAbs() {
-        return abs;
-    }
-
-    public void setAbs(String abs) {
-        this.abs = abs;
-    }
 
     public Integer getCur_people() {
         return cur_people;
@@ -58,11 +50,11 @@ public class Mission extends BmobObject {
         this.get_user = get_user;
     }
 
-    public BmobDate getEnd_time() {
+    public String getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(BmobDate end_time) {
+    public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
 
@@ -90,11 +82,11 @@ public class Mission extends BmobObject {
         this.need_people = need_people;
     }
 
-    public BmobDate getPub_time() {
+    public String getPub_time() {
         return pub_time;
     }
 
-    public void setPub_time(BmobDate pub_time) {
+    public void setPub_time(String pub_time) {
         this.pub_time = pub_time;
     }
 
@@ -106,11 +98,11 @@ public class Mission extends BmobObject {
         this.pub_user = pub_user;
     }
 
-    public BmobDate getStart_time() {
+    public String getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(BmobDate start_time) {
+    public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 
