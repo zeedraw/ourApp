@@ -30,6 +30,30 @@ public class MyUser extends BmobUser {
     private String schoolname;
     private List<String> identifyimage;
 
+    public List<String> getIdentifyimage() {
+        return identifyimage;
+    }
+
+    public void setIdentifyimage(List<String> identifyimage) {
+        this.identifyimage = identifyimage;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getSchoolname() {
+        return schoolname;
+    }
+
+    public void setSchoolname(String schoolname) {
+        this.schoolname = schoolname;
+    }
+
     public String getIdCard() {
         return idCard;
     }
