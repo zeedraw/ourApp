@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
@@ -42,6 +45,9 @@ public class real_name_authenticate extends AppCompatActivity {
     private ImageView halfPic=null;
     private ImageView studentCard=null;
     private TextView up_load = null;
+    private EditText real_name = null;
+    private EditText ID_number = null;
+    private EditText school_name = null;
     private String pic_path[] = new String[4];
     private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
 
@@ -59,12 +65,14 @@ public class real_name_authenticate extends AppCompatActivity {
         halfPic = (ImageView) findViewById(R.id.half_pic);
         studentCard = (ImageView) findViewById(R.id.student_card);
         up_load = (TextView) findViewById(R.id.submit);
+        real_name = (EditText) findViewById(R.id.real_name);
+        ID_number = (EditText) findViewById(R.id.ID_number);
+        school_name= (EditText) findViewById(R.id.school_name);
         cardFront.setOnClickListener(listener);
         cardBack.setOnClickListener(listener);
         halfPic.setOnClickListener(listener);
         studentCard.setOnClickListener(listener);
         up_load.setOnClickListener(upLoad_listener);
-
     }//init
 
     private View.OnClickListener upLoad_listener = new View.OnClickListener(){
@@ -254,7 +262,7 @@ public class real_name_authenticate extends AppCompatActivity {
 
     //将本页面图片上传到服务器
     public void UpLoad(){
-        //TODO 判断是否三个图片都已经选择
+        //TODO 判断是否四个图片都已经选择
         Toast.makeText(getApplicationContext(), "开始上传",
                 Toast.LENGTH_SHORT).show();
 
@@ -266,6 +274,27 @@ public class real_name_authenticate extends AppCompatActivity {
                 //2、urls-上传文件的完整url地址
                 if(urls.size()==pic_path.length){//如果数量相等，则代表文件全部上传完成
                     //do something
+                    MyUser user = new MyUser();
+                    user.setRealname(real_name.getText().toString().trim());
+                    user.setIdCard(ID_number.getText().toString().trim());
+                    user.setSchoolname(school_name.getText().toString().trim());
+                    user.setCardfront(new BmobFile("CardFront", null, urls.get(0)));
+                    user.setCardback(new BmobFile("CardBack", null, urls.get(1)));
+                    user.setHalfpicture(new BmobFile("halfPic", null, urls.get(2)));
+                    user.setStudentcard(new BmobFile("studentCard", null, urls.get(3)));
+                    user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e==null)
+                            {
+                                Log.i("s","更新用户成功");
+                            }
+                            else
+                            {
+                                Log.i("s","更新失败"+e.getMessage());
+                            }
+                        }
+                    });
                     Toast.makeText(getApplicationContext(), "上传成功",
                             Toast.LENGTH_SHORT).show();
                     Log.i("z","上传文件成功");

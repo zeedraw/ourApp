@@ -21,6 +21,7 @@
             android:textColor="#000000"
             android:text="姓名"/>
         <EditText
+            android:id="@+id/real_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_medium"
@@ -42,6 +43,7 @@
             android:textColor="#000000"
             android:text="身份证号"/>
         <EditText
+            android:id="@+id/ID_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_medium"
@@ -63,6 +65,7 @@
             android:textColor="#000000"
             android:text="学校名称"/>
         <EditText
+            android:id="@+id/school_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_medium"
