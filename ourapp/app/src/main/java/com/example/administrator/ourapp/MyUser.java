@@ -30,6 +30,14 @@ public class MyUser extends BmobUser {
     private String schoolname;
     private List<String> identifyimage;
 
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
     public String getIntroduction() {
         return introduction;
     }
