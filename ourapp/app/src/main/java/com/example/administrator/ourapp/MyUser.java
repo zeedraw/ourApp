@@ -2,6 +2,9 @@ package com.example.administrator.ourapp;
 
 import android.provider.ContactsContract;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -22,6 +25,10 @@ public class MyUser extends BmobUser {
     private String name;
     private BmobFile userimage;
     private String introduction;//自我介绍
+    private String realname;
+    private String idCard;
+    private String schoolname;
+    private List<String> identifyimage;
 
     public String getIntroduction() {
         return introduction;
