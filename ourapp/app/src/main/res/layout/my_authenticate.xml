@@ -51,7 +51,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/view_height_custom"
+        android:layout_marginTop="@dimen/widget_margin_medium"
+        android:layout_marginLeft="@dimen/widget_margin_large"
+        android:layout_marginRight="@dimen/widget_margin_large">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="center_vertical"
+            android:textColor="#000000"
+            android:text="学校名称"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="center_vertical"
+            android:textColor="#000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
         android:layout_marginTop="@dimen/widget_margin_medium"
         android:layout_marginLeft="@dimen/widget_margin_large"
         android:layout_marginRight="@dimen/widget_margin_large"
@@ -63,15 +84,35 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/nightscen"
-            android:layout_marginRight="@dimen/widget_margin_medium"/>
+            android:layout_marginRight="@dimen/widget_margin_small"/>
 
         <ImageView
             android:id="@+id/card_back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:src="@drawable/nightscen" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginTop="@dimen/widget_margin_medium"
+        android:layout_marginLeft="@dimen/widget_margin_large"
+        android:layout_marginRight="@dimen/widget_margin_large"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/student_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:src="@drawable/nightscen"
-            android:layout_marginRight="@dimen/widget_margin_medium"/>
+            android:layout_marginRight="@dimen/widget_margin_small"/>
 
         <ImageView
             android:id="@+id/half_pic"
@@ -85,7 +126,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
-        android:layout_marginTop="@dimen/widget_margin_medium"
+        android:layout_marginTop="@dimen/widget_margin_large"
         android:layout_marginLeft="@dimen/widget_margin_large"
         android:layout_marginRight="@dimen/widget_margin_large"
         android:gravity="center">

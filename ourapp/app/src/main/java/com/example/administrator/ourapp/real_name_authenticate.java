@@ -40,9 +40,10 @@ public class real_name_authenticate extends AppCompatActivity {
     private ImageView cardFront=null;
     private ImageView cardBack=null;
     private ImageView halfPic=null;
+    private ImageView studentCard=null;
     private TextView up_load = null;
-    private String pic_path[] = new String[3];
-    private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照
+    private String pic_path[] = new String[4];
+    private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +57,12 @@ public class real_name_authenticate extends AppCompatActivity {
         cardFront = (ImageView) findViewById(R.id.card_front);
         cardBack = (ImageView) findViewById(R.id.card_back);
         halfPic = (ImageView) findViewById(R.id.half_pic);
+        studentCard = (ImageView) findViewById(R.id.student_card);
         up_load = (TextView) findViewById(R.id.submit);
         cardFront.setOnClickListener(listener);
         cardBack.setOnClickListener(listener);
         halfPic.setOnClickListener(listener);
+        studentCard.setOnClickListener(listener);
         up_load.setOnClickListener(upLoad_listener);
 
     }//init
@@ -88,6 +91,9 @@ public class real_name_authenticate extends AppCompatActivity {
                     break;
                 case R.id.half_pic:
                     setImage(2);
+                    break;
+                case R.id.student_card:
+                    setImage(3);
                     break;
             }//switch
 
@@ -127,6 +133,8 @@ public class real_name_authenticate extends AppCompatActivity {
             case 2:
                 imgShow = halfPic;
                 break;
+            case 3:
+                imgShow = studentCard;
         }//swtich
 
         Bitmap bm = null;
