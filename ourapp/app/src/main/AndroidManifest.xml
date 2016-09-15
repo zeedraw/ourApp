@@ -18,7 +18,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppBaseTheme">
+        android:theme="@style/AppBaseTheme"
+        android:largeHeap="true">
+        <!--添加了largeHeap参数 增大app的内存 表面上解决了上传图片过大引起崩溃的问题 但应加入自动压缩图片功能-->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +36,8 @@
         <activity android:name=".my_task"></activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".SignUp"></activity>
+        <activity android:name=".real_name_authenticate"
+            android:hardwareAccelerated="false"></activity>
         <activity android:name=".EditInfo"></activity>
     </application>
 

@@ -12,19 +12,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.administrator.ourapp.location.LocationTest;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
@@ -159,7 +152,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-    //以下四个方法对应MineFrag中的点击事件
+    //以下五个方法对应MineFrag中的点击事件
     public void Myaccount_click(View view)
 {
     MyUser user= BmobUser.getCurrentUser(MyUser.class);
@@ -176,7 +169,41 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 }
 
-    public void Mysetting_click(View view)
+    public void Myauthenticate_click(View view)
+    {
+
+        /**
+         * 显示选择实名认证还是机构认证的对话框
+         */
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("请选择");
+        String[] items = { "实名认证", "机构认证" };
+        builder.setNegativeButton("取消", null);
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // 选择实名认证
+                        ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
+                        Intent intent=new Intent();
+                        intent.setComponent(comp);
+                        startActivity(intent);
+                        break;
+                    case 1: // 选择机构认证
+                        comp=new ComponentName(MainActivity.this,MyAccount.class);
+                        intent=new Intent();
+                        intent.setComponent(comp);
+                        startActivity(intent);
+                        break;
+                }//swtich
+            }//onClick
+        });
+        builder.create().show();
+    }
+
+
+    public void Mysetting_click (View view)
     {
         MyUser user= BmobUser.getCurrentUser(MyUser.class);
         if(user!=null) {
