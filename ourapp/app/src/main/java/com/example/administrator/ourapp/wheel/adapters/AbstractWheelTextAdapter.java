@@ -13,17 +13,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package wheel.widget.adapters;
+package com.example.administrator.ourapp.wheel.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**

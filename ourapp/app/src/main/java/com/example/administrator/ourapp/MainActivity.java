@@ -21,11 +21,11 @@ import cn.bmob.v3.BmobUser;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
-    CheckedTextView tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
-    TextView title;//上方标题
-    FragmentManager mfragManager;
-    FragmentTransaction mTransaction;
-    TextView r_button;
+    private CheckedTextView tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
+    private TextView title;//上方标题
+    private FragmentManager mfragManager;
+    private FragmentTransaction mTransaction;
+    private TextView r_button;
 
 
     @Override
@@ -36,10 +36,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.maininterface);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
         initWidget();
-
-
-
-
 
 
     }

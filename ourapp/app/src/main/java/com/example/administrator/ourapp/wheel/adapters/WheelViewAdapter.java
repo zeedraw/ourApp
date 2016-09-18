@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package wheel.widget.adapters;
+package com.example.administrator.ourapp.wheel.adapters;
 
 import android.database.DataSetObserver;
 import android.view.View;

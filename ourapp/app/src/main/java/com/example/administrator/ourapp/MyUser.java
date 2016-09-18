@@ -22,6 +22,7 @@ public class MyUser extends BmobUser {
     private BmobRelation friends;//好友
     private Boolean isIdentifiedStudent;//是否被认证 true被认证 false没被认证
     private Boolean isIdentifiedPublish;
+    private String tag;//被认证为的类型 教育，活动，社区，景点
     private String name;
     private BmobFile userimage;
     private String introduction;//自我介绍
@@ -32,6 +33,14 @@ public class MyUser extends BmobUser {
     private BmobFile cardback;
     private BmobFile studentcard;
     private BmobFile halfpicture;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public BmobFile getCardback() {
         return cardback;

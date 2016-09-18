@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class task_fragmentAdapter extends FragmentPagerAdapter {
+public class Mission_Do_FragAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> mFragments;
     private String mTabTitle[] = new String[]{"申请中","进行中","已完成"};
 
-    public task_fragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public Mission_Do_FragAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         mFragments=fragments;
     }

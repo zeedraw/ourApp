@@ -28,7 +28,7 @@ public class MainFrag extends Fragment {
 //    private int currIndex = 0;// 当前页卡编号
     private List<Fragment> fragments;//frag集
 //    private TextView t1, t2, t3,t4;// 页卡头标
-    View rootView;
+    private View rootView;
     private SlidingTabLayout tab;
 
 
