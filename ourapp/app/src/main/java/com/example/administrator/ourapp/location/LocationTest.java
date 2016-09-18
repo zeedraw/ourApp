@@ -1,12 +1,7 @@
 package com.example.administrator.ourapp.location;
 
 import android.content.res.AssetManager;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-
-import com.example.administrator.ourapp.R;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -15,10 +10,6 @@ import java.util.Map;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
-import wheel.widget.OnWheelChangedListener;
-import wheel.widget.WheelView;
-import wheel.widget.adapters.ArrayWheelAdapter;
 
 /**
  * Created by Administrator on 2016/9/5.

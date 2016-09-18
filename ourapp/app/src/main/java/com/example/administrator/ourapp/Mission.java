@@ -19,8 +19,8 @@ public class Mission extends BmobObject {
     private String end_time;//结束时间
     private Integer cur_people;//即时人数
     private BmobRelation get_user;//接收人
-    private String state;//任务状态： onWating等待,onGoing进行中,onFinish完成
-    private String tag;//任务类型 edu,act,trans,scene
+    private Integer state;//任务状态： 1审核中,2等待报名中,3进行中，4完成，0审核失败。
+    private String tag;//任务类型 教育,活动,社区,景点
 
     //getter&setter
 
@@ -106,11 +106,11 @@ public class Mission extends BmobObject {
         this.start_time = start_time;
     }
 
-    public String getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 

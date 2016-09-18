@@ -21,9 +21,9 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import wheel.widget.OnWheelChangedListener;
-import wheel.widget.WheelView;
-import wheel.widget.adapters.ArrayWheelAdapter;
+import com.example.administrator.ourapp.wheel.OnWheelChangedListener;
+import com.example.administrator.ourapp.wheel.WheelView;
+import com.example.administrator.ourapp.wheel.adapters.ArrayWheelAdapter;
 
 /**
  * Created by Administrator on 2016/9/11.

@@ -12,22 +12,22 @@
 
     <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginTop="30dip">
 
-    <wheel.widget.WheelView
+    <com.example.administrator.ourapp.wheel.WheelView
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:id="@+id/id_province"> </wheel.widget.WheelView>
+        android:id="@+id/id_province"> </com.example.administrator.ourapp.wheel.WheelView>
 
-    <wheel.widget.WheelView
+    <com.example.administrator.ourapp.wheel.WheelView
         android:layout_height="wrap_content"
         android:layout_width="0dp"
-        android:layout_weight="1" android:id="@+id/id_city"> </wheel.widget.WheelView>
+        android:layout_weight="1" android:id="@+id/id_city"> </com.example.administrator.ourapp.wheel.WheelView>
 
-    <wheel.widget.WheelView
+    <com.example.administrator.ourapp.wheel.WheelView
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:id="@+id/id_district"> </wheel.widget.WheelView>
+        android:id="@+id/id_district"> </com.example.administrator.ourapp.wheel.WheelView>
 
 </LinearLayout>
 

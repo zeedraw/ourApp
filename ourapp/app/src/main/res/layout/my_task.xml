@@ -1,19 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/header" />
-
-    <com.example.administrator.ourapp.SlidingTabLayout
-        android:id="@+id/tab"
+    <include layout="@layout/header"
+        android:id="@+id/mission_header"
+        android:layout_alignParentTop="true"
+        android:layout_height="@dimen/view_height_custom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"/>
+        />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    <!--<com.example.administrator.ourapp.SlidingTabLayout-->
+        <!--android:layout_below="@+id/mission_header"-->
+        <!--android:id="@+id/tab"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/white"/>-->
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/pager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+    <FrameLayout
+        android:id="@+id/frag_mission_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/mission_header"
+        android:layout_above="@+id/linearLayout" />
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/da_tabs"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout">
+        <CheckedTextView
+            android:id="@+id/pub_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="我发布的"
+            android:textColor="@drawable/tabstext"
+            android:drawableTop="@drawable/tabscheck_selector"
+
+            />
+        <CheckedTextView
+            android:id="@+id/do_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="我执行的"
+            android:textColor="@drawable/tabstext"
+            android:drawableTop="@drawable/tabscheck_selector"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

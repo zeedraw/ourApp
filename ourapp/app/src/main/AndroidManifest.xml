@@ -39,6 +39,7 @@
         <activity android:name=".real_name_authenticate"
             android:hardwareAccelerated="false"></activity>
         <activity android:name=".EditInfo"></activity>
+        <activity android:name=".MissionPub"></activity>
     </application>
 
 </manifest>
