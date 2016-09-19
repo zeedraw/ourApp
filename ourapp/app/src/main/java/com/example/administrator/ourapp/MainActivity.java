@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.question_and_answer.question_and_answer;
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 
@@ -187,7 +189,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         startActivity(intent);
                         break;
                     case 1: // 选择机构认证
-                        comp=new ComponentName(MainActivity.this,MyAccount.class);
+                        comp=new ComponentName(MainActivity.this,question_and_answer.class);
                         intent=new Intent();
                         intent.setComponent(comp);
                         startActivity(intent);

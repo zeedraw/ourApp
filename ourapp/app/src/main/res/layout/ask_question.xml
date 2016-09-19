@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header">
+        <!--左侧按钮为返回 中间为 提问 -->
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widget_margin_large"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/widget_margin_large"
+        android:layout_marginLeft="@dimen/widget_margin_large">
+
+        <EditText
+            android:id="@+id/edit_question"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="top"
+            android:background="@null"
+            android:lines="3"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:maxLength="40"
+            android:hint="请写下你的问题，4-40字"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:textColor="@color/black"
+                android:text="发布"
+                android:textSize="@dimen/text_size_medium"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
