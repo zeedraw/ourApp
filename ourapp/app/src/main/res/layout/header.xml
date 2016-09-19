@@ -6,6 +6,7 @@
     android:background="@color/titlebar">
 
     <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
         android:gravity="center_vertical"

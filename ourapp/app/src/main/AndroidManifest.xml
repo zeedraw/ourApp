@@ -45,6 +45,9 @@
             android:hardwareAccelerated="false"></activity>
         <activity android:name=".EditInfo"></activity>
         <activity android:name=".MissionPub"></activity>
+        <activity android:name=".question_and_answer.question_and_answer"></activity>
+        <activity android:name=".question_and_answer.ask_question"></activity>
+        <activity android:name=".question_and_answer.edit_answer"></activity>
     </application>
 
 </manifest>

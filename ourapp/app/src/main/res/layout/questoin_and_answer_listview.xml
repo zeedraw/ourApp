@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    >
+
+    <include layout="@layout/header">
+        <!-- 左侧按钮为返回， 中间内容为 “实名认证” 右侧按钮为 提问-->
+    </include>
+
+    <ListView
+        android:id="@+id/QAlistview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_above="@+id/add_question"
+        android:divider="#000000"
+        android:dividerHeight="2px"/>
+
+
+
+</LinearLayout>
+

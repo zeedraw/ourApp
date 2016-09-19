@@ -135,7 +135,8 @@
                 android:textSize="@dimen/text_size_small"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/question_and_answer"
+                android:layout_width="70dp"
                 android:layout_height="@dimen/view_height_custom"
                 android:text="问答"
                 android:gravity="center_vertical"
