@@ -2,6 +2,7 @@ package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class question_and_answer extends Activity{
     private ListView listView;
     private Vector<String> question_date = new Vector<String>();       //问题的发布日期
     private Vector<String> question_content = new Vector<String>();    //问题的内容
+    private Vector<String> answer_content = new Vector<String>(); //问题的回答
 
 
 
@@ -40,22 +42,76 @@ public class question_and_answer extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questoin_and_answer_listview);
         listView  = (ListView) findViewById(R.id.QAlistview);
+        final Context context = this.getBaseContext();
         initWidget();
-        getQuestionContent();
-        question_content.add("问题测试");
-        question_date.add("2016-9-19");
-        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
-        for(int i = 0; i < question_date.size(); ++i){
-            Map<String, Object> listItem = new HashMap<String, Object>();
-            listItem.put("question_date", question_date.get(i));
-            listItem.put("question_content", question_content.get(i));
-            listItems.add(listItem);
-        }//for i
+////        getQuestionContent();
+//        Log.i("test","step 8");
+//        question_content.add("问题测试");
+//        question_date.add("2016-9-19");
+//        Log.i("test","step 9");
+//        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+//        for(int i = 0; i < question_date.size(); ++i){
+//            Map<String, Object> listItem = new HashMap<String, Object>();
+//            listItem.put("question_date", question_date.get(i));
+//            listItem.put("question_content", question_content.get(i));
+//            listItems.add(listItem);
+//        }//for i
+//        Log.i("test","step 10");
+//        //创建一个SimpleAdapter
+//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.layout.question_and_answer_item,
+//                new String[] {"question_date", "question_content"}, new int[] {R.id.date, R.id.question});
+//        listView.setAdapter(simpleAdapter);
 
-        //创建一个SimpleAdapter
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.layout.question_and_answer_item,
-                new String[] {"question_date", "question_content"}, new int[] {R.id.date, R.id.question});
-        listView.setAdapter(simpleAdapter);
+        BmobQuery<Mission_question> query = new BmobQuery<Mission_question>();
+//        Log.i("test","step 1");
+//查询playerName叫“比目”的数据
+        query.include("answer");
+        query.addWhereEqualTo("objectId", "KNxs444I");
+
+//        Log.i("test","step 2");
+//返回100条数据，如果不加上这条语句，默认返回10条数据
+        query.setLimit(100);
+//        Log.i("test","step 3");
+//执行查询方法
+        query.findObjects(new FindListener<Mission_question>() {
+
+            @Override
+            public void done(List<Mission_question> object, BmobException e) {
+//                Log.i("test","step 4");
+                if(e==null){
+                    for (Mission_question question : object) {
+//                        Log.i("test","step 5");
+                        //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
+                        question_date.add(question.getCreatedAt());
+                        //获得问题的内容
+                        question_content.add(question.getContent());
+                        answer_content.add(question.getanswer().getContent());
+                        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+                        for(int i = 0; i < question_date.size(); ++i){
+                            Map<String, Object> listItem = new HashMap<String, Object>();
+                            listItem.put("question_date", question_date.get(i));
+                            listItem.put("question_content", question_content.get(i));
+                            listItem.put("answer_content", answer_content.get(i));
+                            listItems.add(listItem);
+                        }//for i
+//                        Log.i("test","step 10");
+                        //创建一个SimpleAdapter
+                        SimpleAdapter simpleAdapter = new SimpleAdapter(context, listItems,
+                                R.layout.question_and_answer_item,
+                                new String[] {"question_date", "question_content", "answer_content"},
+                                new int[] {R.id.date, R.id.question, R.id.answer });
+                        listView.setAdapter(simpleAdapter);
+                    }//for
+                }//if
+                else{
+//                    Log.i("test","step 6");
+
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }//else
+            }//done
+        });
+
+//        Log.i("test","step 7");
     }//onCreate
 
 
@@ -92,31 +148,52 @@ public class question_and_answer extends Activity{
     }//initwidget
 
 
-    private int getQuestionContent(){
-        BmobQuery<Mission_question> query = new BmobQuery<Mission_question>();
-//查询playerName叫“比目”的数据
-        query.addWhereEqualTo("objectId", "KNxs444I");
-//返回100条数据，如果不加上这条语句，默认返回10条数据
-        query.setLimit(100);
-//执行查询方法
-        query.findObjects(new FindListener<Mission_question>() {
-            @Override
-            public void done(List<Mission_question> object, BmobException e) {
-                if(e==null){
-                    for (Mission_question question : object) {
-
-                        //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
-                        question_date.add(question.getCreatedAt());
-                        //获得问题的内容
-                        question_content.add(question.getContent());
-                    }//for
-                }//if
-                else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                }//else
-            }//done
-        });
-        return 0;
-    }//getQuestionContent
+//    private void getQuestionContent(){
+////        BmobQuery<Mission_question> query = new BmobQuery<Mission_question>();
+////        Log.i("test","step 1");
+//////查询playerName叫“比目”的数据
+////        query.addWhereEqualTo("objectId", "KNxs444I");
+////        Log.i("test","step 2");
+//////返回100条数据，如果不加上这条语句，默认返回10条数据
+////        query.setLimit(100);
+////        Log.i("test","step 3");
+//////执行查询方法
+////        query.findObjects(new FindListener<Mission_question>() {
+////
+////            @Override
+////            public void done(List<Mission_question> object, BmobException e) {
+////                Log.i("test","step 4");
+////                if(e==null){
+////                    for (Mission_question question : object) {
+////                        Log.i("test","step 5");
+////                        //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
+////                        question_date.add(question.getCreatedAt());
+////                        //获得问题的内容
+////                        question_content.add(question.getContent());
+////                        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+////                        for(int i = 0; i < question_date.size(); ++i){
+////                            Map<String, Object> listItem = new HashMap<String, Object>();
+////                            listItem.put("question_date", question_date.get(i));
+////                            listItem.put("question_content", question_content.get(i));
+////                            listItems.add(listItem);
+////                        }//for i
+////                        Log.i("test","step 10");
+////                        //创建一个SimpleAdapter
+////                        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.layout.question_and_answer_item,
+////                                new String[] {"question_date", "question_content"}, new int[] {R.id.date, R.id.question});
+////                        listView.setAdapter(simpleAdapter);
+////                    }//for
+////                }//if
+////                else{
+////                    Log.i("test","step 6");
+////
+////                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+////                }//else
+////            }//done
+////        });
+////
+////        Log.i("test","step 7");
+//
+//    }//getQuestionContent
 
 }
