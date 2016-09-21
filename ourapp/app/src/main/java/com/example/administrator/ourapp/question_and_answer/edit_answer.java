@@ -92,14 +92,14 @@ public class edit_answer extends Activity {
                 if(question.getanswer().getUser() == null){   //如果question还没有回答即回答还未被创建
 
                     answer.setMyUser(BmobUser.getCurrentUser(MyUser.class));
-                    answer.setQuestion(question);
+//                    answer.setQuestion(question);
                     answer.save(new SaveListener<String>() {
                         @Override
                         public void done(String objectId, BmobException e) {
                             if(e==null){
                                 Log.i("bmob","上传回答成功");
 
-                                //更新question的answer 并不能更新
+                                //更新question的answer
                                 question.setAnswer(answer);
                                 question.update(question_ID, new UpdateListener() {
 
@@ -109,7 +109,7 @@ public class edit_answer extends Activity {
                                             Log.i("bmob","问题更新成功");
                                             edit_answer.this.finish();
                                         }else{
-                                            Log.i("bmob","问题更新失败："+e.getMessage()+","+e.getErrorCode());
+                                            Log.i("bmob","问题更新失败");
                                         }
                                     }
 
