@@ -16,6 +16,7 @@
 
 package com.example.administrator.ourapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -148,6 +149,12 @@ public class ProgressFragment extends Fragment {
         } else {
             throw new IllegalStateException("Can't be used with a custom content view");
         }
+    }
+
+    public void setmEmptyListener(View.OnClickListener listener)
+    {
+        ensureContent();
+        mEmptyView.setOnClickListener(listener);
     }
 
     /**

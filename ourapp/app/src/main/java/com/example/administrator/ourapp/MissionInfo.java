@@ -2,12 +2,19 @@ package com.example.administrator.ourapp;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
+
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -18,10 +25,15 @@ public class MissionInfo extends AppCompatActivity {
     TextView return_bt,commit_bt;//标题上的左右按钮
     TextView info_title;//标题
     TextView QA;    //问答
+    private ImageView userimage;
+    private TextView username;
+    private Mission mMission;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mission_info);
+        Intent intent=getIntent();
+        mMission=(Mission)intent.getSerializableExtra("mission");
         initWidget();
     }
 
@@ -68,5 +80,51 @@ public class MissionInfo extends AppCompatActivity {
             }
         });
 
+        userimage=(ImageView)findViewById(R.id.fre_userimage);
+        new LoadImage().execute(mMission.getPub_user().getUserimage().getUrl());
+
+        username=(TextView)findViewById(R.id.fre_username);
+        username.setText(mMission.getPub_user().getName());
+
+
     }
+
+
+    public class LoadImage extends AsyncTask<String,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(String... strs) {
+            URL request;
+            InputStream input;
+            Drawable drawable = null;
+
+            try {
+                request =new URL(strs[0]);
+                input=(InputStream)request.getContent();
+                drawable = Drawable.createFromStream(input, "src");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return drawable;
+
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            userimage.setImageDrawable(drawable);
+        }
+    }
+
+    //携带mission的intent
+    private void startIntentWithMissino(Class<?> c)
+    {
+        Intent intent=new Intent(MissionInfo.this,c);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("mission",mMission);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
 }

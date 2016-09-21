@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,8 +27,8 @@ import cn.bmob.v3.BmobUser;
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
     private CheckedTextView tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
     private TextView title;//上方标题
-    private FragmentManager mfragManager;
-    private FragmentTransaction mTransaction;
+//    private FragmentManager mfragManager;
+//    private FragmentTransaction mTransaction;
     private TextView r_button;
 
 
@@ -50,7 +51,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tv_mes.setOnClickListener(this);
         tv_mine=(CheckedTextView)findViewById(R.id.mine);
         tv_mine.setOnClickListener(this);
-        tv_main.setChecked(true);
         tv_fre=(CheckedTextView)findViewById(R.id.fre);
         tv_fre.setOnClickListener(this);
 
@@ -60,13 +60,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         title.setText(tv_main.getText());
 
         //默认首页
-         mfragManager=getSupportFragmentManager();
-         mTransaction=mfragManager.beginTransaction();
-        mTransaction.add(R.id.frag_container,new MineFrag(),"mine")
-                .add(R.id.frag_container,new MesFrag(),"mes")
-                .add(R.id.frag_container,new FreFrag(),"fre")
-                .add(R.id.frag_container,new MainFrag(),"main")
-                .commit();
+        tv_main.setChecked(true);
+        myCheckedChaged(tv_main);
+//        FragmentManager mfragManager=getSupportFragmentManager();
+//       FragmentTransaction  mTransaction=mfragManager.beginTransaction();
+//        mTransaction.add(R.id.frag_container,new MineFrag(),"mine")
+//                .add(R.id.frag_container,new MesFrag(),"mes")
+//                .add(R.id.frag_container,new FreFrag(),"fre")
+//                .add(R.id.frag_container,new MainFrag(),"main")
+//                .commit();
 
 
 
@@ -88,11 +90,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_fre.setChecked(false);
             title.setText(tv_main.getText());
             r_button.setVisibility(View.INVISIBLE);
-            mTransaction=mfragManager.beginTransaction();
-            mTransaction.show(mfragManager.findFragmentByTag("main"))
-                    .hide(mfragManager.findFragmentByTag("mes"))
-                    .hide(mfragManager.findFragmentByTag("mine"))
-                    .hide(mfragManager.findFragmentByTag("fre")).commit();
+            myCheckedChaged(view);
+//            mTransaction=mfragManager.beginTransaction();
+//            mTransaction.show(mfragManager.findFragmentByTag("main"))
+//                    .hide(mfragManager.findFragmentByTag("mes"))
+//                    .hide(mfragManager.findFragmentByTag("mine"))
+//                    .hide(mfragManager.findFragmentByTag("fre")).commit();
 
         }
 
@@ -104,12 +107,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_fre.setChecked(false);
             title.setText(tv_mes.getText());
             r_button.setVisibility(View.INVISIBLE);
-
-            mTransaction=mfragManager.beginTransaction();
-            mTransaction.hide(mfragManager.findFragmentByTag("main"))
-                    .show(mfragManager.findFragmentByTag("mes"))
-                    .hide(mfragManager.findFragmentByTag("mine"))
-                    .hide(mfragManager.findFragmentByTag("fre")).commit();
+            myCheckedChaged(view);
+//            mTransaction=mfragManager.beginTransaction();
+//            mTransaction.hide(mfragManager.findFragmentByTag("main"))
+//                    .show(mfragManager.findFragmentByTag("mes"))
+//                    .hide(mfragManager.findFragmentByTag("mine"))
+//                    .hide(mfragManager.findFragmentByTag("fre")).commit();
 
         }
         else if (view==tv_mine)
@@ -120,11 +123,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_fre.setChecked(false);
             title.setText(tv_mine.getText());
             r_button.setVisibility(View.INVISIBLE);
-            mTransaction=mfragManager.beginTransaction();
-            mTransaction.hide(mfragManager.findFragmentByTag("main"))
-                    .hide(mfragManager.findFragmentByTag("mes"))
-                    .show(mfragManager.findFragmentByTag("mine"))
-                    .hide(mfragManager.findFragmentByTag("fre")).commit();
+            myCheckedChaged(view);
+//            mTransaction=mfragManager.beginTransaction();
+//            mTransaction.hide(mfragManager.findFragmentByTag("main"))
+//                    .hide(mfragManager.findFragmentByTag("mes"))
+//                    .show(mfragManager.findFragmentByTag("mine"))
+//                    .hide(mfragManager.findFragmentByTag("fre")).commit();
 
         }
 
@@ -137,15 +141,98 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             title.setText(tv_fre.getText());
             r_button.setText("添加");
             r_button.setVisibility(View.VISIBLE);
+            myCheckedChaged(view);
 
-            mTransaction=mfragManager.beginTransaction();
-            mTransaction.hide(mfragManager.findFragmentByTag("main"))
-                    .hide(mfragManager.findFragmentByTag("mes"))
-                    .hide(mfragManager.findFragmentByTag("mine"))
-                    .show(mfragManager.findFragmentByTag("fre")).commit();
+//            mTransaction=mfragManager.beginTransaction();
+//            mTransaction.hide(mfragManager.findFragmentByTag("main"))
+//                    .hide(mfragManager.findFragmentByTag("mes"))
+//                    .hide(mfragManager.findFragmentByTag("mine"))
+//                    .show(mfragManager.findFragmentByTag("fre")).commit();
 
         }
 
+
+    }
+
+    private void myCheckedChaged(View view)
+    {
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        Fragment mine=fm.findFragmentByTag("mine");
+        Fragment main=fm.findFragmentByTag("main");
+        Fragment mes=fm.findFragmentByTag("mes");
+        Fragment fre=fm.findFragmentByTag("fre");
+
+        if (mine!=null)
+        {
+            ft.hide(mine);
+        }
+        if (main!=null)
+        {
+            ft.hide(main);
+        }
+        if (mes!=null)
+        {
+            ft.hide(mes);
+        }
+        if (fre!=null)
+        {
+            ft.hide(fre);
+        }
+        //判断显示的frag
+        if (view==tv_main)
+        {
+            if (main==null)
+            {
+                main=new MainFrag();
+                ft.add(R.id.frag_container,main,"main");
+            }
+            else
+            {
+                ft.show(main);
+            }
+        }
+
+        else if(view==tv_mes)
+        {
+            if (mes==null)
+            {
+                mes=new MesFrag();
+                ft.add(R.id.frag_container,mes,"mes");
+            }
+            else
+            {
+                ft.show(mes);
+            }
+        }
+
+        else if (view==tv_mine)
+        {
+            if (mine==null)
+            {
+                mine=new MineFrag();
+                ft.add(R.id.frag_container,mine,"mine");
+            }
+            else
+            {
+                ft.show(mine);
+            }
+        }
+
+        else if(view==tv_fre)
+        {
+            if (fre==null)
+            {
+                fre=new FreFrag();
+                ft.add(R.id.frag_container,fre,"fre");
+            }
+            else
+            {
+                ft.show(fre);
+            }
+        }
+
+        ft.commit();
 
     }
 

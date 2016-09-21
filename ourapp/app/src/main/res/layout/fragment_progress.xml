@@ -39,16 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:drawableLeft="@mipmap/emo_im_crying"
-            android:drawablePadding="8dp"
             android:gravity="center"
             android:padding="8dp"
-            android:shadowColor="#aa00"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="4"
-            android:textColor="#a00"
+            android:textColor="#494fe9"
             android:textSize="18sp"
+            android:text="点击重新加载"
             android:textStyle="bold|italic"/>
     </FrameLayout>
 
