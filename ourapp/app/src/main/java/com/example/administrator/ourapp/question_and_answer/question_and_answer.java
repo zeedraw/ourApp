@@ -4,15 +4,27 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MissionAdapter;
+import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +32,9 @@ import java.util.Map;
 import java.util.Vector;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -31,9 +46,13 @@ public class question_and_answer extends Activity{
     TextView return_bt,commit_bt;//标题上的左右按钮
     TextView info_title;//标题
     private ListView listView;
+    private List<Mission_question> qa_list;
     private Vector<String> question_date = new Vector<String>();       //问题的发布日期
     private Vector<String> question_content = new Vector<String>();    //问题的内容
     private Vector<String> answer_content = new Vector<String>(); //问题的回答
+    private Vector<String> question_ID = new Vector<String>();//问题的ID
+    private Vector<String> user_ID = new Vector<String>();//问题的ID
+    private QA_adapter qa_adapter;
 
 
 
@@ -61,13 +80,13 @@ public class question_and_answer extends Activity{
 //        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.layout.question_and_answer_item,
 //                new String[] {"question_date", "question_content"}, new int[] {R.id.date, R.id.question});
 //        listView.setAdapter(simpleAdapter);
-
-        BmobQuery<Mission_question> query = new BmobQuery<Mission_question>();
+//        Mission mis = new Mission();
+//        mis.setObjectId("a28906b359");
+         BmobQuery<Mission_question> query = new BmobQuery<Mission_question>();
 //        Log.i("test","step 1");
-//查询playerName叫“比目”的数据
-        query.include("answer");
-        query.addWhereEqualTo("objectId", "KNxs444I");
-
+        query.include("answer[content],User[objectId|userimage]");
+        query.addWhereEqualTo("mission", "a28906b359");
+        query.order("-createdAt");
 //        Log.i("test","step 2");
 //返回100条数据，如果不加上这条语句，默认返回10条数据
         query.setLimit(100);
@@ -79,41 +98,80 @@ public class question_and_answer extends Activity{
             public void done(List<Mission_question> object, BmobException e) {
 //                Log.i("test","step 4");
                 if(e==null){
-                    for (Mission_question question : object) {
-//                        Log.i("test","step 5");
-                        //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
-                        question_date.add(question.getCreatedAt());
-                        //获得问题的内容
-                        question_content.add(question.getContent());
-                        answer_content.add(question.getanswer().getContent());
-                        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
-                        for(int i = 0; i < question_date.size(); ++i){
-                            Map<String, Object> listItem = new HashMap<String, Object>();
-                            listItem.put("question_date", question_date.get(i));
-                            listItem.put("question_content", question_content.get(i));
-                            listItem.put("answer_content", answer_content.get(i));
-                            listItems.add(listItem);
-                        }//for i
-//                        Log.i("test","step 10");
-                        //创建一个SimpleAdapter
-                        SimpleAdapter simpleAdapter = new SimpleAdapter(context, listItems,
-                                R.layout.question_and_answer_item,
-                                new String[] {"question_date", "question_content", "answer_content"},
-                                new int[] {R.id.date, R.id.question, R.id.answer });
-                        listView.setAdapter(simpleAdapter);
-                    }//for
+                    Log.i("z","查询数据成功");
+                    if (object.size()!=0) {
+
+                        for (Mission_question question : object) {
+                            //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
+                            question_date.add(question.getCreatedAt());
+                            //获得问题的内容
+                            question_content.add(question.getContent());
+                            answer_content.add(question.getanswer().getContent());
+                            question_ID.add(question.getObjectId());
+                            user_ID.add(question.getUser().getObjectId());
+                        }//for
+
+                        qa_list = new ArrayList<Mission_question>(object);
+                        qa_adapter = new QA_adapter(context, R.layout.question_and_answer_item, qa_list);
+                        listView.setAdapter(qa_adapter);
+                    }
+                    else
+                    {
+                        //Todo: 提示 还有没有人提问
+                    }
+
+//                        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+//                        for(int i = 0; i < question_date.size(); ++i){
+//                            Map<String, Object> listItem = new HashMap<String, Object>();
+//                            listItem.put("question_date", question_date.get(i));
+//                            listItem.put("question_content", question_content.get(i));
+//                            listItem.put("answer_content", answer_content.get(i));
+////                            listItem.put("user_avatars", returnBitMap(user_avatars.get(i).getUrl()));
+//                            listItems.add(listItem);
+//                        }//for i
+////                        Log.i("test","step 10");
+//                        //创建一个SimpleAdapter
+//                        SimpleAdapter simpleAdapter = new SimpleAdapter(context, listItems,
+//                                R.layout.question_and_answer_item,
+//                                new String[] {"question_date", "question_content", "answer_content", "user_avatars"},
+//                                new int[] {R.id.date, R.id.question, R.id.answer, R.id.user_avatars});
+//
+//                        listView.setAdapter(simpleAdapter);
+
                 }//if
                 else{
 //                    Log.i("test","step 6");
 
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    Log.i("bmob","获取数据失败："+e.getMessage()+","+e.getErrorCode());
                 }//else
             }//done
         });
 
+
 //        Log.i("test","step 7");
     }//onCreate
 
+//    public Bitmap returnBitMap(String url) {
+//        URL myFileUrl = null;
+//        Bitmap bitmap = null;
+//        try {
+//            myFileUrl = new URL(url);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+//                    .openConnection();
+//            conn.setDoInput(true);
+//            conn.connect();
+//            InputStream is = conn.getInputStream();
+//            bitmap = BitmapFactory.decodeStream(is);
+//            is.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return bitmap;
+//    }
 
     private void initWidget() {
         return_bt=(TextView)findViewById(R.id.lbt);
@@ -145,6 +203,39 @@ public class question_and_answer extends Activity{
                 startActivity(intent);
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if(user_ID.get(i).equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
+                    //若是任务发布者则跳转到编辑回答界面
+                    Intent intent = new Intent(question_and_answer.this, edit_answer.class);
+                    // 在Intent中传递数据
+                    intent.putExtra("question_content", question_content.get(i));
+                    intent.putExtra("answer_content",answer_content.get(i));
+                    intent.putExtra("question_ID", question_ID.get(i));
+                    // 启动Intent
+                    startActivity(intent);
+                }//if
+                //若不是任务发布者则跳转到提问界面
+                else{
+                    Intent intent = new Intent(question_and_answer.this, question_and_answer_detail.class);
+                    // 在Intent中传递数据
+                    intent.putExtra("question_content", question_content.get(i));
+                    intent.putExtra("answer_content",answer_content.get(i));
+                    intent.putExtra("question_date",  question_date.get(i));
+                    intent.putExtra("question", qa_list.get(i));
+                    intent.putExtra("question_ID", question_ID.get(i));
+                    // 启动Intent
+                    startActivity(intent);
+                }//else
+
+
+            }
+        });
+
+
     }//initwidget
 
 

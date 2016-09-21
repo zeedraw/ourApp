@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 
 import cn.bmob.v3.Bmob;

@@ -54,6 +54,7 @@ public class ask_question extends Activity {
                 Mission_question question = new Mission_question();
                 question.setMyUser(BmobUser.getCurrentUser(MyUser.class));
                 question.setContent(EditQuestion.getText().toString());
+                question.setAnswer(null);
 
                 question.save(new SaveListener<String>() {
 
