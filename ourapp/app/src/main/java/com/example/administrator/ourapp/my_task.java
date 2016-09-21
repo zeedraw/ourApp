@@ -32,8 +32,8 @@ public class my_task extends FragmentActivity implements View.OnClickListener {
     private CheckedTextView pub_tv,do_tv;
     private TextView rt_button,pub_button;
     private TextView missionTitle;
-    private FragmentManager mfragManager;
-    private FragmentTransaction mTransaction;
+//    private FragmentManager mfragManager;
+//    private FragmentTransaction mTransaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,17 +61,18 @@ public class my_task extends FragmentActivity implements View.OnClickListener {
     private void initWidget()
     {
         pub_tv=(CheckedTextView)findViewById(R.id.pub_tv);
-        pub_tv.setChecked(true);
         pub_tv.setOnClickListener(this);
         do_tv=(CheckedTextView)findViewById(R.id.do_tv);
         do_tv.setOnClickListener(this);
 
         //默认页面
-        mfragManager=getSupportFragmentManager();
-        mTransaction=mfragManager.beginTransaction();
-        mTransaction.add(R.id.frag_mission_container,new Frag_do(),"do")
-                .add(R.id.frag_mission_container,new Frag_pub(),"pub")
-                .commit();
+        pub_tv.setChecked(true);
+        myCheckedChange(pub_tv);
+//        mfragManager=getSupportFragmentManager();
+//        mTransaction=mfragManager.beginTransaction();
+//        mTransaction.add(R.id.frag_mission_container,new Frag_do(),"do")
+//                .add(R.id.frag_mission_container,new Frag_pub(),"pub")
+//                .commit();
 
 
 
@@ -110,21 +111,59 @@ public class my_task extends FragmentActivity implements View.OnClickListener {
         {
             pub_tv.setChecked(true);
             do_tv.setChecked(false);
-            mTransaction=mfragManager.beginTransaction();
-            mTransaction.show(mfragManager.findFragmentByTag("pub"))
-                    .hide(mfragManager.findFragmentByTag("do"))
-                    .commit();
+           myCheckedChange(view);
         }
 
         else if(view==do_tv)
         {
             pub_tv.setChecked(false);
             do_tv.setChecked(true);
-            mTransaction=mfragManager.beginTransaction();
-            mTransaction.show(mfragManager.findFragmentByTag("do"))
-                    .hide(mfragManager.findFragmentByTag("pub"))
-                    .commit();
+            myCheckedChange(view);
         }
+    }
+
+    private void myCheckedChange(View view)
+    {
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        Fragment doFrag=fm.findFragmentByTag("do");
+        Fragment pubFrag=fm.findFragmentByTag("pub");
+
+        if (view==do_tv)
+        {
+            if (pubFrag!=null)
+            {
+                ft.hide(pubFrag);
+            }
+            if (doFrag==null)
+            {
+                doFrag=new Frag_do();
+                ft.add(R.id.frag_mission_container,doFrag,"do");
+            }
+            else
+            {
+                ft.show(doFrag);
+            }
+        }
+
+        else if (view==pub_tv)
+        {
+            if (doFrag!=null)
+            {
+                ft.hide(doFrag);
+            }
+            if (pubFrag==null)
+            {
+                pubFrag=new Frag_pub();
+                ft.add(R.id.frag_mission_container,pubFrag,"pub");
+            }
+            else
+            {
+                ft.show(pubFrag);
+            }
+        }
+
+        ft.commit();
 
     }
 }
