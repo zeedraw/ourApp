@@ -274,13 +274,13 @@ public class agency_authenticate extends Activity {
                 if(urls.size()==pic_path.length){//如果数量相等，则代表文件全部上传完成
                     //do something
                     MyUser user = new MyUser();
-                    user.setRealname(agency_name.getText().toString().trim());
-                    user.setIdCard(agency_web.getText().toString().trim());
-                    user.setSchoolname(contact_number.getText().toString().trim());
-//                    user.setagency_pic1(new BmobFile("agency_pic1", null, urls.get(0)));
-//                    user.setagency_pic2(new BmobFile("agency_pic2", null, urls.get(1)));
-//                    user.setagency_pic3ture(new BmobFile("agency_pic3", null, urls.get(2)));
-//                    user.setagency_pic4(new BmobFile("agency_pic4", null, urls.get(3)));
+                    user.setAgency_name(agency_name.getText().toString().trim());
+                    user.setAgency_web(agency_web.getText().toString().trim());
+                    user.setAgency_contact_num(contact_number.getText().toString().trim());
+                    user.setAgency_pic1(new BmobFile("agency_pic1", null, urls.get(0)));
+                    user.setAgency_pic2(new BmobFile("agency_pic2", null, urls.get(1)));
+                    user.setAgency_pic3(new BmobFile("agency_pic3", null, urls.get(2)));
+                    user.setAgency_pic4(new BmobFile("agency_pic4", null, urls.get(3)));
                     user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {

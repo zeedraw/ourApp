@@ -34,6 +34,15 @@ public class MyUser extends BmobUser {
     private BmobFile studentcard;
     private BmobFile halfpicture;
 
+    //以下为机构认证所需资料
+    private BmobFile agency_pic1;
+    private BmobFile agency_pic2;
+    private BmobFile agency_pic3;
+    private BmobFile agency_pic4;
+    private String agency_name;
+    private String agency_web;
+    private String agency_contact_num;
+
     public String getTag() {
         return tag;
     }
@@ -211,5 +220,60 @@ public class MyUser extends BmobUser {
     }
 
     public String getName(){return name;}
+
+    public BmobFile getAgency_pic1() {
+        return agency_pic1;
+    }
+
+    public void setAgency_pic1(BmobFile agency_pic1) {
+        this.agency_pic1 = agency_pic1;
+    }
+
+    public BmobFile getAgency_pic2() {
+        return agency_pic2;
+    }
+
+    public void setAgency_pic2(BmobFile agency_pic2) {
+        this.agency_pic2 = agency_pic2;
+    }
+    public BmobFile getAgency_pic3() {
+        return agency_pic3;
+    }
+
+    public void setAgency_pic3(BmobFile agency_pic3) {
+        this.agency_pic3 = agency_pic3;
+    }
+
+    public String getAgency_name() {
+        return agency_name;
+    }
+
+    public void setAgency_name(String agency_name) {
+        this.agency_name = agency_name;
+    }
+
+    public BmobFile getAgency_pic4() {
+        return agency_pic4;
+    }
+
+    public void setAgency_pic4(BmobFile agency_pic4) {
+        this.agency_pic4 = agency_pic4;
+    }
+
+    public String getAgency_web() {
+        return agency_web;
+    }
+
+    public void setAgency_web(String agency_web) {
+        this.agency_web = agency_web;
+    }
+
+    public String getAgency_contact_num() {
+        return agency_contact_num;
+    }
+
+    public void setAgency_contact_num(String agency_contact_num) {
+        this.agency_contact_num = agency_contact_num;
+    }
 
 }

@@ -50,6 +50,7 @@
         <activity android:name=".question_and_answer.edit_answer"></activity>
         <activity android:name=".question_and_answer.question_and_answer_detail"></activity>
         <activity android:name=".question_and_answer.question_and_answer_detail_publisher"></activity>
+        <activity android:name=".authenticate.agency_authenticate"></activity>
     </application>
 
 </manifest>

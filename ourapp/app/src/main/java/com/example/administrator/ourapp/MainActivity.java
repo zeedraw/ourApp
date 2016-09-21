@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 
@@ -277,7 +278,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         startActivity(intent);
                         break;
                     case 1: // 选择机构认证
-                        comp=new ComponentName(MainActivity.this,question_and_answer.class);
+                        comp=new ComponentName(MainActivity.this,agency_authenticate.class);
                         intent=new Intent();
                         intent.setComponent(comp);
                         startActivity(intent);

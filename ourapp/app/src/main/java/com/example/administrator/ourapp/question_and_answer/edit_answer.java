@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 
 import java.util.List;
 
@@ -89,62 +92,24 @@ public class edit_answer extends Activity {
             public void onClick(View view) {
                 answer.setContent(EditAnswer.getText().toString());
 
-                if(question.getanswer().getUser() == null){   //如果question还没有回答即回答还未被创建
+                answer.update(question.getanswer().getObjectId(), new UpdateListener() {
 
-                    answer.setMyUser(BmobUser.getCurrentUser(MyUser.class));
-//                    answer.setQuestion(question);
-                    answer.save(new SaveListener<String>() {
-                        @Override
-                        public void done(String objectId, BmobException e) {
-                            if(e==null){
-                                Log.i("bmob","上传回答成功");
-
-                                //更新question的answer
-                                question.setAnswer(answer);
-                                question.update(question_ID, new UpdateListener() {
-
-                                    @Override
-                                    public void done(BmobException e) {
-                                        if(e==null){
-                                            Log.i("bmob","问题更新成功");
-                                            edit_answer.this.finish();
-                                        }else{
-                                            Log.i("bmob","问题更新失败");
-                                        }
-                                    }
-
-                                });
-
-
-                            }else{
-                                Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                            }
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","回答更新成功");
+                            Toast.makeText(getApplicationContext(), "回答更新成功",
+                                    Toast.LENGTH_SHORT).show();
+                            edit_answer.this.finish();
+//                            ComponentName comp=new ComponentName(edit_answer.this,question_and_answer.class);
+//                            Intent intent=new Intent();
+//                            intent.setComponent(comp);
+//                            startActivity(intent);
+                        }else{
+                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                         }
-                    });
-
-                    //TODO 给相应的问题添加此回答
-
-
-
-                }//if
-                else{   //原本已有回答，只是编辑回答内容
-                    answer.update(question.getanswer().getObjectId(), new UpdateListener() {
-
-                        @Override
-                        public void done(BmobException e) {
-                            if(e==null){
-                                Log.i("bmob","回答更新成功");
-                                Toast.makeText(getApplicationContext(), "回答更新成功",
-                                        Toast.LENGTH_SHORT).show();
-                                edit_answer.this.finish();
-                            }else{
-                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-                            }
-                        }
-                    });
-                }
-
-
+                    }
+                });
             }
         });
 
