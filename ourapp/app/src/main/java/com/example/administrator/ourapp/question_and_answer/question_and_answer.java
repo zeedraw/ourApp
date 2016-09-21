@@ -210,11 +210,12 @@ public class question_and_answer extends Activity{
 
                 if(user_ID.get(i).equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
                     //若是任务发布者则跳转到编辑回答界面
-                    Intent intent = new Intent(question_and_answer.this, edit_answer.class);
+                    Intent intent = new Intent(question_and_answer.this, question_and_answer_detail_publisher.class);
                     // 在Intent中传递数据
                     intent.putExtra("question_content", question_content.get(i));
                     intent.putExtra("answer_content",answer_content.get(i));
                     intent.putExtra("question_ID", question_ID.get(i));
+                    intent.putExtra("question_date",  question_date.get(i));
                     // 启动Intent
                     startActivity(intent);
                 }//if
@@ -225,7 +226,7 @@ public class question_and_answer extends Activity{
                     intent.putExtra("question_content", question_content.get(i));
                     intent.putExtra("answer_content",answer_content.get(i));
                     intent.putExtra("question_date",  question_date.get(i));
-                    intent.putExtra("question", qa_list.get(i));
+//                    intent.putExtra("question", qa_list.get(i));
                     intent.putExtra("question_ID", question_ID.get(i));
                     // 启动Intent
                     startActivity(intent);
