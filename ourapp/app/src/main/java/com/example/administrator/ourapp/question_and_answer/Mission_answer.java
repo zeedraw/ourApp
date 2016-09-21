@@ -12,7 +12,7 @@ import cn.bmob.v3.BmobObject;
 public class Mission_answer extends BmobObject {
     private String content; //回答内容
     private MyUser User;    //回答者
-    private Mission_question question;   //对应问题
+//    private Mission_question question;   //对应问题
     private Mission mission;    //对应任务
 
     public String getContent(){return content;}
@@ -21,8 +21,8 @@ public class Mission_answer extends BmobObject {
     public MyUser getUser(){return User;}
     public void setMyUser(MyUser User){this.User = User;}
 
-    public Mission_question getQuestion(){return question;}
-    public void setQuestion(Mission_question question){this.question = question;}
+//    public Mission_question getQuestion(){return question;}
+//    public void setQuestion(Mission_question question){this.question = question;}
 
     public Mission getMission(){return mission;}
     public void setMission(Mission mission){this.mission = mission;}

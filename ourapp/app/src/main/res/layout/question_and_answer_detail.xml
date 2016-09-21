@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/widget_margin_large"
         android:layout_marginRight="@dimen/widget_margin_large">
         <TextView
-            android:id="@+id/question_content"
+            android:id="@+id/detail_question_content"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginTop="@dimen/widget_margin_medium"
@@ -24,7 +24,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/answer_content"
+            android:id="@+id/detail_answer_content"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:gravity="top"
@@ -32,7 +32,7 @@
             />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/detail_question_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

@@ -1,4 +1,4 @@
-package com.example.administrator.ourapp;
+package com.example.administrator.ourapp.authenticate;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -12,17 +12,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
+import com.example.administrator.ourapp.MyUser;
+import com.example.administrator.ourapp.R;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -31,47 +30,47 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
-import cn.bmob.v3.listener.UploadFileListener;
 
 /**
- * Created by dell-pc on 2016/9/10.
- * 实名认证的java文件
+ * Created by Longze on 2016/9/21.
+ * 机构认证的java
  */
-public class real_name_authenticate extends AppCompatActivity {
+public class agency_authenticate extends Activity {
+
     private final String IMAGE_TYPE = "image/*";
     private final int IMAGE_CODE = 0;   //这里的IMAGE_CODE是自己任意定义的
-    private ImageView cardFront=null;
-    private ImageView cardBack=null;
-    private ImageView halfPic=null;
-    private ImageView studentCard=null;
+    private ImageView agency_pic1=null;
+    private ImageView agency_pic2=null;
+    private ImageView agency_pic3=null;
+    private ImageView agency_pic4=null;
     private TextView up_load = null;
-    private EditText real_name = null;
-    private EditText ID_number = null;
-    private EditText school_name = null;
+    private EditText agency_name = null;
+    private EditText agency_web = null;
+    private EditText contact_number = null;
     private String pic_path[] = new String[4];
     private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_authenticate);
+        setContentView(R.layout.agency_authenticate);
         init();
     }//onCreate
 
     private void init() {
         // TODO Auto-generated method stub
 
-        cardFront = (ImageView) findViewById(R.id.card_front);
-        cardBack = (ImageView) findViewById(R.id.card_back);
-        halfPic = (ImageView) findViewById(R.id.half_pic);
-        studentCard = (ImageView) findViewById(R.id.student_card);
+        agency_pic1 = (ImageView) findViewById(R.id.agency_pic1);
+        agency_pic2 = (ImageView) findViewById(R.id.agency_pic2);
+        agency_pic3 = (ImageView) findViewById(R.id.agency_pic3);
+        agency_pic4 = (ImageView) findViewById(R.id.agency_pic4);
         up_load = (TextView) findViewById(R.id.submit);
-        real_name = (EditText) findViewById(R.id.real_name);
-        ID_number = (EditText) findViewById(R.id.ID_number);
-        school_name= (EditText) findViewById(R.id.school_name);
-        cardFront.setOnClickListener(listener);
-        cardBack.setOnClickListener(listener);
-        halfPic.setOnClickListener(listener);
-        studentCard.setOnClickListener(listener);
+        agency_name = (EditText) findViewById(R.id.agency_name);
+        agency_web = (EditText) findViewById(R.id.agency_web);
+        contact_number= (EditText) findViewById(R.id.contact_number);
+        agency_pic1.setOnClickListener(listener);
+        agency_pic2.setOnClickListener(listener);
+        agency_pic3.setOnClickListener(listener);
+        agency_pic4.setOnClickListener(listener);
         up_load.setOnClickListener(upLoad_listener);
     }//init
 
@@ -91,16 +90,16 @@ public class real_name_authenticate extends AppCompatActivity {
             ImageView img = (ImageView) v;
 
             switch (img.getId()) {
-                case R.id.card_front:
+                case R.id.agency_pic1:
                     setImage(0);
                     break;
-                case R.id.card_back:
+                case R.id.agency_pic2:
                     setImage(1);
                     break;
-                case R.id.half_pic:
+                case R.id.agency_pic3:
                     setImage(2);
                     break;
-                case R.id.student_card:
+                case R.id.agency_pic4:
                     setImage(3);
                     break;
             }//switch
@@ -133,16 +132,16 @@ public class real_name_authenticate extends AppCompatActivity {
         ImageView imgShow = null;
         switch(num){
             case 0:
-                imgShow = cardFront;
+                imgShow = agency_pic1;
                 break;
             case 1:
-                imgShow = cardBack;
+                imgShow = agency_pic2;
                 break;
             case 2:
-                imgShow = halfPic;
+                imgShow = agency_pic3;
                 break;
             case 3:
-                imgShow = studentCard;
+                imgShow = agency_pic4;
         }//swtich
 
         Bitmap bm = null;
@@ -269,19 +268,19 @@ public class real_name_authenticate extends AppCompatActivity {
         BmobFile.uploadBatch(pic_path, new UploadBatchListener() {
 
             @Override
-            public void onSuccess(List<BmobFile> files,List<String> urls) {
+            public void onSuccess(List<BmobFile> files, List<String> urls) {
                 //1、files-上传完成后的BmobFile集合，是为了方便大家对其上传后的数据进行操作，例如你可以将该文件保存到表中
                 //2、urls-上传文件的完整url地址
                 if(urls.size()==pic_path.length){//如果数量相等，则代表文件全部上传完成
                     //do something
                     MyUser user = new MyUser();
-                    user.setRealname(real_name.getText().toString().trim());
-                    user.setIdCard(ID_number.getText().toString().trim());
-                    user.setSchoolname(school_name.getText().toString().trim());
-                    user.setCardfront(new BmobFile("CardFront", null, urls.get(0)));
-                    user.setCardback(new BmobFile("CardBack", null, urls.get(1)));
-                    user.setHalfpicture(new BmobFile("halfPic", null, urls.get(2)));
-                    user.setStudentcard(new BmobFile("studentCard", null, urls.get(3)));
+                    user.setRealname(agency_name.getText().toString().trim());
+                    user.setIdCard(agency_web.getText().toString().trim());
+                    user.setSchoolname(contact_number.getText().toString().trim());
+//                    user.setagency_pic1(new BmobFile("agency_pic1", null, urls.get(0)));
+//                    user.setagency_pic2(new BmobFile("agency_pic2", null, urls.get(1)));
+//                    user.setagency_pic3ture(new BmobFile("agency_pic3", null, urls.get(2)));
+//                    user.setagency_pic4(new BmobFile("agency_pic4", null, urls.get(3)));
                     user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {

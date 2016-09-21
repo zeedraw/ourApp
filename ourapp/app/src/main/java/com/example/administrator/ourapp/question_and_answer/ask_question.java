@@ -2,11 +2,18 @@ package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by Longze on 2016/9/19.
@@ -40,5 +47,29 @@ public class ask_question extends Activity {
                 ask_question.this.finish();
             }
         });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Mission_question question = new Mission_question();
+                question.setMyUser(BmobUser.getCurrentUser(MyUser.class));
+                question.setContent(EditQuestion.getText().toString());
+                question.setAnswer(null);
+
+                question.save(new SaveListener<String>() {
+
+                    @Override
+                    public void done(String objectId, BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","上传数据成功");
+                            ask_question.this.finish();
+                        }else{
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+            }
+        });
+
     }//initWidget
 }
