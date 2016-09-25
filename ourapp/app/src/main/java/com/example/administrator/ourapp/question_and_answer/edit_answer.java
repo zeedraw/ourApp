@@ -2,8 +2,10 @@ package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -96,17 +98,18 @@ public class edit_answer extends Activity {
 
                     @Override
                     public void done(BmobException e) {
+                        AlertDialog.Builder builder=new AlertDialog.Builder(edit_answer.this);
                         if(e==null){
                             Log.i("bmob","回答更新成功");
-                            Toast.makeText(getApplicationContext(), "回答更新成功",
-                                    Toast.LENGTH_SHORT).show();
-                            edit_answer.this.finish();
-//                            ComponentName comp=new ComponentName(edit_answer.this,question_and_answer.class);
-//                            Intent intent=new Intent();
-//                            intent.setComponent(comp);
-//                            startActivity(intent);
+                            builder.setMessage("答案编辑成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                }
+                            }).create().show();
                         }else{
                             Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                            builder.setMessage("答案编辑失败").create().show();
                         }
                     }
                 });

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header">
+        <!--左侧为返回 中间文本为 详细信息-->
+    </include>
+
+    <TextView
+        android:id="@+id/delete_friend"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/orangered"
+        android:textColor="@color/white"
+        android:text="删除好友"
+        android:textSize="@dimen/text_size_large"
+        android:gravity="center"/>
+</LinearLayout>

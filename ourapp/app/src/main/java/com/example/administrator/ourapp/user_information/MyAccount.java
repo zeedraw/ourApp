@@ -1,29 +1,31 @@
-package com.example.administrator.ourapp;
+package com.example.administrator.ourapp.user_information;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.sql.Time;
+import com.example.administrator.ourapp.EditInfo;
+import com.example.administrator.ourapp.IListener;
+import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.MainActivity;
+import com.example.administrator.ourapp.MyUser;
+import com.example.administrator.ourapp.R;
+
 import java.util.Calendar;
-import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
-public class MyAccount extends AppCompatActivity implements IListener{
+public class MyAccount extends AppCompatActivity implements IListener {
     private TextView rt_button,edit_button;
     private TextView title;
     private TextView name_tv,sex_tv,age_tv,location_tv,intro_tv;

@@ -1,7 +1,9 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -78,12 +80,18 @@ public class ask_question extends Activity {
 
                                 @Override
                                 public void done(String objectId, BmobException e) {
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(ask_question.this);
                                     if(e==null){
                                         Log.i("bmob","上传数据成功");
-
-                                        ask_question.this.finish();
+                                        builder.setMessage("问题发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                finish();
+                                            }
+                                        }).create().show();
                                     }else{
                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                        builder.setMessage("问题发布失败").create().show();
                                     }
                                 }
                             });

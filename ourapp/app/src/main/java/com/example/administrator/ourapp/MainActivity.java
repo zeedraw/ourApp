@@ -17,9 +17,10 @@ import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
-import com.example.administrator.ourapp.question_and_answer.question_and_answer;
+import com.example.administrator.ourapp.friends.search_user;
+import com.example.administrator.ourapp.user_information.MyAccount;
+import com.example.administrator.ourapp.user_information.other_information;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -143,6 +144,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             r_button.setText("添加");
             r_button.setVisibility(View.VISIBLE);
             myCheckedChaged(view);
+            r_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ComponentName comp=new ComponentName(MainActivity.this,search_user.class);
+                    Intent intent=new Intent();
+                    intent.setComponent(comp);
+                    startActivity(intent);
+                }
+            });
 
 //            mTransaction=mfragManager.beginTransaction();
 //            mTransaction.hide(mfragManager.findFragmentByTag("main"))
@@ -278,7 +288,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         startActivity(intent);
                         break;
                     case 1: // 选择机构认证
-                        comp=new ComponentName(MainActivity.this,agency_authenticate.class);
+                        comp=new ComponentName(MainActivity.this,other_information.class);
                         intent=new Intent();
                         intent.setComponent(comp);
                         startActivity(intent);

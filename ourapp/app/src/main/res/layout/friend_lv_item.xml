@@ -33,16 +33,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/fre_introduction"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
-                    android:text="@string/Authentication_identity"
                     android:textSize="@dimen/text_size_small"
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/widget_margin_medium"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/smallest"/>
             </LinearLayout>
 
 
