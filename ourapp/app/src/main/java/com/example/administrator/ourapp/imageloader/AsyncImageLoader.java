@@ -5,12 +5,15 @@ import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.HashMap;
 
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.example.administrator.ourapp.R;
 
 
 /**
@@ -22,9 +25,10 @@ public class AsyncImageLoader {
      * 使用软引用SoftReference，可以由系统在恰当的时候更容易的回收
      */
     private HashMap<String, SoftReference<Drawable>> imageCache;
+    private Context mContext;
 
-
-    public AsyncImageLoader(){
+    public AsyncImageLoader(Context context){
+        mContext=context;
         imageCache = new HashMap<String, SoftReference<Drawable>>();
     }
 
@@ -109,6 +113,8 @@ public class AsyncImageLoader {
         }
         catch(Exception e){
             e.printStackTrace();
+            drawable=mContext.getResources().getDrawable(R.drawable.personimg);
+
         }
 
         info.drawable = drawable;

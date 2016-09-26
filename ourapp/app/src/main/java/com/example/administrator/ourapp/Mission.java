@@ -17,7 +17,7 @@ public class Mission extends BmobObject {
     private String pub_time;//发布时间
     private String start_time;//任务开始时间
     private String end_time;//结束时间
-    private Integer cur_people;//即时人数
+    private BmobRelation cur_people;//即时接收人
     private BmobRelation get_user;//接收人
     private Integer state;//任务状态： 1审核中,2等待报名中,3进行中，4完成，0审核失败。
     private String tag;//任务类型 教育,活动,社区,景点
@@ -26,11 +26,11 @@ public class Mission extends BmobObject {
 
 
 
-    public Integer getCur_people() {
+    public BmobRelation getCur_people() {
         return cur_people;
     }
 
-    public void setCur_people(Integer cur_people) {
+    public void setCur_people(BmobRelation cur_people) {
         this.cur_people = cur_people;
     }
 

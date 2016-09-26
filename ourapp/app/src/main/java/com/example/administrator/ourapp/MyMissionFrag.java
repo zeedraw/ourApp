@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.example.administrator.ourapp.pulltorefresh.PullToRefreshBase;
 import com.example.administrator.ourapp.pulltorefresh.PullToRefreshListView;
 
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
@@ -31,7 +33,7 @@ public class MyMissionFrag extends ProgressFragment {
     private boolean mIsStart = true;
     protected PullToRefreshListView mPullListView;
     private List<Mission> mlist;
-    private MissionAdapter mAdapter;
+//    private MissionAdapter mAdapter;
     protected ListView mlistview;
     private String lastTime;
 
@@ -52,33 +54,21 @@ public class MyMissionFrag extends ProgressFragment {
         setContentView(mPullListView);
         setContentShown(false);
         mlistview = mPullListView.getRefreshableView();
-//        initMission("tag","教育","pub_user[name].userimage",7);
-//
-//        mPullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-//            @Override
-//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                mIsStart=true;
-//                queryData("tag","教育","pub_user[name].userimage",7);
-//
-//
-//            }
-//
-//            @Override
-//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                mIsStart=false;
-//                queryData("tag","教育","pub_user[name].userimage",7);
-//            }
-//        });
 
     }
 
-    protected void initMission(final String condition, final String mes, final String include, final int limit)
+    protected void initMission(final MissionAdapterCallBack callBack)
     {
         BmobQuery<Mission> query=new BmobQuery<Mission>();
-        query.addWhereEqualTo(condition,mes);
-        query.order("-createdAt");
-        query.include(include);
-        query.setLimit(limit);
+        addCondition(query);
+        Log.i("z","初始化添加条件成功");
+//        for (Map.Entry<String,String> entry : condition.entrySet())
+//        {
+//            query.addWhereEqualTo(entry.getKey(),entry.getValue());
+//        }
+//        query.order("-createdAt");
+//        query.include(include);
+//        query.setLimit(limit);
         query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
         query.findObjects(new FindListener<Mission>() {
             @Override
@@ -90,9 +80,9 @@ public class MyMissionFrag extends ProgressFragment {
                         Log.i("z","数据不为空");
                         lastTime = list.get(list.size()-1).getCreatedAt();
                         mlist = new ArrayList<Mission>(list);
-                        mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, mlist);
-                        mlistview.setAdapter(mAdapter);
-
+//                        mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, mlist);
+//                        mlistview.setAdapter(mAdapter);
+                        callBack.setAdapter(mlistview,mlist);
                         setContentShown(true);
                         setContentEmpty(false);
                     }
@@ -116,7 +106,7 @@ public class MyMissionFrag extends ProgressFragment {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 mIsStart=true;
-                queryData(condition,mes,include,limit);
+                queryData(callBack);
 
 
             }
@@ -125,18 +115,23 @@ public class MyMissionFrag extends ProgressFragment {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 mIsStart=false;
                 Log.i("up","开始load");
-                queryData(condition,mes,include,limit);
+                queryData(callBack);
 
             }
         });
     }
 
-    private void queryData(String condition,String mes,String include,int limit)
+    private void queryData(final MissionAdapterCallBack callBack)
     {
         BmobQuery<Mission> query=new BmobQuery<Mission>();
-        query.order("-createdAt");
-        query.addWhereEqualTo(condition,mes);
-        query.include(include);
+//        query.order("-createdAt");
+//        for (Map.Entry<String,String> entry : condition.entrySet())
+//        {
+//            query.addWhereEqualTo(entry.getKey(),entry.getValue());
+//        }
+//        query.include(include);
+        addCondition(query);
+        Log.i("z","初始化添加条件成功");
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         if (mIsStart)//true 下拉刷新
         {
@@ -157,7 +152,6 @@ public class MyMissionFrag extends ProgressFragment {
             //query.setSkip(1);
             Log.i("up","开始设置条件"+"skip"+1 +"lastTime"+lastTime);
         }
-        query.setLimit(limit);
         query.findObjects(new FindListener<Mission>() {
             @Override
             public void done(List<Mission> list, BmobException e) {
@@ -183,7 +177,7 @@ public class MyMissionFrag extends ProgressFragment {
                         Log.i("up","list.size<0");
                         mPullListView.setHasMoreData(false);
                     }
-                    mAdapter.notifyDataSetChanged();
+                    callBack.notifyData();
                     mPullListView.onPullDownRefreshComplete();
                     mPullListView.onPullUpRefreshComplete();
                     setLastUpdateTime();
@@ -206,7 +200,16 @@ public class MyMissionFrag extends ProgressFragment {
         return mDateFormat.format(new Date(time));
     }
 
+    protected void addCondition(BmobQuery query)
+    {
 
+    }
+
+    public interface MissionAdapterCallBack
+    {
+        public void setAdapter(ListView listView,List<Mission> list);
+        public void notifyData();
+    }
 
 
 

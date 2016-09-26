@@ -49,6 +49,8 @@
         <activity android:name=".question_and_answer.ask_question"></activity>
         <activity android:name=".question_and_answer.edit_answer"></activity>
         <activity android:name=".question_and_answer.question_and_answer_detail"></activity>
+        <activity android:name=".ChoosePeople"></activity>
+        <activity android:name=".CheckPeople"></activity>
     </application>
 
 </manifest>

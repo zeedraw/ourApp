@@ -2,15 +2,24 @@ package com.example.administrator.ourapp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
+
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 
 /**
  * Created by Administrator on 2016/8/17.
  */
 public class Fragment2 extends MyMissionFrag {
+    private MissionAdapter mAdapter;
+    private MissionAdapterCallBack callBack;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -21,13 +30,37 @@ public class Fragment2 extends MyMissionFrag {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        callBack=new MissionAdapterCallBack() {
+            @Override
+            public void setAdapter(ListView listView, List<Mission> list) {
+                mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, list);
+                listView.setAdapter(mAdapter);
+
+            }
+
+            @Override
+            public void notifyData() {
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+        Log.i("z","创建回调类成功");
         setmEmptyListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setContentShown(false);
-                initMission("tag","活动","pub_user[name].userimage",7);
+                initMission(callBack);
             }
         });
-        initMission("tag","活动","pub_user[name].userimage",7);
+        initMission(callBack);
+    }
+
+    @Override
+    protected void addCondition(BmobQuery query) {
+        query.addWhereEqualTo("tag","活动");
+        query.addWhereEqualTo("state",new Integer(2));
+        query.order("-createdAt");
+        query.setLimit(7);
+        query.include("pub_user[name].userimage");
     }
 }
