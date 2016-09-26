@@ -24,9 +24,9 @@ public class Frag_do extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragments = new ArrayList<Fragment>();
-        fragments.add(new Frg_task_applying());
-        fragments.add(new Frg_task_ing());
-        fragments.add(new Frg_task_completed());
+        fragments.add(new Fragment1());
+        fragments.add(new Fragment1());
+        fragments.add(new Fragment1());
     }
 
     @Nullable
@@ -38,6 +38,7 @@ public class Frag_do extends Fragment {
 
         Mission_Do_FragAdapter adapter = new Mission_Do_FragAdapter(getActivity().getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         slidingTabLayout.setCustomTabView(R.layout.tab,0);
         slidingTabLayout.setViewPager(viewPager);
         return rootView;

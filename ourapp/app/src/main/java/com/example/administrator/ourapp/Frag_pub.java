@@ -38,6 +38,7 @@ public class Frag_pub extends Fragment {
 
         Mission_Pub_FragAdapter adapter = new Mission_Pub_FragAdapter(getActivity().getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         slidingTabLayout.setCustomTabView(R.layout.tab,0);
         slidingTabLayout.setViewPager(viewPager);
         return rootView;

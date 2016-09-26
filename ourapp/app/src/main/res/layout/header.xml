@@ -40,6 +40,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical|right"
         android:textSize="@dimen/text_size_medium"
-        android:textColor="@color/colorwhite"/>
+        android:textColor="@color/colorwhite"
+        />
     </LinearLayout>
 </LinearLayout>

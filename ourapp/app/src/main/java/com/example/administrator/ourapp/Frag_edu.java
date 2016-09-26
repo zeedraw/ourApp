@@ -1,7 +1,6 @@
 package com.example.administrator.ourapp;
 
 import android.content.Intent;
-import android.content.pm.ProviderInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,21 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.administrator.ourapp.pulltorefresh.PullToRefreshBase;
-import com.example.administrator.ourapp.pulltorefresh.PullToRefreshListView;
+import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Administrator on 2016/8/19.
@@ -39,6 +29,8 @@ public class Frag_edu extends MyMissionFrag {
 //    private ListView mlistview;
 //    private int curPage=0;//当前页
 //    private String lastTime;
+    private MissionAdapter mAdapter;
+    private MissionAdapterCallBack callBack;
 
 
     @Override
@@ -71,6 +63,21 @@ public class Frag_edu extends MyMissionFrag {
                 startActivity(intent);
             }
         });
+
+         callBack=new MissionAdapterCallBack() {
+             @Override
+             public void setAdapter(ListView listView, List<Mission> list) {
+                 mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, list);
+                 listView.setAdapter(mAdapter);
+
+             }
+
+             @Override
+             public void notifyData() {
+                mAdapter.notifyDataSetChanged();
+             }
+         };
+        Log.i("z","创建回调类成功");
 //        //初始化数据
 //        setContentView(mPullListView);
 //        setContentShown(false);
@@ -91,18 +98,29 @@ public class Frag_edu extends MyMissionFrag {
 //                        queryData("tag","教育","pub_user[name].userimage",7);
 //            }
 //        });
+
         setmEmptyListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                initMission("tag","教育","pub_user[name].userimage",7);
+                setContentShown(false);
+                initMission(callBack);
             }
         });
-        initMission("tag","教育","pub_user[name].userimage",7);
+        initMission(callBack);
 
 
     }
-//
+
+    @Override
+    protected void addCondition(BmobQuery query) {
+        query.addWhereEqualTo("tag","教育");
+        query.addWhereEqualTo("state",new Integer(2));
+        query.order("-createdAt");
+        query.setLimit(7);
+        query.include("pub_user[name].userimage");
+    }
+
+    //
 //    private void initMission(String condition,String mes,String include,int limit)
 //    {
 //        BmobQuery<Mission> query=new BmobQuery<Mission>();

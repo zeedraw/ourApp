@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -58,6 +59,7 @@ public class MainFrag extends Fragment {
 //        tab.setSelectedIndicatorColors(R.color.white);//滑动条颜色
         //设定适配器
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         tab.setCustomTabView(R.layout.tab, 0);
         tab.setViewPager(viewPager);
 //        viewPager.setOnPageChangeListener(new MyPageChangeListener());

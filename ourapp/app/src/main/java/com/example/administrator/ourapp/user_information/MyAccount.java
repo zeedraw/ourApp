@@ -1,16 +1,24 @@
 package com.example.administrator.ourapp.user_information;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.icu.text.IDNA;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.sql.Time;
 import com.example.administrator.ourapp.EditInfo;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
@@ -19,13 +27,14 @@ import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
-public class MyAccount extends AppCompatActivity implements IListener {
+public class MyAccount extends AppCompatActivity implements IListener{
     private TextView rt_button,edit_button;
     private TextView title;
     private TextView name_tv,sex_tv,age_tv,location_tv,intro_tv;
@@ -35,9 +44,19 @@ public class MyAccount extends AppCompatActivity implements IListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.infomation);
-        ListenerManager.getInstance().registerListtener("MyAccount",this);
         initWidget();
-        initInfo();
+        Intent intent=getIntent();
+        current=(MyUser) intent.getSerializableExtra("user");
+        if (current!=null)
+        {
+            initInfo(false);
+            edit_button.setVisibility(View.INVISIBLE);
+        }
+        else {
+            ListenerManager.getInstance().registerListtener("MyAccount", this);
+            current = BmobUser.getCurrentUser(MyUser.class);
+            initInfo(true);
+        }
 
 
     }
@@ -80,23 +99,30 @@ public class MyAccount extends AppCompatActivity implements IListener {
 
     }
 
-    private void initInfo()
+    private void initInfo(boolean state)//state true 加载本地用户，false加载其他用户
     {
-        current= BmobUser.getCurrentUser(MyUser.class);
+        if (state) {
             Bitmap bitmap = null;
             try {
                 bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
                 user_image_iv.setImageBitmap(bitmap);
                 Log.i("z", "获取更新iv--" + MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png"
-                +"userid:"+current);
+                        + "userid:" + current);
             } catch (Exception e) {
                 // TODO: handle exception
             }
+        }
+        else
+        {
+            new LoadImage().execute(current.getUserimage().getUrl());
+        }
 
 
         name_tv.setText(current.getName());
         sex_tv.setText(current.getSex()?"男":"女");
-        if (current.getBorndate()!=null&&current.getBorndate().length()!=0);
+
+
+        if (current.getBorndate()!=null&&current.getBorndate().length()!=0)
         { age_tv.setText(getAge()+"");}
         if (current.getLocation()!=null)
         {location_tv.setText(current.getLocation());}
@@ -108,7 +134,7 @@ public class MyAccount extends AppCompatActivity implements IListener {
 
     @Override
     public void upData() {
-       initInfo();
+       initInfo(true);
     }
 
     private int getAge()
@@ -143,6 +169,33 @@ public class MyAccount extends AppCompatActivity implements IListener {
             age=y-my+1;
         }
             return age;
+    }
+
+    //异步加载图片
+    public class LoadImage extends AsyncTask<String,Void,Drawable>
+    {
+        @Override
+        protected Drawable doInBackground(String... strs) {
+            URL request;
+            InputStream input;
+            Drawable drawable = null;
+
+            try {
+                request =new URL(strs[0]);
+                input=(InputStream)request.getContent();
+                drawable = Drawable.createFromStream(input, "src");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return drawable;
+
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            user_image_iv.setImageDrawable(drawable);
+        }
     }
 }
 

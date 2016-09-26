@@ -26,6 +26,7 @@
             <include layout = "@layout/friend_lv_item" />
 
             <TextView
+                android:id="@+id/apply_mission_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_height_custom"
                 android:layout_marginTop="@dimen/widget_margin_medium"
@@ -34,18 +35,9 @@
                 android:textSize="@dimen/text_size_large"
                 android:textColor="@color/black"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/view_task_brief_info"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
-                android:drawablePadding="@dimen/widget_margin_micro"
-                android:text="@string/task_brief_introduction"
-                android:textSize="@dimen/text_size_small"
-                android:layout_marginBottom="@dimen/widget_margin_micro"
-                />
 
             <TextView
+                android:id="@+id/apply_mission_location"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_task_brief_info"
                 android:gravity="center_vertical"
@@ -56,55 +48,41 @@
                 android:layout_marginBottom="@dimen/widget_margin_micro"
                 />
 
+
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/view_task_brief_info"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
-                android:drawablePadding="@dimen/widget_margin_micro"
-                android:text="@string/task_location"
-                android:textSize="@dimen/text_size_small"
-                android:layout_marginBottom="@dimen/widget_margin_micro"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/view_task_brief_info">
-
-                <TextView
+                android:id="@+id/apply_mission_time"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/view_task_brief_info"
                     android:gravity="center_vertical"
                     android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
                     android:drawablePadding="@dimen/widget_margin_micro"
-                    android:text="@string/task_start_time"
+                    android:text="任务时间"
 
                     android:textSize="@dimen/text_size_small"
                     android:layout_marginBottom="@dimen/widget_margin_micro" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 至 "
-                    android:textSize="@dimen/text_size_small"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/view_task_brief_info"
-                    android:gravity="center_vertical"
-                    android:text="@string/task_end_time"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_marginBottom="@dimen/widget_margin_micro" />
-
-            </LinearLayout>
 
             <TextView
+                android:id="@+id/apply_mission_needpeople"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_task_brief_info"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
                 android:drawablePadding="@dimen/widget_margin_micro"
-                android:text="@string/task_person_amount"
+                android:text="需要人数"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginBottom="@dimen/widget_margin_micro"
+                />
+            <TextView
+                android:id="@+id/apply_mission_pubtime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_task_brief_info"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_pin_drop_black_24dp"
+                android:drawablePadding="@dimen/widget_margin_micro"
+                android:text="发布时间"
                 android:textSize="@dimen/text_size_small"
                 android:layout_marginBottom="@dimen/widget_margin_micro"
                 />
@@ -124,11 +102,11 @@
                 android:textColor="@color/black"
                 android:layout_marginBottom="@dimen/widget_margin_medium"/>
 
-            <EditText
+            <TextView
+                android:id="@+id/apply_mission_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:editable="false"
                 android:lines="7"
                 android:autoLink="all"
                 android:text="@string/task_details"
