@@ -54,6 +54,9 @@
         <activity android:name=".friends.search_user"></activity>
         <activity android:name=".user_information.other_information"></activity>
         <activity android:name=".user_information.detailed_information"></activity>
+        <activity android:name=".friends.confirm_friend"></activity>
+        <activity android:name=".friends.send_friend_application"></activity>
+        <activity android:name=".friends.friend_application"></activity>
     </application>
 
 </manifest>
