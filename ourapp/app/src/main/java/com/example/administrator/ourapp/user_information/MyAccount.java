@@ -1,4 +1,4 @@
-package com.example.administrator.ourapp;
+package com.example.administrator.ourapp.user_information;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -19,6 +19,13 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Time;
+import com.example.administrator.ourapp.EditInfo;
+import com.example.administrator.ourapp.IListener;
+import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.MainActivity;
+import com.example.administrator.ourapp.MyUser;
+import com.example.administrator.ourapp.R;
+
 import java.util.Calendar;
 import java.util.Date;
 

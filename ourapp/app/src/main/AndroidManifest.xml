@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MissionInfo"></activity>
-        <activity android:name=".MyAccount"></activity>
+        <activity android:name=".user_information.MyAccount"></activity>
         <activity android:name=".MyMission"></activity>
         <activity android:name=".MySetting"></activity>
         <activity android:name=".apply"></activity>
@@ -51,6 +51,11 @@
         <activity android:name=".question_and_answer.question_and_answer_detail"></activity>
         <activity android:name=".ChoosePeople"></activity>
         <activity android:name=".CheckPeople"></activity>
+        <activity android:name=".question_and_answer.question_and_answer_detail_publisher"></activity>
+        <activity android:name=".authenticate.agency_authenticate"></activity>
+        <activity android:name=".friends.search_user"></activity>
+        <activity android:name=".user_information.other_information"></activity>
+        <activity android:name=".user_information.detailed_information"></activity>
     </application>
 
 </manifest>

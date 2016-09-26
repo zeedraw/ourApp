@@ -133,10 +133,11 @@ public class MissionInfo extends AppCompatActivity {
         QA.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                ComponentName comp=new ComponentName(MissionInfo.this,question_and_answer.class);
-                Intent intent=new Intent();
-                intent.setComponent(comp);
-                startActivity(intent);
+//                    ComponentName comp=new ComponentName(MissionInfo.this,question_and_answer.class);
+//                    Intent intent=new Intent();
+//                    intent.setComponent(comp);
+//                    startActivity(intent);
+                startIntentWithMission(question_and_answer.class);
             }
         });
 
@@ -190,7 +191,7 @@ public class MissionInfo extends AppCompatActivity {
     }
 
     //携带mission的intent
-    private void startIntentWithMissino(Class<?> c)
+    private void startIntentWithMission(Class<?> c)
     {
         Intent intent=new Intent(MissionInfo.this,c);
         Bundle bundle=new Bundle();
