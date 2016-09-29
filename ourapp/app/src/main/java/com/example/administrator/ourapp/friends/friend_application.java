@@ -3,10 +3,8 @@ package com.example.administrator.ourapp.friends;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.administrator.ourapp.MyUser;
@@ -69,7 +67,7 @@ public class friend_application extends Activity {
 
 
 
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         message_ID = intent.getStringExtra("message_ID");
 
         BmobQuery<Message> query = new BmobQuery<Message>();
@@ -104,15 +102,15 @@ public class friend_application extends Activity {
 
                                         //发送同意添加好友的消息
 
-                                        Message agree_friend_apply_message = new Message();
-                                        agree_friend_apply_message.setSender(BmobUser.getCurrentUser(MyUser.class));
-                                        agree_friend_apply_message.setContent(BmobUser.getCurrentUser(MyUser.class).getUsername()+
+                                        Message agree_friend_apply_App_message = new Message();
+                                        agree_friend_apply_App_message.setSender(BmobUser.getCurrentUser(MyUser.class));
+                                        agree_friend_apply_App_message.setContent(BmobUser.getCurrentUser(MyUser.class).getUsername()+
                                                 "同意添加您为好友");
-                                        agree_friend_apply_message.setType(1);    //1代表同意添加好友消息
-                                        agree_friend_apply_message.setBe_viewed(false);
-                                        agree_friend_apply_message.setReceiver(object.getSender());
+                                        agree_friend_apply_App_message.setType(1);    //1代表同意添加好友消息
+                                        agree_friend_apply_App_message.setBe_viewed(false);
+                                        agree_friend_apply_App_message.setReceiver(object.getSender());
 
-                                        agree_friend_apply_message.save(new SaveListener<String>() {
+                                        agree_friend_apply_App_message.save(new SaveListener<String>() {
 
                                             @Override
                                             public void done(String objectId, BmobException e) {
@@ -138,15 +136,15 @@ public class friend_application extends Activity {
                         @Override
                         public void onClick(View view) {
 
-                            Message agree_friend_apply_message = new Message();
-                            agree_friend_apply_message.setSender(BmobUser.getCurrentUser(MyUser.class));
-                            agree_friend_apply_message.setContent(BmobUser.getCurrentUser(MyUser.class).getUsername()+
+                            Message agree_friend_apply_App_message = new Message();
+                            agree_friend_apply_App_message.setSender(BmobUser.getCurrentUser(MyUser.class));
+                            agree_friend_apply_App_message.setContent(BmobUser.getCurrentUser(MyUser.class).getUsername()+
                                     "拒绝添加您为好友");
-                            agree_friend_apply_message.setType(2);    //2代表拒绝添加好友消息
-                            agree_friend_apply_message.setBe_viewed(false);
-                            agree_friend_apply_message.setReceiver(object.getSender());
+                            agree_friend_apply_App_message.setType(2);    //2代表拒绝添加好友消息
+                            agree_friend_apply_App_message.setBe_viewed(false);
+                            agree_friend_apply_App_message.setReceiver(object.getSender());
 
-                            agree_friend_apply_message.save(new SaveListener<String>() {
+                            agree_friend_apply_App_message.save(new SaveListener<String>() {
 
                                 @Override
                                 public void done(String objectId, BmobException e) {

@@ -265,7 +265,7 @@ public class real_name_authenticate extends AppCompatActivity {
 
     //将本页面图片上传到服务器
     public void UpLoad(){
-        //TODO 判断是否四个图片都已经选择
+        //TODO 判断是否四个图片都已经选择、以及文本是否都填上
         Toast.makeText(getApplicationContext(), "开始上传",
                 Toast.LENGTH_SHORT).show();
 

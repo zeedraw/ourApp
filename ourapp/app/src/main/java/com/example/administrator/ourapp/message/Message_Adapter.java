@@ -1,11 +1,8 @@
 package com.example.administrator.ourapp.message;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +11,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
-import com.example.administrator.ourapp.imageloader.TagInfo;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by Longze on 2016/9/25.
@@ -35,7 +29,7 @@ public class Message_Adapter extends ArrayAdapter<Message> {
     public Message_Adapter(Context context, int resource, List<Message> objects) {
         super(context, resource, objects);
         imgCache=new HashMap<String,Drawable>();
-        loader=new AsyncImageLoader();
+        loader=new AsyncImageLoader(getContext());
         res=resource;
         query_list = objects;
     }
@@ -62,37 +56,7 @@ public class Message_Adapter extends ArrayAdapter<Message> {
             viewHolder=(ViewHolder) convertView.getTag();
         }
 
-//        加载网络图片功能
-//        String imgurl= message.getUserimage().getUrl(); // 得到该项所代表的url地址
-//        Drawable drawable = imgCache.get(imgurl);  // 先去缓存中找
-//
-//        TagInfo tag = new TagInfo();
-//        tag.setPosition(position);  //保存当前位置
-//        tag.setUrl(imgurl);         // 保存当前项所要加载的url
-//        viewHolder.message_image.setTag(position);
-//
-//        if(null!=drawable){                         // 找到了直接设置为图像
-//            viewHolder.message_image.setImageDrawable(drawable);
-//        }else {                                      // 没找到则开启异步线程
-//            drawable = loader.loadDrawableByTag(tag, new AsyncImageLoader.ImageCallBack() {
-//
-//                @Override
-//                public void obtainImage(TagInfo ret_info) {
-//
-//                    imgCache.put(ret_info.getUrl(), ret_info.getDrawable());    // 首先把获取的图片放入到缓存中
-//
-//                    // 通过返回的TagInfo去Tag缓存中找，然后再通过找到的Tag来获取到所对应的ImageView
-//                    ImageView person_iv = (ImageView)listView.findViewWithTag(position);
-//                    Log.i("z", "person_iv: " +person_iv  + " position: " + ret_info.getPosition());
-//                    if (null != person_iv)
-//                        person_iv.setImageDrawable(ret_info.getDrawable());
-//                }
-//            });
-//
-//            if (drawable!=null) {
-//                viewHolder.message_image.setImageDrawable(drawable);
-//            }
-//        }
+
         String MessageType = "未知消息";
         Drawable MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
 
@@ -101,6 +65,35 @@ public class Message_Adapter extends ArrayAdapter<Message> {
                 MessageType = "好友请求";
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
                 break;
+            case 1:
+                MessageType = "同意添加好友";
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+            case 2:
+                MessageType = "拒绝添加好友";
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+            case 3:
+                MessageType = "通过任务申请";
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+            case 4:
+                MessageType = "任务申请";       //有人报名任务  看到此消息的是发布者
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+            case 5:
+                MessageType = "任务已开始";
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+            case 7:
+                MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+            case 8:
+                MessageType = "新的回答";       //发布者对用户的问题进行了回答 看到此消息的是提问者
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                break;
+
 
         }//switch 判断message来给属性赋值
 

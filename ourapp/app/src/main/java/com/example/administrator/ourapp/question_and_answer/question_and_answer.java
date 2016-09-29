@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 
@@ -38,7 +39,7 @@ public class question_and_answer extends Activity{
     private Vector<String> question_content = new Vector<String>();    //问题的内容
     private Vector<String> answer_content = new Vector<String>(); //问题的回答
     private Vector<String> question_ID = new Vector<String>();//问题的ID
-    private Vector<String> user_ID = new Vector<String>();//问题的ID
+    private Vector<String> user_ID = new Vector<String>();//问题的提问者的ID
     private QA_adapter qa_adapter;
 
     //TODO 给头像添加点击事件 跳转到个人信息页面
@@ -165,7 +166,7 @@ public class question_and_answer extends Activity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if(user_ID.get(i).equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
+                if(mission.getPub_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
                     //若是任务发布者则跳转到编辑回答界面
                     // 在Intent中传递数据
                     Intent intent = new Intent(question_and_answer.this, question_and_answer_detail_publisher.class);

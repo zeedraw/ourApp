@@ -2,15 +2,15 @@ package com.example.administrator.ourapp.message;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
@@ -18,11 +18,6 @@ import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
-import com.example.administrator.ourapp.friends.friends_adapter;
-import com.example.administrator.ourapp.question_and_answer.Mission_question;
-import com.example.administrator.ourapp.question_and_answer.QA_adapter;
-import com.example.administrator.ourapp.user_information.MyAccount;
-import com.example.administrator.ourapp.user_information.other_information;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +41,20 @@ public class MesFrag extends Fragment implements IListener {
     private Vector<String> message_sender_ID = new Vector<String>();//消息发送者的objectId
     private Vector<String> message_date = new Vector<String>();//消息发送的时间
     private Vector<String> message_ID = new Vector<String>();
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            this.update();
+            handler.postDelayed(this, 1000 * 2);// 间隔2秒
+        }
+        void update() {
+            //刷新msg的内容
+            Load_Message(BmobUser.getCurrentUser(MyUser.class).getObjectId());
+        }
+    };
+
+    //TODO 添加了自动刷新但未调试
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,6 +90,8 @@ public class MesFrag extends Fragment implements IListener {
                //TODO 通过switch判断 type分别进入不同的消息页面 先只做跳转好友申请详情页
             }//onItemClick
         });
+
+        handler.postDelayed(runnable, 1000 * 3);
         return rootview;
     }//onCreateView
 
@@ -117,7 +128,7 @@ public class MesFrag extends Fragment implements IListener {
                     }
                     else
                     {
-                        //Todo: 提示 还有没有消息
+                        //Todo: 提示 还没有消息
                     }
                 }//if
                 else{
@@ -134,4 +145,5 @@ public class MesFrag extends Fragment implements IListener {
     public void upData() {
 
     }
+
 }

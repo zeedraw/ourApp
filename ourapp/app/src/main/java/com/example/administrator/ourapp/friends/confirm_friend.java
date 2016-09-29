@@ -3,7 +3,6 @@ package com.example.administrator.ourapp.friends;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -55,7 +54,7 @@ public class confirm_friend extends Activity {
             }
         });
 
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         message_ID = intent.getStringExtra("message_ID");
 
         BmobQuery<Message> query = new BmobQuery<Message>();

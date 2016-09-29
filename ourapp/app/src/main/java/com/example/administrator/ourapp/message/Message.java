@@ -19,6 +19,12 @@ public class Message extends BmobObject {
     消息的类型中 0代表好友请求消息
                 1代表同意添加好友消息
                 2代表拒绝添加好友消息
+                3代表申请任务成功
+                4代表报名任务成功
+                5代表申请的任务开始消息
+                6代表
+                7代表有人对用户的任务进行提问的消息
+                8代表提问有新的回答的消息
      */
 
     public String getContent() {

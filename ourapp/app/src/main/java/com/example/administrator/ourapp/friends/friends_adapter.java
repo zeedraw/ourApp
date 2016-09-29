@@ -31,7 +31,7 @@ public class friends_adapter extends ArrayAdapter<MyUser> {
     public friends_adapter(Context context, int resource, List<MyUser> objects) {
         super(context, resource, objects);
         imgCache=new HashMap<String,Drawable>();
-        loader=new AsyncImageLoader();
+        loader=new AsyncImageLoader(getContext());
         res=resource;
         query_list = objects;
     }

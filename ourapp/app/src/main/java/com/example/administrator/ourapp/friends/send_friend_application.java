@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.message.Message;
@@ -64,14 +63,14 @@ public class send_friend_application extends Activity {
                     commit_bt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Message friend_apply_message = new Message();
-                            friend_apply_message.setSender(BmobUser.getCurrentUser(MyUser.class));
-                            friend_apply_message.setContent(apply_information.getText().toString());
-                            friend_apply_message.setType(0);    //0代表好友申请的消息
-                            friend_apply_message.setBe_viewed(false);
-                            friend_apply_message.setReceiver(object);
+                            Message friend_apply_App_message = new Message();
+                            friend_apply_App_message.setSender(BmobUser.getCurrentUser(MyUser.class));
+                            friend_apply_App_message.setContent(apply_information.getText().toString());
+                            friend_apply_App_message.setType(0);    //0代表好友申请的消息
+                            friend_apply_App_message.setBe_viewed(false);
+                            friend_apply_App_message.setReceiver(object);
 
-                            friend_apply_message.save(new SaveListener<String>() {
+                            friend_apply_App_message.save(new SaveListener<String>() {
 
                                 @Override
                                 public void done(String objectId, BmobException e) {
