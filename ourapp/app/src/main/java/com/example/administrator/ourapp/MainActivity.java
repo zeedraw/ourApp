@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.CheckedTextView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
@@ -27,7 +28,7 @@ import cn.bmob.v3.BmobUser;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
-    private CheckedTextView tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
+    private RelativeLayout tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
     private TextView title;//上方标题
 //    private FragmentManager mfragManager;
 //    private FragmentTransaction mTransaction;
@@ -47,22 +48,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
     private  void initWidget(){
         //下部tabs中的3个组件
-        tv_main=(CheckedTextView)findViewById(R.id.main);
+        tv_main=(RelativeLayout) findViewById(R.id.main);
         tv_main.setOnClickListener(this);
-        tv_mes=(CheckedTextView)findViewById(R.id.mes);
+        tv_mes=(RelativeLayout) findViewById(R.id.mes);
         tv_mes.setOnClickListener(this);
-        tv_mine=(CheckedTextView)findViewById(R.id.mine);
+        tv_mine=(RelativeLayout) findViewById(R.id.mine);
         tv_mine.setOnClickListener(this);
-        tv_fre=(CheckedTextView)findViewById(R.id.fre);
+        tv_fre=(RelativeLayout) findViewById(R.id.fre);
         tv_fre.setOnClickListener(this);
 
 
         //设置activity的标题
         title=(TextView)findViewById(R.id.title);
-        title.setText(tv_main.getText());
+        title.setText("首页");
 
         //默认首页
-        tv_main.setChecked(true);
+        tv_main.setSelected(true);
         myCheckedChaged(tv_main);
 //        FragmentManager mfragManager=getSupportFragmentManager();
 //       FragmentTransaction  mTransaction=mfragManager.beginTransaction();
@@ -86,11 +87,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if(view==tv_main)
         {
-            tv_main.setChecked(true);
-            tv_mes.setChecked(false);
-            tv_mine.setChecked(false);
-            tv_fre.setChecked(false);
-            title.setText(tv_main.getText());
+            tv_main.setSelected(true);
+            tv_mes.setSelected(false);
+            tv_mine.setSelected(false);
+            tv_fre.setSelected(false);
+            title.setText("首页");
             r_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
 //            mTransaction=mfragManager.beginTransaction();
@@ -103,11 +104,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         else if (view==tv_mes)
         {
-            tv_main.setChecked(false);
-            tv_mes.setChecked(true);
-            tv_mine.setChecked(false);
-            tv_fre.setChecked(false);
-            title.setText(tv_mes.getText());
+            tv_main.setSelected(false);
+            tv_mes.setSelected(true);
+            tv_mine.setSelected(false);
+            tv_fre.setSelected(false);
+            title.setText("消息");
             r_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
 //            mTransaction=mfragManager.beginTransaction();
@@ -119,11 +120,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         else if (view==tv_mine)
         {
-            tv_main.setChecked(false);
-            tv_mes.setChecked(false);
-            tv_mine.setChecked(true);
-            tv_fre.setChecked(false);
-            title.setText(tv_mine.getText());
+            tv_main.setSelected(false);
+            tv_mes.setSelected(false);
+            tv_mine.setSelected(true);
+            tv_fre.setSelected(false);
+            title.setText("我的");
             r_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
 //            mTransaction=mfragManager.beginTransaction();
@@ -136,11 +137,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         else if(view==tv_fre)
         {
-            tv_fre.setChecked(true);
-            tv_main.setChecked(false);
-            tv_mine.setChecked(false);
-            tv_mes.setChecked(false);
-            title.setText(tv_fre.getText());
+            tv_fre.setSelected(true);
+            tv_main.setSelected(false);
+            tv_mine.setSelected(false);
+            tv_mes.setSelected(false);
+            title.setText("好友");
             r_button.setText("添加");
             r_button.setVisibility(View.VISIBLE);
             myCheckedChaged(view);

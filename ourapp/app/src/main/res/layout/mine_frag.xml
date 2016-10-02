@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBJ"
+    >
+
+
+
+    <RelativeLayout
+        android:id="@+id/p2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/bj"
+        android:onClick="Myaccount_click">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:paddingRight="13pt"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/g15"
+
+            />
+        <ImageView
+            android:id="@+id/mine_userimage_iv"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/defaulticon"
+            android:paddingLeft="15dp"
+            />
+        <RelativeLayout
+            android:id="@+id/r1"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/mine_userimage_iv"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/mine_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_height_custom"
+                android:paddingLeft="20dp"
+                android:paddingTop="22dp"
+                android:text="昵称未知"
+                android:textColor="#000000"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_below="@+id/mine_name_tv"
+                android:text="暂无简介"
+                android:paddingLeft="20dp"
+                android:textSize="14dp"
+                android:textColor="#333333"
+                android:paddingTop="2dp"
+                android:ellipsize="middle"
+                />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:layout_below="@+id/mine_name_tv"
+                android:src="@drawable/star03"
+                />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/R2"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:background="@color/colorbj"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/p2">
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#dddddd"  />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#e5e5e5"
+            android:layout_below="@+id/r2"
+            android:layout_alignParentLeft="false"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#dddddd"
+            android:layout_alignParentBottom="true"/>
+
+        <RelativeLayout
+            android:id="@+id/r2"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:onClick="Mymssion_click">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/g17"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                />
+            <ImageView
+                android:id="@+id/i2"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/g03"
+                android:paddingLeft="25dp"/>
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/i2"
+                android:text="我的任务"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="#333333"
+                android:paddingLeft="15dp"
+                android:paddingTop="14dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/r3"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_below="@+id/r2"
+            android:onClick="Myauthenticate_click">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/g17"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                />
+            <ImageView
+                android:id="@+id/i3"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/g34"
+                android:paddingLeft="25dp"/>
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/i3"
+                android:text="我的认证"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="#333333"
+                android:paddingLeft="15dp"
+                android:paddingTop="13dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/R3"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/colorbj"
+        android:layout_below="@+id/R2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        >
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#dddddd"  />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#e5e5e5"
+            android:layout_below="@+id/r4"
+            android:layout_alignParentLeft="false"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/r4"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:onClick="Mysetting_click">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/g17"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                />
+            <ImageView
+                android:id="@+id/i4"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/g08"
+                android:paddingLeft="20dp"/>
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/i4"
+                android:text="设置"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="#333333"
+                android:paddingLeft="15dp"
+                android:paddingTop="13dp" />
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+

@@ -1,24 +1,23 @@
 package com.example.administrator.ourapp;
 
+import android.icu.text.Normalizer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.administrator.ourapp.pulltorefresh.PullToRefreshBase;
-import com.example.administrator.ourapp.pulltorefresh.PullToRefreshListView;
 
-import java.security.PublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
@@ -26,40 +25,42 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * Created by Administrator on 2016/9/20.
+ * Created by Administrator on 2016/9/28.
  */
 public class MyMissionFrag extends ProgressFragment {
-    private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
-    private boolean mIsStart = true;
-    protected PullToRefreshListView mPullListView;
-    private List<Mission> mlist;
-//    private MissionAdapter mAdapter;
-    protected ListView mlistview;
+    private View mContentView;
     private String lastTime;
-
-
+    private List<Mission> mlist;
+    protected ListView mlistview;
+    private boolean mIsStart = true;
+    private RefreshLayout refreshLayout;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-        mPullListView = new PullToRefreshListView(getContext());
-        mPullListView.setPullLoadEnabled(false);
-        mPullListView.setScrollLoadEnabled(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        mContentView=inflater.inflate(R.layout.missionrefresh,container,false);
+        mlistview=(ListView)mContentView.findViewById(R.id.mission_listview);
+        refreshLayout=(RefreshLayout) mContentView.findViewById(R.id.mission_refreshlayout);
+        refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        refreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
         return inflater.inflate(R.layout.fragment_progress,container,false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //初始化数据
-        setContentView(mPullListView);
+        setContentView(mContentView);
         setContentShown(false);
-        mlistview = mPullListView.getRefreshableView();
 
     }
 
     protected void initMission(final MissionAdapterCallBack callBack)
     {
-        BmobQuery<Mission> query=new BmobQuery<Mission>();
+        final BmobQuery<Mission> query=new BmobQuery<Mission>();
         addCondition(query);
         Log.i("z","初始化添加条件成功");
 //        for (Map.Entry<String,String> entry : condition.entrySet())
@@ -102,23 +103,24 @@ public class MyMissionFrag extends ProgressFragment {
             }
         });
 
-                mPullListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onRefresh() {
                 mIsStart=true;
-                queryData(callBack);
-
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                mIsStart=false;
-                Log.i("up","开始load");
                 queryData(callBack);
 
             }
         });
+
+        refreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+            @Override
+            public void onLoad() {
+                mIsStart=false;
+                queryData(callBack);
+            }
+        });
+
+
     }
 
     private void queryData(final MissionAdapterCallBack callBack)
@@ -171,34 +173,21 @@ public class MyMissionFrag extends ProgressFragment {
                             lastTime = list.get(list.size()-1).getCreatedAt();
                         }
 
-                        mPullListView.setHasMoreData(true);
                     }
                     else {
                         Log.i("up","list.size<0");
-                        mPullListView.setHasMoreData(false);
+
                     }
                     callBack.notifyData();
-                    mPullListView.onPullDownRefreshComplete();
-                    mPullListView.onPullUpRefreshComplete();
-                    setLastUpdateTime();
-
                 }
+
+                refreshLayout.setRefreshing(false);
+
+                refreshLayout.setLoading(false);
             }
         });
     }
 
-    private void setLastUpdateTime() {
-        String text = formatDateTime(System.currentTimeMillis());
-        mPullListView.setLastUpdatedLabel(text);
-    }
-
-    private String formatDateTime(long time) {
-        if (0 == time) {
-            return "";
-        }
-
-        return mDateFormat.format(new Date(time));
-    }
 
     protected void addCondition(BmobQuery query)
     {
@@ -210,8 +199,4 @@ public class MyMissionFrag extends ProgressFragment {
         public void setAdapter(ListView listView,List<Mission> list);
         public void notifyData();
     }
-
-
-
-
 }

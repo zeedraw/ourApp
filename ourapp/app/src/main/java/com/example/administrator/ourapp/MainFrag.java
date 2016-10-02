@@ -1,19 +1,11 @@
 package com.example.administrator.ourapp;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +32,9 @@ public class MainFrag extends Fragment {
         //构造适配器
         fragments=new ArrayList<Fragment>();
         fragments.add(new Frag_edu());
-        fragments.add(new Fragment2());
-        fragments.add(new Fragment3());
-        fragments.add(new Fragment4());
+        fragments.add(new Frag_activity());
+        fragments.add(new Frag_trans());
+        fragments.add(new Frag_community());
 
     }
 

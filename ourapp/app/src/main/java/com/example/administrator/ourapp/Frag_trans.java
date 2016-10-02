@@ -16,7 +16,7 @@ import cn.bmob.v3.BmobQuery;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class Fragment3 extends MyMissionFrag{
+public class Frag_trans extends MyMissionFrag {
         private MissionAdapter mAdapter;
         private MissionAdapterCallBack callBack;
     @Override

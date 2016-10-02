@@ -17,7 +17,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by Administrator on 2016/9/17.
  */
-public class Frg_task_reviewing extends MyMissionFrag {
+public class Frg_task_reviewing extends MyMissionFrag_old {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

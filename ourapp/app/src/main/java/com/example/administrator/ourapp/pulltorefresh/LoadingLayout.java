@@ -66,8 +66,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
             throw new NullPointerException("Loading view can not be null.");
         }
         
-        LayoutParams params = new LayoutParams(
-                LayoutParams.MATCH_PARENT, 
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
         addView(mContainer, params);
     }
@@ -82,7 +82,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
         if (show == (View.VISIBLE == getVisibility())) {
             return;
         }
-
+        
         ViewGroup.LayoutParams params = mContainer.getLayoutParams();
         if (null != params) {
             if (show) {
@@ -90,8 +90,6 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
             } else {
                 params.height = 0;
             }
-
-            requestLayout();
             setVisibility(show ? View.VISIBLE : View.INVISIBLE);
         }
     }

@@ -1,7 +1,5 @@
 package com.example.administrator.ourapp.pulltorefresh;
 
-import com.example.administrator.ourapp.pulltorefresh.ILoadingLayout.State;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.ListView;
+
+import com.example.administrator.ourapp.pulltorefresh.ILoadingLayout.State;
 
 /**
  * 这个类实现了ListView下拉刷新，上加载更多和滑到底部自动加载
@@ -123,19 +123,17 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
     
     @Override
     public void setScrollLoadEnabled(boolean scrollLoadEnabled) {
-        if (isScrollLoadEnabled() == scrollLoadEnabled) {
-            return;
-        }
-
         super.setScrollLoadEnabled(scrollLoadEnabled);
-
+        
         if (scrollLoadEnabled) {
             // 设置Footer
             if (null == mLoadMoreFooterLayout) {
                 mLoadMoreFooterLayout = new FooterLoadingLayout(getContext());
+            }
+            
+            if (null == mLoadMoreFooterLayout.getParent()) {
                 mListView.addFooterView(mLoadMoreFooterLayout, null, false);
             }
-
             mLoadMoreFooterLayout.show(true);
         } else {
             if (null != mLoadMoreFooterLayout) {
@@ -156,7 +154,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView> implement
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (isScrollLoadEnabled() && hasMoreData()) {
-            if (scrollState == OnScrollListener.SCROLL_STATE_IDLE 
+            if (scrollState == OnScrollListener.SCROLL_STATE_IDLE
                     || scrollState == OnScrollListener.SCROLL_STATE_FLING) {
                 if (isReadyForPullUp()) {
                     startLoading();
