@@ -1,7 +1,5 @@
 package com.example.administrator.ourapp.pulltorefresh;
 
-import com.example.administrator.ourapp.pulltorefresh.ILoadingLayout.State;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,6 +11,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import com.example.administrator.ourapp.pulltorefresh.ILoadingLayout.State;
 
 /**
  * 这个实现了下拉刷新和上拉加载更多的功能
@@ -518,24 +518,24 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
      */
     protected void refreshRefreshableViewSize(int width, int height) {
         if (null != mRefreshableViewWrapper) {
-            LayoutParams lp = (LayoutParams) mRefreshableViewWrapper.getLayoutParams();
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRefreshableViewWrapper.getLayoutParams();
             if (lp.height != height) {
                 lp.height = height;
                 mRefreshableViewWrapper.requestLayout();
             }
         }
     }
-    
+
     /**
      * 将刷新View添加到当前容器中
-     * 
+     *
      * @param context context
      * @param refreshableView 可以刷新的View
      */
     protected void addRefreshableView(Context context, T refreshableView) {
         int width  = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        
+
         // 创建一个包装容器
         mRefreshableViewWrapper = new FrameLayout(context);
         mRefreshableViewWrapper.addView(refreshableView, width, height);
@@ -544,16 +544,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         // 这样做的原因是，如果此是它的height是MATCH_PARENT，那么footer得到的高度就是0，所以，我们先设置高度很小
         // 我们就可以得到header和footer的正常高度，当onSizeChanged后，Refresh view的高度又会变为正常。
         height = 10;
-        addView(mRefreshableViewWrapper, new LayoutParams(width, height));
+        addView(mRefreshableViewWrapper, new LinearLayout.LayoutParams(width, height));
     }
-    
+
     /**
      * 添加Header和Footer
-     * 
+     *
      * @param context context
      */
     protected void addHeaderAndFooter(Context context) {
-        LayoutParams params = new LayoutParams(
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         

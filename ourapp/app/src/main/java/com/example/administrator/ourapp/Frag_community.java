@@ -16,7 +16,7 @@ import cn.bmob.v3.BmobQuery;
 /**
  * Created by Administrator on 2016/8/17.
  */
-public class Fragment4 extends MyMissionFrag {
+public class Frag_community extends MyMissionFrag_old {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     @Override
@@ -62,3 +62,5 @@ public class Fragment4 extends MyMissionFrag {
         query.include("pub_user[name].userimage");
     }
 }
+
+

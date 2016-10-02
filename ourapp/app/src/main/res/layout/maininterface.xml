@@ -11,10 +11,10 @@
        android:layout_width="match_parent"
         />
 
-    <include layout="@layout/tabs"
+    <include layout="@layout/mytabs"
         android:id="@+id/tabslayout"
         android:layout_alignParentBottom="true"
-        android:layout_height="65dp"
+        android:layout_height="45dp"
         android:layout_width="match_parent"/>
 <FrameLayout
     android:id="@+id/frag_container"

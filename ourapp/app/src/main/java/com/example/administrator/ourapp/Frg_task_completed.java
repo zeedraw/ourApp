@@ -17,7 +17,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by dell-pc on 2016/8/21.
  */
-public class Frg_task_completed extends MyMissionFrag{
+public class Frg_task_completed extends MyMissionFrag_old {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

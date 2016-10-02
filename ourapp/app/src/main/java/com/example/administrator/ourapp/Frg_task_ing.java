@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
 import com.example.administrator.ourapp.mymissionadapter.PubMissionIngAdapter;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by dell-pc on 2016/8/21.
  */
-public class Frg_task_ing extends MyMissionFrag{
+public class Frg_task_ing extends MyMissionFrag_old {
     private PubMissionIngAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

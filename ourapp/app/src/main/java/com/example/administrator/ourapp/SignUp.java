@@ -137,12 +137,9 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
             {
                 Resources r =getResources();
                 MyUser newuser=new MyUser();
-                Uri imageuri= Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
-                        + r.getResourcePackageName(R.drawable.personimg) + "/"
-                        + r.getResourceTypeName(R.drawable.personimg) + "/"
-                        + r.getResourceEntryName(R.drawable.personimg));
-                File file=new File(String.valueOf(imageuri));
-                BmobFile image=new BmobFile("defaultimage",null,"http://bmob-cdn-6218.b0.upaiyun.com/2016/09/24/c5b5dd404064ee1e809a93cc117970ca.PNG");
+
+                BmobFile image=new BmobFile("defaultimage",null,"http://bmob-cdn-6218.b0.upaiyun.com/2016/09/24/be697b3a401676fd80ecfc00bc8dabd4.png");
+                newuser.setUserimage(image);
                 newuser.setUsername(phonenum_ed.getText().toString());
                 newuser.setPassword(pw_ed.getText().toString());
                 newuser.setName(name_ed.getText().toString());

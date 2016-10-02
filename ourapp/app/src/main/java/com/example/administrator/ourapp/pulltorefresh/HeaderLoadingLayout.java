@@ -1,7 +1,5 @@
 package com.example.administrator.ourapp.pulltorefresh;
 
-import com.example.administrator.ourapp.R;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -13,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.administrator.ourapp.R;
 
 /**
  * 这个类封装了下拉刷新的布局

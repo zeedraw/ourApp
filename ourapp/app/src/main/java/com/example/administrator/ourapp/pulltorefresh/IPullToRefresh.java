@@ -1,7 +1,5 @@
 package com.example.administrator.ourapp.pulltorefresh;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.administrator.ourapp.pulltorefresh.PullToRefreshBase.OnRefreshListener;
