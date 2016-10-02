@@ -18,6 +18,10 @@ import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
+import com.example.administrator.ourapp.question_and_answer.Mission_question;
+import com.example.administrator.ourapp.question_and_answer.question_and_answer;
+import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail;
+import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail_publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +31,15 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Administrator on 2016/8/18.
  */
 public class MesFrag extends Fragment implements IListener {
     private ListView listView;
-    private Message_Adapter     message_adapter;
+    private Message_Adapter message_adapter;
     private List<Message> message_list;
 
     private Vector<String> message_content = new Vector<String>();       //消息的内容
@@ -42,19 +48,19 @@ public class MesFrag extends Fragment implements IListener {
     private Vector<String> message_date = new Vector<String>();//消息发送的时间
     private Vector<String> message_ID = new Vector<String>();
 
-    private Handler handler = new Handler();
-    private Runnable runnable = new Runnable() {
-        public void run() {
-            this.update();
-            handler.postDelayed(this, 1000 * 2);// 间隔2秒
-        }
-        void update() {
-            //刷新msg的内容
-            Load_Message(BmobUser.getCurrentUser(MyUser.class).getObjectId());
-        }
-    };
+//    private Handler handler = new Handler();
+//    private Runnable runnable = new Runnable() {
+//        public void run() {
+//            this.update();
+//            handler.postDelayed(this, 1000 * 2);// 间隔2秒
+//        }
+//        void update() {
+//            //刷新msg的内容
+//            Load_Message(BmobUser.getCurrentUser(MyUser.class).getObjectId());
+//        }
+//    };
 
-    //TODO 添加了自动刷新但未调试
+    //TODO 添加了自动刷新[为不断地从服务器请求数据 若时间允许 改成通过Bmob的通知系统获取然后刷新]
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,6 +73,20 @@ public class MesFrag extends Fragment implements IListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                message_list.get(i).setBe_viewed(true);
+                message_list.get(i).update(message_list.get(i).getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","更新成功");
+                        }else{
+                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+
 
                 switch(message_type.get(i)){
 
@@ -86,12 +106,54 @@ public class MesFrag extends Fragment implements IListener {
                         intent2.putExtra("message_ID", message_ID.get(i));
                         startActivity(intent2);
                         break;
+                    case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
+
+                        BmobQuery<Mission_question> query7 = new BmobQuery<Mission_question>();
+                        query7.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
+
+                            @Override
+                            public void done(Mission_question object, BmobException e) {
+                                if(e==null){
+                                    Intent intent7 = new Intent(getActivity(), question_and_answer_detail_publisher.class);
+                                    intent7.putExtra("question_content", object.getContent());
+                                    intent7.putExtra("answer_content",object.getanswer().getContent());
+                                    intent7.putExtra("question_ID", object.getObjectId());
+                                    intent7.putExtra("question_date", object.getCreatedAt());
+                                    startActivity(intent7);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        break;
+                    case 8: //跳转到问答详情界面(提问者）（有新的提问）
+                        BmobQuery<Mission_question> query8 = new BmobQuery<Mission_question>();
+                        query8.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
+
+                            @Override
+                            public void done(Mission_question object, BmobException e) {
+                                if(e==null){
+                                    Intent intent8 = new Intent(getActivity(), question_and_answer_detail_publisher.class);
+                                    intent8.putExtra("question_content", object.getContent());
+                                    intent8.putExtra("answer_content",object.getanswer().getContent());
+                                    intent8.putExtra("question_ID", object.getObjectId());
+                                    intent8.putExtra("question_date", object.getCreatedAt());
+                                    startActivity(intent8);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        break;
+
                 }//switch 通过switch判断 type分别进入不同的消息页面
-               //TODO 通过switch判断 type分别进入不同的消息页面 先只做跳转好友申请详情页
+               //TODO 通过switch判断 type分别进入不同的消息页面 进入后be_viewed置为true 并修改服务器的数据
             }//onItemClick
         });
 
-        handler.postDelayed(runnable, 1000 * 3);
+//        handler.postDelayed(runnable, 1000 * 3);
         return rootview;
     }//onCreateView
 
@@ -111,15 +173,15 @@ public class MesFrag extends Fragment implements IListener {
                     if (object.size()!=0) {
                         for (Message message : object) {
                             message_date.add(message.getCreatedAt());
-                            Log.i("z","查询信息创建时间1");
+//                            Log.i("z","查询信息创建时间1");
                             message_content.add(message.getContent());
-                            Log.i("z","查询信息的内容2");
+//                            Log.i("z","查询信息的内容2");
                             message_sender_ID.add(message.getSender().getObjectId());
-                            Log.i("z","查询消息发送者的ID3");
+//                            Log.i("z","查询消息发送者的ID3");
                             message_type.add(message.getType());
-                            Log.i("z","查询发布者的ID4");
+//                            Log.i("z","查询发布者的ID4");
                             message_ID.add(message.getObjectId());
-                            Log.i("z","查询消息的ID5");
+                            Log.i("z","消息加载成功");
                         }//for
 
                         message_list = new ArrayList<Message>(object);

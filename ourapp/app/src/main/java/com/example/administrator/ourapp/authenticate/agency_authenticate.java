@@ -57,7 +57,6 @@ public class agency_authenticate extends Activity {
     }//onCreate
 
     private void init() {
-        // TODO Auto-generated method stub
 
         agency_pic1 = (ImageView) findViewById(R.id.agency_pic1);
         agency_pic2 = (ImageView) findViewById(R.id.agency_pic2);
@@ -86,7 +85,6 @@ public class agency_authenticate extends Activity {
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
             ImageView img = (ImageView) v;
 
             switch (img.getId()) {
@@ -107,7 +105,6 @@ public class agency_authenticate extends Activity {
         }//onClick
 
         private void setImage(int i) { //i代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照
-            // TODO Auto-generated method stub
             //使用intent调用系统提供的相册功能，使用startActivityForResult是为了获取用户选择的图片
             num = i; //供onActivityResult判断是发出ImageView的组件是哪个
             Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);

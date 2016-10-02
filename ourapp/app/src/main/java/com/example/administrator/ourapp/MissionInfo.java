@@ -112,7 +112,7 @@ public class MissionInfo extends AppCompatActivity {
                                                     SendMessage sm = new SendMessage();
                                                     sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
                                                             "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
-                                                                    + "刚刚报名了您发布的任务", 4, false);
+                                                                    + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId());
                                                     //4代表报名任务成功的消息
                                                 }
                                                 else

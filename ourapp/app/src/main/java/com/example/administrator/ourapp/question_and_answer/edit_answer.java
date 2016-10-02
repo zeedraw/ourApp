@@ -111,7 +111,7 @@ public class edit_answer extends Activity {
 
                                 SendMessage sm = new SendMessage();
                                 sm.send(BmobUser.getCurrentUser(MyUser.class), question.getUser(),
-                                        "您的提问有新回答啦", 8 , false);
+                                        "您的提问有新回答啦", 8 , false, question.getObjectId());
                                 //8代表提问有回答的消息
 
                                 builder.setMessage("答案编辑成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {

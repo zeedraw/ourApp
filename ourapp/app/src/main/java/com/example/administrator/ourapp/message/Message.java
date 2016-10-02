@@ -12,7 +12,11 @@ public class Message extends BmobObject {
     private String content; //消息的内容
     private MyUser sender;  //消息的发送者
     private MyUser receiver;    //消息的接收者
-    boolean be_viewed = false;  //消息是否已读
+    private boolean be_viewed = false;  //消息是否已读
+
+
+
+    private String remark;
     Integer type;   //消息的类型
 
     /*
@@ -51,7 +55,7 @@ public class Message extends BmobObject {
         this.receiver = receiver;
     }
 
-    public boolean isBe_viewed() {
+    public boolean getBe_viewed() {
         return be_viewed;
     }
 
@@ -65,5 +69,13 @@ public class Message extends BmobObject {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

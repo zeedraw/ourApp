@@ -42,7 +42,10 @@ public class friend_application extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.firend_application);
         initwidget();
+        set_message_be_viewed();
     }
+
+
 
     private void initwidget() {
 
@@ -81,6 +84,9 @@ public class friend_application extends Activity {
                     fre_username.setText(object.getSender().getUsername());
                     fre_introduction.setText(object.getSender().getIntroduction());
                     apply_information_widget.setText(object.getContent());
+
+
+
 
                     agree_to_add_friend.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -168,4 +174,9 @@ public class friend_application extends Activity {
         });
 
     }//initwidget
+
+    private void set_message_be_viewed() {
+
+
+    }//set_message_be_viewed
 }

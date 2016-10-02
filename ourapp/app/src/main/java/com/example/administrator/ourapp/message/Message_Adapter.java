@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
+import com.jauker.widget.BadgeView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +102,17 @@ public class Message_Adapter extends ArrayAdapter<Message> {
         viewHolder.message_date.setText(message.getCreatedAt().substring(5,15));
         viewHolder.message_type.setText(MessageType);
         viewHolder.message_image.setImageDrawable(MessageImage);
+
+        if(!message.getBe_viewed()){
+            BadgeView badgeView = new BadgeView(getContext());
+            badgeView.setTargetView(viewHolder.message_date);
+            badgeView.setBadgeMargin(0, 0, 0, 0); //左上右下
+            badgeView.setBadgeCount(1);
+        }
+
+
+
+
         return convertView;
     }
 

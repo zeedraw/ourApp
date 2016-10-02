@@ -25,7 +25,9 @@ import com.example.administrator.ourapp.message.MesFrag;
 import com.example.administrator.ourapp.user_information.MyAccount;
 import com.example.administrator.ourapp.user_information.other_information;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 
 
@@ -44,7 +46,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
         setContentView(R.layout.maininterface);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
+
+        // 初始化BmobSDK
+//        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(this);
+
         initWidget();
+
 
 
     }
@@ -58,7 +69,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tv_mine.setOnClickListener(this);
         tv_fre=(CheckedTextView)findViewById(R.id.fre);
         tv_fre.setOnClickListener(this);
-
 
         //设置activity的标题
         title=(TextView)findViewById(R.id.title);

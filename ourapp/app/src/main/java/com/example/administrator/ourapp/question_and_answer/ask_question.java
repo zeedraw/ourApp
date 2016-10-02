@@ -87,7 +87,7 @@ public class ask_question extends Activity {
 
                                         SendMessage sm = new SendMessage();
                                         sm.send(BmobUser.getCurrentUser(MyUser.class), mission.getPub_user(),
-                                                question.getContent(), 7, false); //7代表有人提问的消息
+                                                question.getContent(), 7, false, question.getObjectId()); //7代表有人提问的消息
 
 
                                         builder.setMessage("问题发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
