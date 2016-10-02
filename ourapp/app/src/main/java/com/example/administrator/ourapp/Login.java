@@ -117,16 +117,20 @@ public class Login extends AppCompatActivity {
                             Log.i("z","缓存用户成功");
                             BmobFile bf= BmobUser.getCurrentUser(MyUser.class).getUserimage();
                             File saveFile=new File(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
+                            Log.i("z",MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
                             bf.download(saveFile, new DownloadFileListener() {
                                 @Override
                                 public void done(String s, BmobException e) {
                                     if (e==null){
+                                        Log.i("z","下载用户头像成功");
                                     ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag"});
-                                    finish();}
+                                    finish();
+                                    }
                                     else
                                     {
-                                        Log.i("z","下载用户头像成功");
+                                        Log.i("z","下载用户头像失败"+e.getMessage());
                                     }
+
                                 }
 
                                 @Override
@@ -146,13 +150,7 @@ public class Login extends AppCompatActivity {
                             AlertDialog.Builder builder=new AlertDialog.Builder(Login.this)
                                     .setTitle("登录失败")
                                     .setMessage(e.getMessage())
-                                    .setPositiveButton("确定",new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
+                                    .setPositiveButton("确定",null);
                             builder.create().show();
 
                         }

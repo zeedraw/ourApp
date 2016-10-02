@@ -32,7 +32,7 @@ public class Frag_community extends MyMissionFrag_old {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, list);
+                mAdapter = new MissionAdapter(getContext(), R.layout.missionitem, list);
                 listView.setAdapter(mAdapter);
 
             }
@@ -59,7 +59,7 @@ public class Frag_community extends MyMissionFrag_old {
         query.addWhereEqualTo("state",new Integer(2));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name].userimage");
+        query.include("pub_user[name|orgDescription].userimage");
     }
 }
 

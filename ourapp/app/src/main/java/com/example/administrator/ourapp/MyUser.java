@@ -33,7 +33,8 @@ public class MyUser extends BmobUser {
     private BmobFile cardback;
     private BmobFile studentcard;
     private BmobFile halfpicture;
-
+    private String stuDescription; //学生认证描述
+    private String orgDescription;//机构认证描述
     //以下为机构认证所需资料
     private BmobFile agency_pic1;
     private BmobFile agency_pic2;
@@ -42,6 +43,22 @@ public class MyUser extends BmobUser {
     private String agency_name;
     private String agency_web;
     private String agency_contact_num;
+
+    public String getOrgDescription() {
+        return orgDescription;
+    }
+
+    public void setOrgDescription(String orgDescription) {
+        this.orgDescription = orgDescription;
+    }
+
+    public String getStuDescription() {
+        return stuDescription;
+    }
+
+    public void setStuDescription(String stuDescription) {
+        this.stuDescription = stuDescription;
+    }
 
     public String getTag() {
         return tag;

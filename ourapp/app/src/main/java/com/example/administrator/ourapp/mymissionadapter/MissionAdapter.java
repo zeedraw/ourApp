@@ -62,10 +62,11 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
             convertView=inflater.inflate(res,null);
             viewHolder=new ViewHolder();
             viewHolder.person_image=(ImageView)convertView.findViewById(R.id.person_image);
-            viewHolder.person_info=(TextView)convertView.findViewById(R.id.person_info);
             viewHolder.mission_title=(TextView)convertView.findViewById(R.id.mission_title);
+            viewHolder.organization=(TextView)convertView.findViewById(R.id.organization);
             viewHolder.mission_abs=(TextView)convertView.findViewById(R.id.mission_abs);
-            viewHolder.mission_publish_time=(TextView)convertView.findViewById(R.id.mission_publish_time);
+            viewHolder.mission_time=(TextView)convertView.findViewById(R.id.mission_time);
+            viewHolder.location_abs=(TextView)convertView.findViewById(R.id.location_abs);
             convertView.setTag(viewHolder);
         }
         else
@@ -116,20 +117,22 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
 //                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.personimg));
 //            }
         }
-        viewHolder.person_info.setText(mission.getPub_user().getName());
+        viewHolder.organization.setText(mission.getPub_user().getOrgDescription());
         viewHolder.mission_title.setText(mission.getName());
-        viewHolder.mission_abs.setText(mission.getDetail());
-        viewHolder.mission_publish_time.setText(mission.getPub_time());
+        viewHolder.mission_abs.setText(mission.getIntro());
+        viewHolder.mission_time.setText(mission.getStart_time()+"到"+mission.getEnd_time());
+        viewHolder.location_abs.setText(mission.getLocation_abs());
 
         return convertView;
     }
 
     class ViewHolder{
         ImageView person_image;
-        TextView person_info;
+        TextView organization;
         TextView mission_title;
         TextView mission_abs;
-        TextView mission_publish_time;
+        TextView mission_time;
+        TextView location_abs;
 
     }
     public Mission getMission(int p)

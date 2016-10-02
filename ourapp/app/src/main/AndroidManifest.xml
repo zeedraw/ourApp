@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.administrator.ourapp">
 
-    <meta-data
-        android:name="Bmob_APP_KEY"
-        android:value="Bmob平台的Application ID" />
+
+
 
     <!--允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,6 +21,8 @@
     <!--推送所需的权限-->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
 
 
     <application
@@ -79,7 +80,7 @@
             </intent-filter>
         </service>
 
-        <!-- 用于进程保活 -->
+         用于进程保活
         <service
             android:name="cn.bmob.push.lib.service.PushNotifyService"
             android:process=":bmobpush" >
@@ -96,14 +97,14 @@
             </intent-filter>
         </receiver>
 
-        <!-- 第四部中创建的消息接收器，在这里进行注册 -->
+         第四部中创建的消息接收器，在这里进行注册
         <receiver android:name=".MyPushMessageReceiver">
             <intent-filter >
                 <action android:name="cn.bmob.push.action.MESSAGE"/>
             </intent-filter>
         </receiver>
 
-        <!-- 接收心跳和唤醒的广播，要和PushService运行在同个进程 -->
+         接收心跳和唤醒的广播，要和PushService运行在同个进程
         <receiver
             android:name="cn.bmob.push.PushNotifyReceiver"
             android:process=":bmobpush" >
