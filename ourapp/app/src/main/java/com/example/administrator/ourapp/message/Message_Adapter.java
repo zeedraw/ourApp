@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
 import com.jauker.widget.BadgeView;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * Created by Longze on 2016/9/25.
  */
-public class Message_Adapter extends ArrayAdapter<Message> {
+public class Message_Adapter extends ArraySwipeAdapter<Message> {
     HashMap<String, Drawable> imgCache;     // 图片缓存
     AsyncImageLoader loader;                // 异步加载图片类
     // HashMap<Integer, TagInfo> tag_map;      // TagInfo缓存
@@ -38,7 +39,7 @@ public class Message_Adapter extends ArrayAdapter<Message> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        Message message = getItem(position); //数据项
+        Message message = (Message) getItem(position); //数据项
         final ListView listView = (ListView)parent;
         ViewHolder viewHolder = null;
         if (convertView == null)
@@ -114,6 +115,11 @@ public class Message_Adapter extends ArrayAdapter<Message> {
 
 
         return convertView;
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int i) {
+        return 0;
     }
 
     class ViewHolder{
