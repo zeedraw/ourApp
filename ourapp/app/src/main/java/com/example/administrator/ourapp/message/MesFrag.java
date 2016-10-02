@@ -41,7 +41,6 @@ public class MesFrag extends Fragment implements IListener {
     private ListView listView;
     private Message_Adapter message_adapter;
     private List<Message> message_list;
-
     private Vector<String> message_content = new Vector<String>();       //消息的内容
     private Vector<Integer> message_type = new Vector<Integer>();    //消息类型
     private Vector<String> message_sender_ID = new Vector<String>();//消息发送者的objectId
