@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         // 初始化BmobSDK
 //        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
         // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation().save();
+        BmobInstallation.getCurrentInstallation().save1();
         // 启动推送服务
         BmobPush.startWork(this);
 
