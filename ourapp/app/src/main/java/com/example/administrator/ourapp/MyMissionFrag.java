@@ -98,7 +98,7 @@ public class MyMissionFrag extends ProgressFragment {
                 {
                     setContentShown(true);
                     setContentEmpty(true);
-                    Log.i("z","查询数据失败");
+                    Log.i("z","查询数据失败"+e.getMessage()+","+e.getErrorCode());
                 }
             }
         });

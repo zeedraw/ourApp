@@ -18,12 +18,17 @@ import android.widget.CheckedTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
+import com.example.administrator.ourapp.friends.FreFrag;
 import com.example.administrator.ourapp.friends.search_user;
+import com.example.administrator.ourapp.message.MesFrag;
 import com.example.administrator.ourapp.user_information.MyAccount;
 import com.example.administrator.ourapp.user_information.other_information;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 
 
@@ -42,7 +47,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
         setContentView(R.layout.maininterface);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
+
+        // 初始化BmobSDK
+//        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(this);
+
         initWidget();
+
 
 
     }
@@ -56,7 +70,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tv_mine.setOnClickListener(this);
         tv_fre=(RelativeLayout) findViewById(R.id.fre);
         tv_fre.setOnClickListener(this);
-
 
         //设置activity的标题
         title=(TextView)findViewById(R.id.title);
@@ -289,7 +302,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         startActivity(intent);
                         break;
                     case 1: // 选择机构认证
-                        comp=new ComponentName(MainActivity.this,other_information.class);
+                        comp=new ComponentName(MainActivity.this,agency_authenticate.class);
                         intent=new Intent();
                         intent.setComponent(comp);
                         startActivity(intent);

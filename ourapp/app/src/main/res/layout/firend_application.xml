@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header">
+        <!--左侧返回 中间 好友申请-->
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/firend_item_height"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/widget_margin_large">
+
+        <ImageView
+            android:id="@+id/fre_userimage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/portrait"
+            android:layout_marginRight="@dimen/widget_margin_medium"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fre_username"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/user_name"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/fre_introduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:textSize="@dimen/text_size_small"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="@dimen/widget_margin_medium"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="@dimen/widget_margin_large"
+        android:layout_marginLeft="@dimen/widget_margin_large">
+
+        <TextView
+            android:id="@+id/apply_information"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/widget_margin_large">
+
+        <TextView
+            android:id="@+id/refuse_to_add_friend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/widget_margin_medium"
+            android:text="拒绝"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            android:background="@color/whitesmoke"/>
+
+        <TextView
+            android:id="@+id/agree_to_add_friend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/widget_margin_medium"
+            android:text="同意"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            android:background="@color/titlebar"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.message.SendMessage;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 
 import java.io.InputStream;
@@ -82,6 +83,7 @@ public class MissionInfo extends AppCompatActivity {
                 String[] items={"个人报名","团队报名"};
                 builder.setNegativeButton("取消",null);
                 builder.setItems(items, new DialogInterface.OnClickListener() {
+                    //TODO 添加判断是否已经报名功能 如果已经报名则提示不能重复报名
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i)
@@ -100,12 +102,18 @@ public class MissionInfo extends AppCompatActivity {
                                         BmobRelation relation=new BmobRelation();
                                         relation.add(user);
                                         mission.setCur_people(relation);
+
                                         mission.update(new UpdateListener() {
                                             @Override
                                             public void done(BmobException e) {
                                                 if (e==null)
                                                 {
                                                     mes.setMessage("报名成功");
+                                                    SendMessage sm = new SendMessage();
+                                                    sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
+                                                            "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
+                                                                    + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId());
+                                                    //4代表报名任务成功的消息
                                                 }
                                                 else
                                                 {
@@ -115,8 +123,12 @@ public class MissionInfo extends AppCompatActivity {
                                             }
                                         });
 
+
+
                                     }
                                 });
+
+
                                 mybuilder.create().show();
                                     break;
                             case 1://选择团体报名

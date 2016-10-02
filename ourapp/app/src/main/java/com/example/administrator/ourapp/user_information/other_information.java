@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.friends.send_friend_application;
+import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail_publisher;
 
 import java.util.List;
 
@@ -141,45 +143,32 @@ public class other_information extends Activity {
                 @Override
                 public void onClick(View view) {
 
-                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
-                    MyUser new_friend = new MyUser();
-                    new_friend.setObjectId(other_ID);
-                    BmobRelation relation = new BmobRelation();
-                    relation.add(new_friend);
-                    user.setFriends(relation);
-                    user.update(new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if(e==null){
-                                Log.i("bmob","多对多关联添加成功");
-                                AlertDialog.Builder builder=new AlertDialog.Builder(other_information.this);
-                                builder.setMessage("添加好友成功").setCancelable(false).
-                                        setPositiveButton("确定", null).create().show();
-                            }else{
-                                Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                            }
-                        }
+                    //TODO 点击添加改为跳转到好友申请界面
 
-                    });
-
-
-                    BmobRelation relation2 = new BmobRelation();
-                    relation2.add(user);
-                    new_friend.setFriends(relation2);
-                    new_friend.update(new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-                            if(e==null){
-                                Log.i("bmob","多对多关联添加成功");
+                    Intent intent = new Intent(other_information.this, send_friend_application.class);
+                    intent.putExtra("other_ID", other_ID);
+                    // 启动Intent
+                    startActivity(intent);
+//                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
+//                    MyUser new_friend = new MyUser();
+//                    new_friend.setObjectId(other_ID);
+//                    BmobRelation relation = new BmobRelation();
+//                    relation.add(new_friend);
+//                    user.setFriends(relation);
+//                    user.update(new UpdateListener() {
+//                        @Override
+//                        public void done(BmobException e) {
+//                            if(e==null){
+//                                Log.i("bmob","多对多关联添加成功");
 //                                AlertDialog.Builder builder=new AlertDialog.Builder(other_information.this);
 //                                builder.setMessage("添加好友成功").setCancelable(false).
 //                                        setPositiveButton("确定", null).create().show();
-                            }else{
-                                Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                            }
-                        }
-
-                    });
+//                            }else{
+//                                Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                            }
+//                        }
+//
+//                    });
 
                 }//onClick
             });

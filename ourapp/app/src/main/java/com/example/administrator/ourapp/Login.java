@@ -13,14 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.message.MyBmobInstallation;
+
 import java.io.File;
 import java.net.URI;
+import java.util.List;
 
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Administrator on 2016/9/3.
@@ -70,6 +77,43 @@ public class Login extends AppCompatActivity {
                     public void done(MyUser myUser, BmobException e) {
                         if(e==null)
                         {
+
+
+                            final BmobQuery<MyBmobInstallation> query = new BmobQuery<MyBmobInstallation>();
+                            query.addWhereEqualTo("installationId", BmobInstallation.getInstallationId(getBaseContext()));
+                            query.findObjects(new FindListener<MyBmobInstallation>() {
+
+                                @Override
+                                public void done(List<MyBmobInstallation> object, BmobException e) {
+
+                                    if (e == null) {
+                                        if (object.size() > 0) {
+                                            MyBmobInstallation mbi = object.get(0);
+                                            mbi.setUid(BmobUser.getCurrentUser().getObjectId());
+                                            mbi.update(new UpdateListener() {
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if(e == null){
+                                                        // TODO Auto-generated method stub
+                                                        Log.i("bmob", "设备信息更新成功");
+                                                    }
+
+                                                    else{
+                                                        // TODO Auto-generated method stub
+                                                        Log.i("bmob", "设备信息更新失败:"+e.getMessage()+","+e.getErrorCode());
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                        }//else
+                                    }//if e == null
+                                }
+                            });
+
+
+
+
+
                             Log.i("z","缓存用户成功");
                             BmobFile bf= BmobUser.getCurrentUser(MyUser.class).getUserimage();
                             File saveFile=new File(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");

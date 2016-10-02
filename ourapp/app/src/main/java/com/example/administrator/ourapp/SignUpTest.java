@@ -152,7 +152,6 @@
 //
 //    @Override
 //    public void onChanged(WheelView wheel, int oldValue, int newValue) {
-//        // TODO Auto-generated method stub
 //        if (wheel == mViewProvince) {
 //            updateCities();
 //            editor.putInt("province",mViewProvince.getCurrentItem());

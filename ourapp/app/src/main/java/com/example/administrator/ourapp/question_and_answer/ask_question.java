@@ -12,11 +12,11 @@ import android.widget.TextView;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.message.SendMessage;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Longze on 2016/9/19.
@@ -83,6 +83,13 @@ public class ask_question extends Activity {
                                     AlertDialog.Builder builder=new AlertDialog.Builder(ask_question.this);
                                     if(e==null){
                                         Log.i("bmob","上传数据成功");
+                                        //TODO 添加发布问题的通知[已完成 未调试]
+
+                                        SendMessage sm = new SendMessage();
+                                        sm.send(BmobUser.getCurrentUser(MyUser.class), mission.getPub_user(),
+                                                question.getContent(), 7, false, question.getObjectId()); //7代表有人提问的消息
+
+
                                         builder.setMessage("问题发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {

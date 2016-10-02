@@ -16,6 +16,7 @@ import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
+import com.example.administrator.ourapp.message.SendMessage;
 
 import java.util.List;
 
@@ -92,27 +93,41 @@ public class edit_answer extends Activity {
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                answer.setContent(EditAnswer.getText().toString());
 
-                answer.update(question.getanswer().getObjectId(), new UpdateListener() {
+                //若答案有变更才上传
+                //TODO 添加有回答的通知[需要判断原来的文本和现在的文本不一样才通知] [已完成  未调试]
+                if(!(EditAnswer.getText().toString().equals(question.getanswer().getContent()))){
+                    answer.setContent(EditAnswer.getText().toString());
 
-                    @Override
-                    public void done(BmobException e) {
-                        AlertDialog.Builder builder=new AlertDialog.Builder(edit_answer.this);
-                        if(e==null){
-                            Log.i("bmob","回答更新成功");
-                            builder.setMessage("答案编辑成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();
-                                }
-                            }).create().show();
-                        }else{
-                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-                            builder.setMessage("答案编辑失败").create().show();
+                    answer.update(question.getanswer().getObjectId(), new UpdateListener() {
+
+                        @Override
+                        public void done(BmobException e) {
+                            AlertDialog.Builder builder=new AlertDialog.Builder(edit_answer.this);
+                            if(e==null){
+                                Log.i("bmob","回答更新成功");
+
+
+
+                                SendMessage sm = new SendMessage();
+                                sm.send(BmobUser.getCurrentUser(MyUser.class), question.getUser(),
+                                        "您的提问有新回答啦", 8 , false, question.getObjectId());
+                                //8代表提问有回答的消息
+
+                                builder.setMessage("答案编辑成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finish();
+                                    }
+                                }).create().show();
+                            }else{
+                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                                builder.setMessage("答案编辑失败").create().show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
 

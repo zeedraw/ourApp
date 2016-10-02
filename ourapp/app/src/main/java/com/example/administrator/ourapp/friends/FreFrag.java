@@ -1,4 +1,4 @@
-package com.example.administrator.ourapp;
+package com.example.administrator.ourapp.friends;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.administrator.ourapp.IListener;
+import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.MyUser;
+import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.friends.friends_adapter;
 import com.example.administrator.ourapp.user_information.MyAccount;
 import com.example.administrator.ourapp.user_information.other_information;
@@ -28,7 +32,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * Created by Administrator on 2016/8/23.
  */
-public class FreFrag extends Fragment implements IListener{
+public class FreFrag extends Fragment implements IListener {
     private ListView listView;
     private friends_adapter fre_adapter;
     private List<MyUser> query_list;

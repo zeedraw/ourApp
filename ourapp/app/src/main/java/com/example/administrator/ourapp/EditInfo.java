@@ -61,6 +61,7 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
     protected static Uri tempUri;
     private ImageView personal_icon_iv;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
