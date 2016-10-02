@@ -31,18 +31,18 @@ public class SendMessage {
                 if(e==null){
                     Log.i("bomb","发送信息成功：" + objectId);
 
+                    BmobPushManager bmobPush = new BmobPushManager();
+                    BmobQuery<MyBmobInstallation> query = BmobInstallation.getQuery();
+                    query.addWhereEqualTo("uid", receiver.getObjectId());
+                    bmobPush.setQuery(query);
+                    bmobPush.pushMessage("新消息");
+
 //                    BmobPushManager bmobPush = new BmobPushManager();
 //                    BmobQuery<BmobInstallation> query = BmobInstallation.getQuery();
-//                    query.addWhereEqualTo("uid", receiver.getObjectId());
+//                    query.addWhereEqualTo("deviceType", "android");
 //                    bmobPush.setQuery(query);
-//                    bmobPush.pushMessage("新消息");
-
-                    BmobPushManager bmobPush = new BmobPushManager();
-                    BmobQuery<BmobInstallation> query = BmobInstallation.getQuery();
-                    query.addWhereEqualTo("deviceType", "android");
-                    bmobPush.setQuery(query);
-                    bmobPush.pushMessage("消息内容");
-                    Log.i("bomb","已发送推送");
+//                    bmobPush.pushMessage("消息内容");
+//                    Log.i("bomb","已发送推送");
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                 }//else
