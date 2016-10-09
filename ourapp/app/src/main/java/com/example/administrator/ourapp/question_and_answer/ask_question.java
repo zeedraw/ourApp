@@ -63,8 +63,6 @@ public class ask_question extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //// TODO: 2016/10/9 调用自动刷新
-             //   ListenerManager.getInstance().sendBroadCast(new String[]{"QA"});
                 answer.setContent("暂无回答");
                 answer.setMyUser(BmobUser.getCurrentUser(MyUser.class));
                 answer.setMission(question.getMission());
@@ -96,6 +94,7 @@ public class ask_question extends Activity {
                                         builder.setMessage("问题发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
+                                                ListenerManager.getInstance().sendBroadCast(new String[]{"QA"});
                                                 finish();
                                             }
                                         }).create().show();

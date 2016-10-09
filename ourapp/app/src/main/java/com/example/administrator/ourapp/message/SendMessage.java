@@ -42,7 +42,7 @@ public class SendMessage {
                         @Override
                         public void done(BmobException e) {
                             if(e==null){
-                                Log.i("bmob","更新成功");
+                                Log.i("bmob","消息未读更新成功");
                             }else{
                                 Log.i("bmob","消息未读更新失败："+e.getMessage()+","+e.getErrorCode());
                             }

@@ -187,6 +187,7 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                                                 message.setReceiver(object.get(i));
                                                 message.setType(5); //5为申请的任务开始信息
                                                 message.setBe_viewed(false);
+                                                message.setRemark(mission.getObjectId());
                                                 message.setContent("恭喜您，您参加的"+ mission.getName() +
                                                         "活动已经开始！");
                                                 messages.add(message);

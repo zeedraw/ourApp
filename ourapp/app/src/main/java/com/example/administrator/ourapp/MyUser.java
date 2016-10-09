@@ -1,11 +1,7 @@
 package com.example.administrator.ourapp;
 
-import android.provider.ContactsContract;
-
-import java.lang.reflect.Array;
-import java.util.List;
-
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
 
@@ -22,6 +18,8 @@ public class MyUser extends BmobUser {
     private BmobRelation friends;//好友
     private Boolean isIdentifiedStudent;//是否被认证 true被认证 false没被认证
     private Boolean isIdentifiedPublish;
+    private Integer ident_state_stu; //学生认证的状态 0为未认证 1为审核中 2为已通过
+    private Integer ident_state_pub; //机构的认证状态 0为未认证 1为审核中 2为已通过
     private String tag;//被认证为的类型 教育，活动，社区，景点
     private String name;
     private BmobFile userimage;
@@ -44,7 +42,15 @@ public class MyUser extends BmobUser {
     private String agency_web;
     private String agency_contact_num;
     private Boolean is_new_message = false;
+    private BmobDate message_refresh_time; //最后一次在本地加载新消息的时间
 
+    public BmobDate getMessage_refresh_time() {
+        return message_refresh_time;
+    }
+
+    public void setMessage_refresh_time(BmobDate message_refresh_time) {
+        this.message_refresh_time = message_refresh_time;
+    }
 
     public String getOrgDescription() {
         return orgDescription;
@@ -301,6 +307,23 @@ public class MyUser extends BmobUser {
 
     public void setIs_new_message(Boolean is_new_message) {
         this.is_new_message = is_new_message;
+    }
+
+
+    public Integer getIdent_state_pub() {
+        return ident_state_pub;
+    }
+
+    public void setIdent_state_pub(Integer ident_state_pub) {
+        this.ident_state_pub = ident_state_pub;
+    }
+
+    public Integer getIdent_state_stu() {
+        return ident_state_stu;
+    }
+
+    public void setIdent_state_stu(Integer ident_state_stu) {
+        this.ident_state_stu = ident_state_stu;
     }
 
 

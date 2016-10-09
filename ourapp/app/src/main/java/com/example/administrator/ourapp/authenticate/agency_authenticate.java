@@ -278,6 +278,7 @@ public class agency_authenticate extends Activity {
                     user.setAgency_pic2(new BmobFile("agency_pic2", null, urls.get(1)));
                     user.setAgency_pic3(new BmobFile("agency_pic3", null, urls.get(2)));
                     user.setAgency_pic4(new BmobFile("agency_pic4", null, urls.get(3)));
+                    user.setIdent_state_pub(1); //1代表审核中
                     user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {

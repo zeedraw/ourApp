@@ -16,10 +16,13 @@ import android.widget.ListView;
 import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MissionInfo;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
+import com.example.administrator.ourapp.my_task;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail;
@@ -48,7 +51,7 @@ public class MesFrag extends Fragment implements IListener {
     private Vector<String> message_sender_ID = new Vector<String>();//消息发送者的objectId
     private Vector<String> message_date = new Vector<String>();//消息发送的时间
     private Vector<String> message_ID = new Vector<String>();
-//    private Vector<>
+    private Vector<String> message_mark = new Vector<String>(); //消息的备注（记录任务或者问答的ID）
 
 //    private Handler handler = new Handler();
 //    private Runnable runnable = new Runnable() {
@@ -123,19 +126,66 @@ public class MesFrag extends Fragment implements IListener {
                         intent2.putExtra("message_ID", message_ID.get(i));
                         startActivity(intent2);
                         break;
-                    case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
 
+                    case 3: //跳转到任务详情界面（通过任务申请）
+                        BmobQuery<Mission> query3 = new BmobQuery<Mission>();
+                        query3.include("pub_user[userimage]");
+                        query3.getObject(message_mark.get(i), new QueryListener<Mission>() {
+
+                            @Override
+                            public void done(Mission object, BmobException e) {
+                                if(e==null){
+                                    Intent intent=new Intent(getContext(), MissionInfo.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("mission",object);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        break;
+
+                    case 4: //有用户报名 跳转到我的任务界面
+                        Intent intent4 = new Intent(getActivity(), my_task.class);
+//                        intent4.putExtra("message_ID", message_ID.get(i));
+                        startActivity(intent4);
+                        break;
+
+                    case 5: //跳转到任务详情界面（任务开始）
+                        BmobQuery<Mission> query5 = new BmobQuery<Mission>();
+                        query5.include("pub_user[userimage]");
+                        query5.getObject(message_mark.get(i), new QueryListener<Mission>() {
+
+                            @Override
+                            public void done(Mission object, BmobException e) {
+                                if(e==null){
+                                    Intent intent=new Intent(getContext(), MissionInfo.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("mission",object);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+                        });
+                        break;
+
+                    case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
                         BmobQuery<Mission_question> query7 = new BmobQuery<Mission_question>();
+                        query7.include("answer[content]");
                         query7.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
 
                             @Override
                             public void done(Mission_question object, BmobException e) {
                                 if(e==null){
-                                    Intent intent7 = new Intent(getActivity(), question_and_answer_detail_publisher.class);
-                                    intent7.putExtra("question_content", object.getContent());
-                                    intent7.putExtra("answer_content",object.getanswer().getContent());
-                                    intent7.putExtra("question_ID", object.getObjectId());
-                                    intent7.putExtra("question_date", object.getCreatedAt());
+                                    Intent intent7 = new Intent(getContext(), question_and_answer_detail_publisher.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("question",object);
+                                    intent7.putExtras(bundle);
                                     startActivity(intent7);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
@@ -146,16 +196,16 @@ public class MesFrag extends Fragment implements IListener {
                         break;
                     case 8: //跳转到问答详情界面(提问者）（有新的提问）
                         BmobQuery<Mission_question> query8 = new BmobQuery<Mission_question>();
+                        query8.include("answer[content]");
                         query8.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
 
                             @Override
                             public void done(Mission_question object, BmobException e) {
                                 if(e==null){
-                                    Intent intent8 = new Intent(getActivity(), question_and_answer_detail_publisher.class);
-                                    intent8.putExtra("question_content", object.getContent());
-                                    intent8.putExtra("answer_content",object.getanswer().getContent());
-                                    intent8.putExtra("question_ID", object.getObjectId());
-                                    intent8.putExtra("question_date", object.getCreatedAt());
+                                    Intent intent8 = new Intent(getContext(), question_and_answer_detail.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("question",object);
+                                    intent8.putExtras(bundle);
                                     startActivity(intent8);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
@@ -200,6 +250,7 @@ public class MesFrag extends Fragment implements IListener {
                             message_type.add(message.getType());
 //                            Log.i("z","查询发布者的ID4");
                             message_ID.add(message.getObjectId());
+                            message_mark.add(message.getRemark());
                             Log.i("z","消息加载成功");
                         }//for
 

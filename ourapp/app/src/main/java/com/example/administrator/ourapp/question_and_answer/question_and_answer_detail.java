@@ -19,6 +19,7 @@ public class question_and_answer_detail extends Activity {
     TextView question_content;
     TextView answer_content;
     TextView question_date;
+    private Mission_question question;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +38,11 @@ public class question_and_answer_detail extends Activity {
 
         return_bt.setText("返回");
         info_title.setText("问答");
-        question_content.setText(intent.getStringExtra("question_content"));
-        answer_content.setText(intent.getStringExtra("answer_content"));
-        question_date.setText(intent.getStringExtra("question_date"));
+        question = (Mission_question)intent.getSerializableExtra("question");
+
+        question_content.setText(question.getContent());
+        answer_content.setText(question.getanswer().getContent());
+        question_date.setText(question.getCreatedAt());
 
         return_bt.setOnClickListener(new View.OnClickListener() {
             @Override

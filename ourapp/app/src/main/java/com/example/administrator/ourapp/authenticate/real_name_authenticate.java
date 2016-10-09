@@ -282,6 +282,7 @@ public class real_name_authenticate extends AppCompatActivity {
                     user.setCardback(new BmobFile("CardBack", null, urls.get(1)));
                     user.setHalfpicture(new BmobFile("halfPic", null, urls.get(2)));
                     user.setStudentcard(new BmobFile("studentCard", null, urls.get(3)));
+                    user.setIdent_state_stu(1); //1代表审核中
                     user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {

@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
@@ -36,7 +38,10 @@ import com.example.administrator.ourapp.user_information.other_information;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
@@ -45,6 +50,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //    private FragmentManager mfragManager;
 //    private FragmentTransaction mTransaction;
     private TextView r_button;
+    private Integer Not_certified = 0;
+    private Integer Auditing = 1;
+    private Integer Certify_passed = 2;
+    private Integer state_stu;
+    private Integer state_pub;
 
 
     @Override
@@ -300,21 +310,66 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         builder.setItems(items, new DialogInterface.OnClickListener() {
 
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0: // 选择实名认证
-                        ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
-                        Intent intent=new Intent();
-                        intent.setComponent(comp);
-                        startActivity(intent);
-                        break;
-                    case 1: // 选择机构认证
-                        comp=new ComponentName(MainActivity.this,agency_authenticate.class);
-                        intent=new Intent();
-                        intent.setComponent(comp);
-                        startActivity(intent);
-                        break;
-                }//swtich
+            public void onClick(DialogInterface dialog, final int which) {
+
+                BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+                query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
+
+                    @Override
+                    public void done(MyUser object, BmobException e) {
+                        if(e==null){
+                            state_stu = object.getIdent_state_stu();
+                            state_pub = object.getIdent_state_pub();
+
+                            switch (which) {
+                                case 0: // 选择实名认证
+                                    //TODO 添加是否已经通过认证的判断
+                                    if(state_stu == 1){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("正在认证");
+                                        Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else if(state_stu == 2){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("认证已通过，不能重复认证");
+                                        Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
+
+                                    }else{
+                                        ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
+                                        Intent intent=new Intent();
+                                        intent.setComponent(comp);
+                                        startActivity(intent);
+                                    }
+                                    break;
+                                case 1: // 选择机构认证
+                                    if(state_pub == 1){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("正在认证");
+                                        Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if(state_pub == 2){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("认证已通过，不能重复认证");
+                                        Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
+
+                                    }else{
+                                        ComponentName comp=new ComponentName(MainActivity.this,agency_authenticate.class);
+                                        Intent intent=new Intent();
+                                        intent.setComponent(comp);
+                                        startActivity(intent);
+                                    }
+                                    break;
+                            }//swtich
+
+
+                        }else{
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+
+                });
+
             }//onClick
         });
         builder.create().show();
