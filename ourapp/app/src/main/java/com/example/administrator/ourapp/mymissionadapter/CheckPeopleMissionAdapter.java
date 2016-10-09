@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.mymissionadapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,11 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.CheckPeople;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.R;
@@ -27,69 +28,58 @@ import java.util.List;
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by Administrator on 2016/9/22.
+ * Created by Administrator on 2016/10/6.
  */
-public class PubMissionReviewAdapter extends ArrayAdapter<Mission> {
+
+public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
     HashMap<String, Drawable> imgCache;     // 图片缓存
     AsyncImageLoader loader;                // 异步加载图片类
     // HashMap<Integer, TagInfo> tag_map;      // TagInfo缓存
     private int res;                        //item布局
     private List<Mission> mlist;
-    public PubMissionReviewAdapter(Context context, int resource, List<Mission> objects) {
+
+    public CheckPeopleMissionAdapter(Context context, int resource, List<Mission> objects) {
         super(context, resource, objects);
-        imgCache=new HashMap<String,Drawable>();
-        loader=new AsyncImageLoader(getContext());
-        res=resource;
-        mlist=objects;
+        imgCache = new HashMap<String, Drawable>();
+        loader = new AsyncImageLoader(getContext());
+        res = resource;
+        mlist = objects;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder=null;
-        final Mission mission=getItem(position); //数据项
-        final ListView listView=(ListView)parent;
-        if (convertView==null)
-        {
-            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView=inflater.inflate(res,null);
-            viewHolder=new ViewHolder();
-            viewHolder.person_image=(ImageView)convertView.findViewById(R.id.person_image);
-            viewHolder.person_info=(TextView)convertView.findViewById(R.id.person_info);
-            viewHolder.mission_title=(TextView)convertView.findViewById(R.id.mission_title);
-            viewHolder.mission_abs=(TextView)convertView.findViewById(R.id.mission_abs);
-            viewHolder.mission_publish_time=(TextView)convertView.findViewById(R.id.mission_publish_time);
-            viewHolder.check=(Button)convertView.findViewById(R.id.checkpeople_bt);
-            viewHolder.check.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                }
-            });
-            viewHolder.choose=(Button)convertView.findViewById(R.id.checkpeople_bt);
-            viewHolder.choose.setOnClickListener(null);
-            viewHolder.start=(Button)convertView.findViewById(R.id.start_bt);
-            viewHolder.start.setOnClickListener(null);
+        final Mission mission = getItem(position); //数据项
+        final ListView listView = (ListView) parent;
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(res, null);
+            viewHolder = new ViewHolder();
+            viewHolder.person_image = (ImageView) convertView.findViewById(R.id.person_image);
+            viewHolder.mission_title = (TextView) convertView.findViewById(R.id.mission_title);
+            viewHolder.mission_abs = (TextView) convertView.findViewById(R.id.mission_abs);
+            viewHolder.organization = (TextView) convertView.findViewById(R.id.organization);
+            viewHolder.mission_time = (TextView) convertView.findViewById(R.id.mission_time);
+            viewHolder.location_abs = (TextView) convertView.findViewById(R.id.location_abs);
+            viewHolder.check = (TextView) convertView.findViewById(R.id.checkpeople_tv);
             convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        else
-        {
-            viewHolder=(ViewHolder) convertView.getTag();
-        }
-        if (mission.getPub_user().getObjectId().equals(BmobUser.getObjectByKey("objectId")))
-        {
-            Bitmap bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getContext())+"/user_image.png");
-            Drawable localdrawable=new BitmapDrawable(bitmap);
+        if (mission.getPub_user().getObjectId().equals(BmobUser.getObjectByKey("objectId"))) {
+            Bitmap bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getContext()) + "/user_image.png");
+            Drawable localdrawable = new BitmapDrawable(bitmap);
             viewHolder.person_image.setImageDrawable(localdrawable);
-            Log.i("z","本地任务用户头像加载成功");
-        }
-        else {
-//            if (mission.getPub_user().getUserimage() != null) {
+            Log.i("z", "本地任务用户头像加载成功");
+        } else {
+            if (mission.getPub_user().getUserimage() != null) {
                 String imgurl = mission.getPub_user().getUserimage().getUrl(); // 得到该项所代表的url地址
                 Drawable drawable = imgCache.get(imgurl);  // 先去缓存中找
 
                 TagInfo tag = new TagInfo();
                 tag.setPosition(position);  //保存当前位置
-                tag.setUrl(imgurl);         // 保存当前项所要加载的url
+                tag.setUrl(imgurl);
                 viewHolder.person_image.setTag(position);
 
                 if (null != drawable) {                         // 找到了直接设置为图像
@@ -114,30 +104,40 @@ public class PubMissionReviewAdapter extends ArrayAdapter<Mission> {
                         viewHolder.person_image.setImageDrawable(drawable);
                     }
                 }
-//            } else {
-//                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.personimg));
-//            }
+            } else {
+                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.defaulticon));
+            }
         }
-        viewHolder.person_info.setText(mission.getPub_user().getName());
+        viewHolder.organization.setText(mission.getPub_user().getOrgDescription());
         viewHolder.mission_title.setText(mission.getName());
-        viewHolder.mission_abs.setText(mission.getDetail());
-        viewHolder.mission_publish_time.setText(mission.getPub_time());
+        viewHolder.mission_abs.setText(mission.getIntro());
+        viewHolder.mission_time.setText(mission.getStart_time() + "到" + mission.getEnd_time());
+        viewHolder.location_abs.setText(mission.getLocation_abs());
+
+        viewHolder.check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CheckPeople.class);
+                intent.putExtra("missionId", mission.getObjectId());
+                getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }
 
-
-
-    class ViewHolder{
+    class ViewHolder {
         ImageView person_image;
-        TextView person_info;
+        TextView organization;
         TextView mission_title;
         TextView mission_abs;
-        TextView mission_publish_time;
-        Button check,choose,start;
+        TextView mission_time;
+        TextView location_abs;
+        TextView check;
 
 
     }
+
     public Mission getMission(int p)
     {
         return mlist.get(p);

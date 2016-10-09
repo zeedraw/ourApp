@@ -77,10 +77,10 @@ public class LocationPickerDialog implements OnWheelChangedListener {
         editor=preferences.edit();
         LayoutInflater inflater=LayoutInflater.from(mcontext);
         rootView=(LinearLayout)inflater.inflate(R.layout.locationwheel,null);
-        builder=new AlertDialog.Builder(mcontext);
-                    builder.setView(rootView).setCancelable(false).setPositiveButton("确定", mlistener)
-                   ;
 
+        builder=new AlertDialog.Builder(mcontext);
+        builder.setTitle("请选择省市区");
+        builder.setView(rootView).setCancelable(false).setPositiveButton("确定", mlistener).setNegativeButton("取消",null);
 
             setUpViews();
             setUpListener();
@@ -228,7 +228,7 @@ public class LocationPickerDialog implements OnWheelChangedListener {
         }
     }
 
-    public  String getBornDate()
+    public  String getLocation()
     {
         return mCurrentProviceName+"-"+mCurrentCityName +"-"+mCurrentDistrictName;
     }

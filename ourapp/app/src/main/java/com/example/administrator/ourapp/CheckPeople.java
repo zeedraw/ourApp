@@ -37,7 +37,11 @@ public class CheckPeople extends AppCompatActivity {
         Intent intent=getIntent();
         missionId=intent.getStringExtra("missionId");
         initWidget();
-        setListener();
+        String origin=intent.getStringExtra("origin");
+        if (origin!=null&&origin.equals("publisher"))
+        {
+            setListener();
+        }
         query();
     }
 
@@ -45,6 +49,7 @@ public class CheckPeople extends AppCompatActivity {
     {
         listView=(ListView)findViewById(R.id.checkpeople_lv);
         title=(TextView)findViewById(R.id.title);
+        title.setText("查看人员");
         rt_bt=(TextView)findViewById(R.id.lbt);
         rt_bt.setText("返回");
         rt_bt.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +88,7 @@ public class CheckPeople extends AppCompatActivity {
                 if (e==null)
                 {
                     userList=new ArrayList<MyUser>(list);
-                    userItemAdapter=new UserItemAdapter(CheckPeople.this,R.layout.friend_lv_item,userList);
+                    userItemAdapter=new UserItemAdapter(CheckPeople.this,R.layout.user_item,userList);
                     listView.setAdapter(userItemAdapter);
                 }
                 else

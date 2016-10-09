@@ -17,7 +17,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by Administrator on 2016/9/17.
  */
-public class Frg_task_reviewing extends MyMissionFrag_old {
+public class Frg_task_reviewing extends MyMissionFrag {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,7 +32,7 @@ public class Frg_task_reviewing extends MyMissionFrag_old {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, list);
+                mAdapter = new MissionAdapter(getContext(), R.layout.missionitem, list);
                 listView.setAdapter(mAdapter);
 
             }
@@ -60,6 +60,6 @@ public class Frg_task_reviewing extends MyMissionFrag_old {
         query.addWhereEqualTo("state",new Integer(1));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name].userimage");
+        query.include("pub_user[name|orgDescription].userimage");
     }
 }

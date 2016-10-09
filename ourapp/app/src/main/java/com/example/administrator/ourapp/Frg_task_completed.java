@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.administrator.ourapp.mymissionadapter.CheckPeopleMissionAdapter;
 import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
 
 import java.util.List;
@@ -17,8 +18,8 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by dell-pc on 2016/8/21.
  */
-public class Frg_task_completed extends MyMissionFrag_old {
-    private MissionAdapter mAdapter;
+public class Frg_task_completed extends MyMissionFrag {
+    private CheckPeopleMissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class Frg_task_completed extends MyMissionFrag_old {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new MissionAdapter(getContext(), R.layout.mission_abstract, list);
+                mAdapter = new CheckPeopleMissionAdapter(getContext(), R.layout.missionitem2, list);
                 listView.setAdapter(mAdapter);
 
             }
@@ -60,6 +61,6 @@ public class Frg_task_completed extends MyMissionFrag_old {
         query.addWhereEqualTo("state",new Integer(4));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name].userimage");
+        query.include("pub_user[name|orgDescription].userimage");
     }
 }

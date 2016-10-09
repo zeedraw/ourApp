@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp;
 
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,13 +9,19 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,10 +57,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         // 初始化BmobSDK
 //        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
-        // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation().save1();
-        // 启动推送服务
-        BmobPush.startWork(this);
+//        // 使用推送服务时的初始化操作
+//        BmobInstallation.getCurrentInstallation().save1();
+//        // 启动推送服务
+//        BmobPush.startWork(this);
 
         initWidget();
 
@@ -382,6 +389,32 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             filePath = context.getFilesDir().getPath();
         }
         return filePath;
+    }
+
+    /**
+     * 得到自定义的progressDialog
+     * @param context
+     * @return
+     */
+    public static Dialog createLoadingDialog(Context context) {
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.loadingdialog, null);// 得到加载view
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 加载布局
+        // main.xml中的ImageView
+        ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
+        // 加载动画
+        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
+                context, R.anim.loading_animation);
+        // 使用ImageView显示动画
+        spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+
+        Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
+
+        loadingDialog.setCancelable(false);// 不可以用“返回键”取消
+        loadingDialog.setContentView(layout);// 设置布局
+        return loadingDialog;
+
     }
 
 

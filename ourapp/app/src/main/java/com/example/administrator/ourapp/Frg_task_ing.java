@@ -17,7 +17,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by dell-pc on 2016/8/21.
  */
-public class Frg_task_ing extends MyMissionFrag_old {
+public class Frg_task_ing extends MyMissionFrag {
     private PubMissionIngAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +60,6 @@ public class Frg_task_ing extends MyMissionFrag_old {
         query.addWhereEqualTo("state",new Integer(3));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name].userimage");
+        query.include("pub_user[name|orgDescription].userimage");
     }
 }

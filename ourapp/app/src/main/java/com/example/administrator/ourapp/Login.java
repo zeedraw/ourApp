@@ -79,36 +79,36 @@ public class Login extends AppCompatActivity {
                         {
 
 
-                            final BmobQuery<MyBmobInstallation> query = new BmobQuery<MyBmobInstallation>();
-                            query.addWhereEqualTo("installationId", BmobInstallation.getInstallationId(getBaseContext()));
-                            query.findObjects(new FindListener<MyBmobInstallation>() {
-
-                                @Override
-                                public void done(List<MyBmobInstallation> object, BmobException e) {
-
-                                    if (e == null) {
-                                        if (object.size() > 0) {
-                                            MyBmobInstallation mbi = object.get(0);
-                                            mbi.setUid(BmobUser.getCurrentUser().getObjectId());
-                                            mbi.update(new UpdateListener() {
-                                                @Override
-                                                public void done(BmobException e) {
-                                                    if(e == null){
-                                                        // TODO Auto-generated method stub
-                                                        Log.i("bmob", "设备信息更新成功");
-                                                    }
-
-                                                    else{
-                                                        // TODO Auto-generated method stub
-                                                        Log.i("bmob", "设备信息更新失败:"+e.getMessage()+","+e.getErrorCode());
-                                                    }
-                                                }
-                                            });
-                                        } else {
-                                        }//else
-                                    }//if e == null
-                                }
-                            });
+//                            final BmobQuery<MyBmobInstallation> query = new BmobQuery<MyBmobInstallation>();
+//                            query.addWhereEqualTo("installationId", BmobInstallation.getInstallationId(getBaseContext()));
+//                            query.findObjects(new FindListener<MyBmobInstallation>() {
+//
+//                                @Override
+//                                public void done(List<MyBmobInstallation> object, BmobException e) {
+//
+//                                    if (e == null) {
+//                                        if (object.size() > 0) {
+//                                            MyBmobInstallation mbi = object.get(0);
+//                                            mbi.setUid(BmobUser.getCurrentUser().getObjectId());
+//                                            mbi.update(new UpdateListener() {
+//                                                @Override
+//                                                public void done(BmobException e) {
+//                                                    if(e == null){
+//                                                        // TODO Auto-generated method stub
+//                                                        Log.i("bmob", "设备信息更新成功");
+//                                                    }
+//
+//                                                    else{
+//                                                        // TODO Auto-generated method stub
+//                                                        Log.i("bmob", "设备信息更新失败:"+e.getMessage()+","+e.getErrorCode());
+//                                                    }
+//                                                }
+//                                            });
+//                                        } else {
+//                                        }//else
+//                                    }//if e == null
+//                                }
+//                            });
 
 
 

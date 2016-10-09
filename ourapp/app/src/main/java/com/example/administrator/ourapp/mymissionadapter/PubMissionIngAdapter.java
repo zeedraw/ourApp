@@ -62,32 +62,34 @@ public class PubMissionIngAdapter extends ArrayAdapter<Mission> {
             convertView=inflater.inflate(res,null);
             viewHolder=new ViewHolder();
             viewHolder.person_image=(ImageView)convertView.findViewById(R.id.person_image);
-            viewHolder.person_info=(TextView)convertView.findViewById(R.id.person_info);
             viewHolder.mission_title=(TextView)convertView.findViewById(R.id.mission_title);
             viewHolder.mission_abs=(TextView)convertView.findViewById(R.id.mission_abs);
-            viewHolder.mission_publish_time=(TextView)convertView.findViewById(R.id.mission_publish_time);
-            viewHolder.check=(Button)convertView.findViewById(R.id.ing_checkpeople_bt);
+            viewHolder.organization=(TextView)convertView.findViewById(R.id.organization);
+            viewHolder.mission_time=(TextView)convertView.findViewById(R.id.mission_time);
+            viewHolder.location_abs=(TextView)convertView.findViewById(R.id.location_abs);
+            viewHolder.check=(TextView) convertView.findViewById(R.id.checkpeople_tv);
+            viewHolder.finish=(TextView)convertView.findViewById(R.id.finish_tv);
             convertView.setTag(viewHolder);
         }
         else
-        {
-            viewHolder=(ViewHolder) convertView.getTag();
-        }
-        if (mission.getPub_user().getObjectId().equals(BmobUser.getObjectByKey("objectId")))
-        {
-            Bitmap bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getContext())+"/user_image.png");
-            Drawable localdrawable=new BitmapDrawable(bitmap);
-            viewHolder.person_image.setImageDrawable(localdrawable);
-            Log.i("z","本地任务用户头像加载成功");
-        }
-        else {
-            if (mission.getPub_user().getUserimage() != null) {
-                String imgurl = mission.getPub_user().getUserimage().getUrl(); // 得到该项所代表的url地址
-                Drawable drawable = imgCache.get(imgurl);  // 先去缓存中找
+                {
+                    viewHolder=(ViewHolder) convertView.getTag();
+                }
+                if (mission.getPub_user().getObjectId().equals(BmobUser.getObjectByKey("objectId")))
+                {
+                    Bitmap bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getContext())+"/user_image.png");
+                    Drawable localdrawable=new BitmapDrawable(bitmap);
+                    viewHolder.person_image.setImageDrawable(localdrawable);
+                    Log.i("z","本地任务用户头像加载成功");
+                }
+                else {
+                    if (mission.getPub_user().getUserimage() != null) {
+                        String imgurl = mission.getPub_user().getUserimage().getUrl(); // 得到该项所代表的url地址
+                        Drawable drawable = imgCache.get(imgurl);  // 先去缓存中找
 
-                TagInfo tag = new TagInfo();
-                tag.setPosition(position);  //保存当前位置
-                tag.setUrl(imgurl);         // 保存当前项所要加载的url
+                        TagInfo tag = new TagInfo();
+                        tag.setPosition(position);  //保存当前位置
+                        tag.setUrl(imgurl);         // 保存当前项所要加载的url
                 viewHolder.person_image.setTag(position);
 
                 if (null != drawable) {                         // 找到了直接设置为图像
@@ -113,20 +115,51 @@ public class PubMissionIngAdapter extends ArrayAdapter<Mission> {
                     }
                 }
             } else {
-                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.personimg));
+                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.defaulticon));
             }
         }
-        viewHolder.person_info.setText(mission.getPub_user().getName());
+        viewHolder.organization.setText(mission.getPub_user().getOrgDescription());
         viewHolder.mission_title.setText(mission.getName());
-        viewHolder.mission_abs.setText(mission.getDetail());
-        viewHolder.mission_publish_time.setText(mission.getPub_time());
+        viewHolder.mission_abs.setText(mission.getIntro());
+        viewHolder.mission_time.setText(mission.getStart_time()+"到"+mission.getEnd_time());
+        viewHolder.location_abs.setText(mission.getLocation_abs());
 
         viewHolder.check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(), CheckPeople.class);
                 intent.putExtra("missionId",mission.getObjectId());
+                intent.putExtra("origin","publisher");
                 getContext().startActivity(intent);
+            }
+        });
+
+        viewHolder.finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setMessage("确认完成当前任务？");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Mission missionPointer=new Mission();
+                        missionPointer.setObjectId(mission.getObjectId());
+                        missionPointer.setState(new Integer(4));
+                        missionPointer.update(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e==null)
+                                {
+                                    Log.i("z","完成任务");
+                                    mlist.remove(mission);
+                                    PubMissionIngAdapter.this.notifyDataSetChanged();
+                                }
+
+                            }
+                        });
+                    }
+                });
+                builder.create().show();
             }
         });
 
@@ -136,11 +169,14 @@ public class PubMissionIngAdapter extends ArrayAdapter<Mission> {
 
     class ViewHolder{
         ImageView person_image;
-        TextView person_info;
+        TextView organization;
         TextView mission_title;
         TextView mission_abs;
-        TextView mission_publish_time;
-        Button check;
+        TextView mission_time;
+        TextView location_abs;
+        TextView check,finish;
+
+
 
     }
 }

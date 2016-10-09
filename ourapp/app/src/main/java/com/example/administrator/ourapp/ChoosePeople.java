@@ -48,6 +48,7 @@ public class ChoosePeople extends AppCompatActivity {
     private  int state=NORMAL;
     private RelativeLayout edit_bar;
     private Button add;
+    private int chooseNum=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,11 +195,15 @@ public class ChoosePeople extends AppCompatActivity {
                     if (checkBox.isChecked())
                     {
                         checkBox.setChecked(false);
+                        chooseNum--;
+                        setAddEnable();
                         addList.remove(userList.get(i));
                     }
                     else
                     {
                         checkBox.setChecked(true);
+                        chooseNum++;
+                        setAddEnable();
                         addList.add(userList.get(i));
                     }
                 }
@@ -219,7 +224,7 @@ public class ChoosePeople extends AppCompatActivity {
                 if (e==null)
                 {
                     userList=new ArrayList<MyUser>(list);
-                    userItemAdapter=new UserItemAdapter(ChoosePeople.this,R.layout.friend_lv_item,userList);
+                    userItemAdapter=new UserItemAdapter(ChoosePeople.this,R.layout.user_item,userList);
                     listView.setAdapter(userItemAdapter);
                     initEditButton();
                 }
@@ -244,6 +249,7 @@ public class ChoosePeople extends AppCompatActivity {
                     addList.clear();
                     state=EDIT;
                     edit_bar.setVisibility(View.VISIBLE);
+                    add.setEnabled(false);
                     userItemAdapter.setCheckBoxShown(true);
                     userItemAdapter.notifyDataSetChanged();
 
@@ -260,5 +266,17 @@ public class ChoosePeople extends AppCompatActivity {
             }
         };
         edit_bt.setOnClickListener(edit);
+    }
+
+    private void setAddEnable()
+    {
+        if (chooseNum>0)
+        {
+            add.setEnabled(true);
+        }
+        else
+        {
+            add.setEnabled(false);
+        }
     }
 }

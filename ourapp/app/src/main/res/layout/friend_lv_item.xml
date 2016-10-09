@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants">
-    所有子组件失去焦点
 
     <LinearLayout
         android:layout_width="match_parent"
