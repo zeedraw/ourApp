@@ -70,7 +70,7 @@ public class MyMissionFrag extends ProgressFragment {
 //        query.order("-createdAt");
 //        query.include(include);
 //        query.setLimit(limit);
-        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.findObjects(new FindListener<Mission>() {
             @Override
             public void done(List<Mission> list, BmobException e) {

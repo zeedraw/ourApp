@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBJ">
+    <include layout="@layout/header"></include>
+    <EditText
+        android:id="@+id/edit_intro"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorbj"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="start"
+        android:hint="请编辑信息..."
+        android:textColorHint="@color/grey"
+        android:maxLength="180"/>
+
+
+</LinearLayout>

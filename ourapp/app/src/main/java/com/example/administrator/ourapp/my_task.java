@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,10 @@ public class my_task extends FragmentActivity implements View.OnClickListener {
                 {
                     Intent intent=new Intent(my_task.this,MissionPub.class);
                     startActivity(intent);
+                }
+                else
+                {
+
                 }
             }
         });

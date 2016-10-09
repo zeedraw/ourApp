@@ -14,9 +14,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +23,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,7 +31,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -169,7 +165,7 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
     //locationpicker的点击事件
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
-        location_tv.setText(locationPickerDialog.getBornDate());
+        location_tv.setText(locationPickerDialog.getLocation());
     }
 
     /**
@@ -217,9 +213,9 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
                     startPhotoZoom(data.getData()); // 开始对图片进行裁剪处理
                     break;
                 case CROP_SMALL_PICTURE:
-                    if (data != null) {
-                        setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
-                    }
+                if (data != null) {
+                    setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
+                }
                     break;
             }
         }

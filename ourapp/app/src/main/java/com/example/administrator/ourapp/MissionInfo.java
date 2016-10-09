@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.ourapp.message.SendMessage;
@@ -24,6 +26,7 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
@@ -34,15 +37,16 @@ public class MissionInfo extends AppCompatActivity {
 
     private TextView return_bt,commit_bt;//标题上的左右按钮
     private TextView info_title;//标题
-    private TextView QA;    //问答
+    private RelativeLayout QA;    //问答
     private ImageView userimage;
     private TextView username;
+    private TextView orgDescription;
     private Mission mMission;
-    private TextView mName,mLocation,mTime,mNeedPeople,mPubTime,mDetails;
+    private TextView mName,mLocation,mTime,mLocDtails,mDetails,mState;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mission_info);
+        setContentView(R.layout.task);
         Intent intent=getIntent();
         mMission=(Mission)intent.getSerializableExtra("mission");
         initWidget();
@@ -52,7 +56,7 @@ public class MissionInfo extends AppCompatActivity {
 
         return_bt=(TextView)findViewById(R.id.lbt);
         commit_bt=(TextView)findViewById(R.id.rbt);
-        QA = (TextView) findViewById(R.id.question_and_answer);
+        QA = (RelativeLayout) findViewById(R.id.question_and_answer);
         //在textview左侧添加drawable
 //        return_bt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_keyboard_arrow_left_black_24dp, 0, 0, 0);
         return_bt.setText("返回");
@@ -78,67 +82,44 @@ public class MissionInfo extends AppCompatActivity {
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 AlertDialog.Builder builder=new AlertDialog.Builder(MissionInfo.this);
-                builder.setTitle("请选择");
-                String[] items={"个人报名","团队报名"};
-                builder.setNegativeButton("取消",null);
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    //TODO 添加判断是否已经报名功能 如果已经报名则提示不能重复报名
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i)
-                        {
-                            case 0://选择个人报名
-                               AlertDialog.Builder mybuilder=new AlertDialog.Builder(MissionInfo.this);
+
+                AlertDialog.Builder mybuilder=new AlertDialog.Builder(MissionInfo.this);
                                 mybuilder.setMessage("确定以当前用户报名");
                                 mybuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     AlertDialog.Builder mes=new AlertDialog.Builder(MissionInfo.this);
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        MyUser user=new MyUser();
+                                        final MyUser user = new MyUser();
                                         user.setObjectId((String) BmobUser.getObjectByKey("objectId"));
-                                        Mission mission=new Mission();
+                                        final Mission mission = new Mission();
                                         mission.setObjectId(mMission.getObjectId());
-                                        BmobRelation relation=new BmobRelation();
+                                        BmobRelation relation = new BmobRelation();
                                         relation.add(user);
                                         mission.setCur_people(relation);
 
                                         mission.update(new UpdateListener() {
                                             @Override
                                             public void done(BmobException e) {
-                                                if (e==null)
-                                                {
+                                                if (e == null) {
                                                     mes.setMessage("报名成功");
                                                     SendMessage sm = new SendMessage();
                                                     sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
                                                             "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
                                                                     + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId());
                                                     //4代表报名任务成功的消息
-                                                }
-                                                else
-                                                {
-                                                    mes.setMessage("报名失败"+e.getMessage());
+
+                                                } else {
+                                                    mes.setMessage("报名失败" + e.getMessage());
                                                 }
                                                 mes.create().show();
                                             }
                                         });
 
-
-
                                     }
-                                });
+                                    });
+                            mybuilder.setNegativeButton("取消",null);
 
-
-                                mybuilder.create().show();
-                                    break;
-                            case 1://选择团体报名
-                                break;
-                        }
-                    }
-                });
-                builder.create().show();
-
-
+                mybuilder.create().show();
             }
         });
 
@@ -153,23 +134,41 @@ public class MissionInfo extends AppCompatActivity {
             }
         });
 
-        userimage=(ImageView)findViewById(R.id.fre_userimage);
+        userimage=(ImageView)findViewById(R.id.person_image);
         new LoadImage().execute(mMission.getPub_user().getUserimage().getUrl());
 
-        username=(TextView)findViewById(R.id.fre_username);
+        username=(TextView)findViewById(R.id.publisher_name);
         username.setText(mMission.getPub_user().getName());
 
-        mName=(TextView)findViewById(R.id.apply_mission_name);
+        orgDescription=(TextView)findViewById(R.id.organization);
+        orgDescription.setText(mMission.getPub_user().getOrgDescription());
+
+        mName=(TextView)findViewById(R.id.mission_title);
         mName.setText(mMission.getName());
-        mLocation=(TextView)findViewById(R.id.apply_mission_location);
-        mLocation.setText(mMission.getLocation());
-        mTime=(TextView)findViewById(R.id.apply_mission_time);
+        mLocation=(TextView)findViewById(R.id.mission_location);
+        mLocation.setText(mMission.getLocation_abs());
+
+        mState=(TextView)findViewById(R.id.mission_state);
+        switch (mMission.getState())
+        {
+            case 2:
+                mState.setText("申请中");
+                break;
+            case 3:
+                mState.setText("进行中");
+                break;
+            case 4:
+                mState.setText("已结束");
+                break;
+        }
+
+        mTime=(TextView)findViewById(R.id.mission_time);
         mTime.setText(mMission.getStart_time()+"至"+mMission.getEnd_time());
-        mNeedPeople=(TextView)findViewById(R.id.apply_mission_needpeople);
-        mNeedPeople.setText(mMission.getNeed_people().toString());
-        mPubTime=(TextView)findViewById(R.id.apply_mission_pubtime);
-        mPubTime.setText(mMission.getPub_time());
-        mDetails=(TextView)findViewById(R.id.apply_mission_details);
+
+        mLocDtails=(TextView)findViewById(R.id.detail_location);
+        mLocDtails.setText(mMission.getLocation());
+
+        mDetails=(TextView)findViewById(R.id.detail_mission);
         mDetails.setText(mMission.getDetail());
 
 

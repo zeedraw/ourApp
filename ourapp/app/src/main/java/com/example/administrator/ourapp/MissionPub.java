@@ -1,7 +1,9 @@
 package com.example.administrator.ourapp;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +13,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.user_information.MyAccount;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,18 +22,26 @@ import java.util.Date;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import rx.internal.operators.OnSubscribeLift;
 
 /**
  * Created by Administrator on 2016/9/17.
  */
-public class MissionPub extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    private TextView tag,start_time,end_time,rt,save,title;
-    private EditText name,location,needppeople,details;
+public class MissionPub extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
+    private TextView tag,start_time,end_time,rt,save,title,location,detail_location,detail_mission;
+    private EditText name,intro;
     private DatePickerDialog start_dpl,end_dpl;
+    private LocationPickerDialog locationPickerDialog;//选择地点
+    private Calendar calendar=Calendar.getInstance();
+
+    private final static int FOR_DETAIL_LOCATION=0;
+    private final static int GET_DETAIL_LOCATION=1;
+    private final static int FOR_DETAIL=2;
+    private final static int GET_DETAIL=3;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mission_publish);
+        setContentView(R.layout.missionpub);
         initWidget();
     }
 
@@ -40,33 +52,15 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
         tag.setText((String)BmobUser.getObjectByKey("tag"));
 
         name=(EditText)findViewById(R.id.mission_pub_name_et);
+        intro=(EditText)findViewById(R.id.mission_pub_intro_et);
+        location=(TextView)findViewById(R.id.location_tv);
+        detail_location=(TextView)findViewById(R.id.detail_location_tv);
 
-        location=(EditText)findViewById(R.id.mission_pub_location_et);
+        start_time=(TextView)findViewById(R.id.start_tv);
+        end_time=(TextView)findViewById(R.id.end_tv);
 
-        needppeople=(EditText)findViewById(R.id.mission_pub_needpeople_et);
 
-        final Calendar calendar=Calendar.getInstance();
-        start_time=(TextView)findViewById(R.id.mission_pub_start_et);
-        start_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                start_dpl=new DatePickerDialog(MissionPub.this,MissionPub.this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DATE));
-                start_dpl.setTitle("请设置开始时间");
-                start_dpl.show();
-            }
-        });
-
-        end_time=(TextView)findViewById(R.id.mission_pub_end_et);
-        end_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                end_dpl=new DatePickerDialog(MissionPub.this,MissionPub.this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DATE));
-                end_dpl.setTitle("请设置结束时间");
-                end_dpl.show();
-            }
-        });
-
-        details=(EditText)findViewById(R.id.mission_pub_details_et);
+        detail_mission=(TextView)findViewById(R.id.detail);
 
         rt=(TextView)findViewById(R.id.lbt);
         rt.setText("返回");
@@ -98,6 +92,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
         {
            AlertDialog.Builder builder=new AlertDialog.Builder(this);
             builder.setMessage("信息未填写完整");
+            builder.create().show();
             return false;
         }
         else
@@ -108,19 +103,22 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
 
     private void publish()
     {
-        if (isEmpty(name)&&isEmpty(location)&&isEmpty(needppeople)&&isEmpty(start_time)&&isEmpty(end_time)&&isEmpty(details))
+        if (isEmpty(name)&&isEmpty(intro)&&isEmpty(location)&&isEmpty(detail_location)&&isEmpty(start_time)&&isEmpty(end_time)&&isEmpty(detail_mission))
         {
+            final Dialog dialog=MainActivity.createLoadingDialog(MissionPub.this);
+            dialog.show();
             Mission mission=new Mission();
             mission.setName(name.getText().toString().trim());
-            mission.setNeed_people(Integer.valueOf(needppeople.getText().toString()));
-            mission.setDetail(details.getText().toString().trim());
-            mission.setLocation(location.getText().toString().trim());
+            mission.setIntro(intro.getText().toString().trim());
+            mission.setLocation_abs(location.getText().toString().trim());
             mission.setPub_user(BmobUser.getCurrentUser(MyUser.class));
+            mission.setLocation(detail_location.getText().toString().trim());
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             mission.setPub_time(df.format(new Date()));
             mission.setStart_time(start_time.getText().toString().trim());
             mission.setEnd_time(end_time.getText().toString().trim());
             mission.setState(new Integer(1));
+            mission.setDetail(detail_mission.getText().toString().trim());
             mission.setTag(tag.getText().toString().trim());
 
             mission.save(new SaveListener<String>() {
@@ -129,6 +127,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
                     AlertDialog.Builder builder=new AlertDialog.Builder(MissionPub.this);
                     if (e==null)
                     {
+                        dialog.dismiss();
                         builder.setMessage("发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -193,5 +192,58 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
             }
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==FOR_DETAIL_LOCATION&&resultCode==GET_DETAIL_LOCATION)
+        {
+            String info=data.getStringExtra("info");
+            detail_location.setText(info);
+        }
+        else if (requestCode==FOR_DETAIL&&resultCode==GET_DETAIL)
+        {
+            String info=data.getStringExtra("info");
+            detail_mission.setText(info);
+        }
+    }
+
+    public void locationClick(View view)
+    {
+        locationPickerDialog=new LocationPickerDialog(this,this);
+        locationPickerDialog.show();
+    }
+    public void onClick(DialogInterface dialogInterface, int i) {
+        location.setText(locationPickerDialog.getLocation());
+    }
+
+    public void detailLocationClick(View view)
+    {
+        Intent intent=new Intent(this, EditIntro.class);
+        intent.putExtra("from","for_detail_location");
+        intent.putExtra("mes",detail_location.getText().toString().trim());
+        startActivityForResult(intent,FOR_DETAIL_LOCATION);
+    }
+    public void startTimeClick(View view)
+    {
+        start_dpl=new DatePickerDialog(MissionPub.this,MissionPub.this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DATE));
+        start_dpl.setTitle("请设置开始时间");
+        start_dpl.show();
+    }
+
+    public void endTimeClick(View view)
+    {
+        end_dpl=new DatePickerDialog(MissionPub.this,MissionPub.this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DATE));
+        end_dpl.setTitle("请设置结束时间");
+        end_dpl.show();
+    }
+
+    public void detailClick(View view)
+    {
+        Intent intent=new Intent(this, EditIntro.class);
+        intent.putExtra("from","for_detail");
+        intent.putExtra("mes",detail_mission.getText().toString().trim());
+        startActivityForResult(intent,FOR_DETAIL);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp;
 
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,13 +9,19 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,8 +57,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         // 初始化BmobSDK
 //        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
-        // 使用推送服务时的初始化操作
-//        BmobInstallation.getCurrentInstallation().save();
+//        // 使用推送服务时的初始化操作
+//        BmobInstallation.getCurrentInstallation().save1();
 //        // 启动推送服务
 //        BmobPush.startWork(this);
 

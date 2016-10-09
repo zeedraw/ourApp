@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.example.administrator.ourapp.RefreshLayout
         android:id="@+id/mission_refreshlayout"
         android:layout_width="match_parent"
@@ -11,7 +12,9 @@
         <ListView
             android:id="@+id/mission_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"
+            android:divider="@color/divider"
+            android:dividerHeight="9dp"/>
     </com.example.administrator.ourapp.RefreshLayout>
 
 </LinearLayout>

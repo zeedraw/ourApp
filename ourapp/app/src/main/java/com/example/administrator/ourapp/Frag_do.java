@@ -24,9 +24,9 @@ public class Frag_do extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragments = new ArrayList<Fragment>();
-        fragments.add(new Fragment1());
-        fragments.add(new Fragment1());
-        fragments.add(new Fragment1());
+        fragments.add(new DoApplyingFrag());
+        fragments.add(new DoIngFrag());
+        fragments.add(new DoComFrag());
     }
 
     @Nullable

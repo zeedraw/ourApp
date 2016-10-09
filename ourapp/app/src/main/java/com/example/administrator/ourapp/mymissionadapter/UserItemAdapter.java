@@ -49,8 +49,9 @@ public class UserItemAdapter extends ArrayAdapter<MyUser> {
             LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView=inflater.inflate(res,null);
             viewHolder=new ViewHolder();
-            viewHolder.user_image=(ImageView)convertView.findViewById(R.id.fre_userimage);
-            viewHolder.user_name=(TextView)convertView.findViewById(R.id.fre_username);
+            viewHolder.user_image=(ImageView)convertView.findViewById(R.id.user_image);
+            viewHolder.user_name=(TextView)convertView.findViewById(R.id.user_name);
+            viewHolder.studentDescription=(TextView)convertView.findViewById(R.id.student_des);
             viewHolder.choose_cb=(CheckBox)convertView.findViewById(R.id.choose_cb);
             convertView.setTag(viewHolder);
         }
@@ -90,6 +91,7 @@ public class UserItemAdapter extends ArrayAdapter<MyUser> {
             }
         }
         viewHolder.user_name.setText(user.getName());
+        viewHolder.studentDescription.setText(user.getStuDescription());
         ChangeCheckBox(flag);
         return convertView;
     }
@@ -97,6 +99,7 @@ public class UserItemAdapter extends ArrayAdapter<MyUser> {
     class ViewHolder{
         ImageView user_image;
         TextView user_name;
+        TextView studentDescription;
         CheckBox choose_cb;
 
     }

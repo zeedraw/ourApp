@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" 
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:background="@color/colorbj">
+        android:background="@color/colorbj"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
 
         <ImageView
             android:id="@+id/person_image"
@@ -15,7 +18,7 @@
             android:src="@drawable/defaulticon"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
         <ImageView
@@ -26,6 +29,7 @@
             android:id="@+id/imageView10"
             android:layout_alignLeft="@+id/mission_title"
             android:layout_alignStart="@+id/mission_title"
+            android:layout_marginTop="5dp"
 />
         <TextView
             android:id="@+id/organization"
@@ -34,24 +38,11 @@
             android:text="XX机构"
             android:textSize="@dimen/text_size_micro"
             android:textColor="#999999"
-            android:layout_alignTop="@+id/imageView10"
-            android:layout_toRightOf="@+id/imageView10"
-            android:layout_toEndOf="@+id/imageView10"
+            android:layout_below="@+id/mission_title"
+            android:layout_toRightOf="@id/imageView10"
             android:layout_marginLeft="2dp"
-            android:layout_marginTop="1dp"/>
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="20dp"
-            android:text="活动名称"
-            android:textSize="@dimen/text_size_large"
-            android:textColor="#333333"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp"
-            android:layout_toRightOf="@+id/person_image"
-            android:layout_toEndOf="@+id/person_image"
-            android:ellipsize="end"
-            android:id="@+id/mission_title" />
+            android:layout_marginTop="5dp"/>
+
         <TextView
             android:id="@+id/mission_abs"
             android:layout_width="match_parent"
@@ -66,11 +57,12 @@
             android:layout_marginRight="15dp"/>
         <View
             android:id="@+id/vl1"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#e5e5e5"
+            android:background="@color/gray"
             android:layout_below="@+id/mission_abs"
-            android:layout_alignLeft="@+id/mission_abs"/>
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"/>
         <RelativeLayout
             android:id="@+id/rl1"
             android:layout_width="165dp"
@@ -120,6 +112,17 @@
                 android:layout_toRightOf="@+id/imageView3"
                 android:layout_toEndOf="@+id/imageView3" />
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="20dp"
+            android:text="活动名称"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="#333333"
+            android:id="@+id/mission_title"
+            android:layout_toRightOf="@id/person_image"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

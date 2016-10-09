@@ -72,13 +72,14 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
             convertView=inflater.inflate(res,null);
             viewHolder=new ViewHolder();
             viewHolder.person_image=(ImageView)convertView.findViewById(R.id.person_image);
-            viewHolder.person_info=(TextView)convertView.findViewById(R.id.person_info);
             viewHolder.mission_title=(TextView)convertView.findViewById(R.id.mission_title);
+            viewHolder.organization=(TextView)convertView.findViewById(R.id.organization);
             viewHolder.mission_abs=(TextView)convertView.findViewById(R.id.mission_abs);
-            viewHolder.mission_publish_time=(TextView)convertView.findViewById(R.id.mission_publish_time);
-            viewHolder.check=(Button)convertView.findViewById(R.id.checkpeople_bt);
-            viewHolder.choose=(Button)convertView.findViewById(R.id.choosepeople_bt);
-            viewHolder.start=(Button)convertView.findViewById(R.id.start_bt);
+            viewHolder.mission_time=(TextView)convertView.findViewById(R.id.mission_time);
+            viewHolder.location_abs=(TextView)convertView.findViewById(R.id.location_abs);
+            viewHolder.check=(TextView) convertView.findViewById(R.id.checkpeople_tv);
+            viewHolder.choose=(TextView) convertView.findViewById(R.id.choosepeople_tv);
+            viewHolder.start=(TextView) convertView.findViewById(R.id.start_tv);
             convertView.setTag(viewHolder);
         }
         else
@@ -125,13 +126,16 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                     }
                 }
             } else {
-                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.personimg));
+                viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.defaulticon));
             }
         }
-        viewHolder.person_info.setText(mission.getPub_user().getName());
+
+        viewHolder.organization.setText(mission.getPub_user().getOrgDescription());
         viewHolder.mission_title.setText(mission.getName());
-        viewHolder.mission_abs.setText(mission.getDetail());
-        viewHolder.mission_publish_time.setText(mission.getPub_time());
+        viewHolder.mission_abs.setText(mission.getIntro());
+        viewHolder.mission_time.setText(mission.getStart_time()+"到"+mission.getEnd_time());
+        viewHolder.location_abs.setText(mission.getLocation_abs());
+
         viewHolder.choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +149,7 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(), CheckPeople.class);
                 intent.putExtra("missionId",mission.getObjectId());
+                intent.putExtra("origin","publisher");
                 getContext().startActivity(intent);
             }
         });
@@ -164,8 +169,6 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                             public void done(BmobException e) {
                                 Log.i("z","开始任务成功");
                                 //TODO  给相关人员推送消息[已推送被选中人员 还未同意未被选中人员]
-
-
 
                                 BmobQuery<MyUser> query = new BmobQuery<MyUser>();
 
@@ -240,11 +243,12 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
 
     class ViewHolder{
         ImageView person_image;
-        TextView person_info;
+        TextView organization;
         TextView mission_title;
         TextView mission_abs;
-        TextView mission_publish_time;
-        Button check,choose,start;
+        TextView mission_time;
+        TextView location_abs;
+        TextView check,choose,start;
 
     }
     public Mission getMission(int p)

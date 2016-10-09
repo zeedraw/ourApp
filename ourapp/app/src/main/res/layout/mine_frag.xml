@@ -45,23 +45,11 @@
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_large"/>
 
-            <TextView
-                android:id="@+id/t2"
-                android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_below="@+id/mine_name_tv"
-                android:text="暂无简介"
-                android:paddingLeft="20dp"
-                android:textSize="14dp"
-                android:textColor="#333333"
-                android:paddingTop="2dp"
-                android:ellipsize="middle"
-                />
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 android:layout_below="@+id/mine_name_tv"
                 android:src="@drawable/star03"
                 />

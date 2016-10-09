@@ -50,26 +50,31 @@ public class MineFrag extends Fragment implements IListener{
         } catch (Exception e)
         {
             // TODO: handle exception
-        }}
+        }
+
+            name_tv.setText((String)BmobUser.getObjectByKey("name"));
+            Log.i("naosumi",(String)BmobUser.getObjectByKey("name"));
+        }
 //        else
 //        {
 //            user_image_iv.setImageDrawable(getResources().getDrawable(R.drawable.portrait));
 //        }
-        if (BmobUser.getCurrentUser(MyUser.class)==null)
+        else
         {
+            user_image_iv.setImageDrawable(getResources().getDrawable(R.drawable.defaulticon));
             name_tv.setText("未知用户");
 //            location_tv.setText("所在地未知");
 
         }
-        else
-        {
-            name_tv.setText((String)BmobUser.getObjectByKey("name"));
-            Log.i("naosumi",(String)BmobUser.getObjectByKey("name"));
+//        else
+//        {
+//            name_tv.setText((String)BmobUser.getObjectByKey("name"));
+//            Log.i("naosumi",(String)BmobUser.getObjectByKey("name"));
 //            if(BmobUser.getObjectByKey("location")!=null)
 //            {
 //                location_tv.setText((String)BmobUser.getObjectByKey("location"));
 //            }
 
-        }
+//        }
     }
 }
