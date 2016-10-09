@@ -3,21 +3,28 @@ package com.example.administrator.ourapp.message;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.adapters.ArraySwipeAdapter;
+import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
 import com.jauker.widget.BadgeView;
 
 import java.util.HashMap;
 import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Longze on 2016/9/25.
@@ -27,6 +34,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
     AsyncImageLoader loader;                // 异步加载图片类
     // HashMap<Integer, TagInfo> tag_map;      // TagInfo缓存
     private int res;                        //item布局
+    private Button delete_btn;
     private List<Message> query_list;
     public Message_Adapter(Context context, int resource, List<Message> objects) {
         super(context, resource, objects);
@@ -34,6 +42,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
         loader=new AsyncImageLoader(getContext());
         res=resource;
         query_list = objects;
+        this.setMode(Attributes.Mode.Single);
     }
 
     @Override
@@ -89,7 +98,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                 break;
             case 7:
                 MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.jinji);
                 break;
             case 8:
                 MessageType = "新的回答";       //发布者对用户的问题进行了回答 看到此消息的是提问者
@@ -100,18 +109,42 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
         }//switch 判断message来给属性赋值
 
         viewHolder.message_content.setText(message.getContent());
-        viewHolder.message_date.setText(message.getCreatedAt().substring(5,15));
+        viewHolder.message_date.setText(message.getCreatedAt().substring(5,16));
         viewHolder.message_type.setText(MessageType);
         viewHolder.message_image.setImageDrawable(MessageImage);
 
-        if(!message.getBe_viewed()){
+        //判断小红点
+        if(!message.getBe_viewed()) {
             BadgeView badgeView = new BadgeView(getContext());
-            badgeView.setTargetView(viewHolder.message_date);
+            badgeView.setTargetView(viewHolder.message_image);
             badgeView.setBadgeMargin(0, 0, 0, 0); //左上右下
             badgeView.setBadgeCount(1);
         }
 
+        delete_btn = (Button) convertView.findViewById(R.id.delete);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO 添加删除信息的处理方法
+                Message message = query_list.get(position);
+                message.setObjectId(message.getObjectId());
+                message.delete(new UpdateListener() {
 
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","成功");
+                            query_list.remove(position);
+                            notifyDataSetChanged();
+                            Toast.makeText(getContext(), "消息已删除", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+
+            }
+        });
 
 
         return convertView;
@@ -119,7 +152,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
 
     @Override
     public int getSwipeLayoutResourceId(int i) {
-        return 0;
+        return R.id.swipe;
     }
 
     class ViewHolder{
