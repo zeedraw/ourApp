@@ -43,6 +43,8 @@ public class MyUser extends BmobUser {
     private String agency_name;
     private String agency_web;
     private String agency_contact_num;
+    private Boolean is_new_message = false;
+
 
     public String getOrgDescription() {
         return orgDescription;
@@ -292,5 +294,14 @@ public class MyUser extends BmobUser {
     public void setAgency_contact_num(String agency_contact_num) {
         this.agency_contact_num = agency_contact_num;
     }
+
+    public Boolean getIs_new_message() {
+        return is_new_message;
+    }
+
+    public void setIs_new_message(Boolean is_new_message) {
+        this.is_new_message = is_new_message;
+    }
+
 
 }

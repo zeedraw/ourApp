@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MyUser;
@@ -46,6 +48,7 @@ public class MesFrag extends Fragment implements IListener {
     private Vector<String> message_sender_ID = new Vector<String>();//消息发送者的objectId
     private Vector<String> message_date = new Vector<String>();//消息发送的时间
     private Vector<String> message_ID = new Vector<String>();
+//    private Vector<>
 
 //    private Handler handler = new Handler();
 //    private Runnable runnable = new Runnable() {
@@ -73,13 +76,28 @@ public class MesFrag extends Fragment implements IListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
                 message_list.get(i).setBe_viewed(true);
                 message_list.get(i).update(message_list.get(i).getObjectId(), new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
                         if(e==null){
                             Log.i("bmob","更新成功");
+
+//                            MyUser current_user = new MyUser();
+//                            current_user.setIs_new_message(true);
+//                            current_user.update(BmobUser.getCurrentUser(MyUser.class).getObjectId()
+//                                    , new UpdateListener() {
+//
+//                                        @Override
+//                                        public void done(BmobException e) {
+//                                            if(e==null){
+//                                                Log.i("bmob","更新成功");
+//                                            }else{
+//                                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+//                                            }
+//                                        }
+//                                    });
+
                         }else{
                             Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                         }
@@ -152,6 +170,8 @@ public class MesFrag extends Fragment implements IListener {
             }//onItemClick
         });
 
+
+
 //        handler.postDelayed(runnable, 1000 * 3);
         return rootview;
     }//onCreateView
@@ -184,8 +204,27 @@ public class MesFrag extends Fragment implements IListener {
                         }//for
 
                         message_list = new ArrayList<Message>(object);
-                        message_adapter = new Message_Adapter(getContext(), R.layout.message_item, message_list);
+                        message_adapter = new Message_Adapter(getContext(),
+                                R.layout.message_listview_item, message_list);
                         listView.setAdapter(message_adapter);
+                        message_adapter.setMode(Attributes.Mode.Single);
+
+                        MyUser current_user = new MyUser();
+                        current_user.setIs_new_message(false);
+                        current_user.update(BmobUser.getCurrentUser(MyUser.class).getObjectId()
+                                , new UpdateListener() {
+
+                                    @Override
+                                    public void done(BmobException e) {
+                                        if(e==null){
+                                            Log.i("bmob","更新成功");
+                                        }else{
+                                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                                        }
+                                    }
+                                });
+
+
                     }
                     else
                     {
