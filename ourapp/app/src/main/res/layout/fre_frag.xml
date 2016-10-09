@@ -10,8 +10,8 @@
         android:id="@+id/mes_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#000000"
-        android:dividerHeight="2px"/>
+        android:divider="#dddddd"
+        android:dividerHeight="1.5dp"/>
 
     <!-- sss -->
 </LinearLayout>
