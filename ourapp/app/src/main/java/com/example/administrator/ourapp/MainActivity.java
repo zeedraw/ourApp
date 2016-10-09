@@ -396,6 +396,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      * @param context
      * @return
      */
+    //自定义的loading框
     public static Dialog createLoadingDialog(Context context) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
