@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.R;
 
@@ -78,4 +79,6 @@ public class question_and_answer_detail_publisher extends Activity {
             }
         });
     }//initWidget
+
+
 }

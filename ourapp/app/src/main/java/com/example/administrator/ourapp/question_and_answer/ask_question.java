@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
@@ -62,6 +63,8 @@ public class ask_question extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //// TODO: 2016/10/9 调用自动刷新
+             //   ListenerManager.getInstance().sendBroadCast(new String[]{"QA"});
                 answer.setContent("暂无回答");
                 answer.setMyUser(BmobUser.getCurrentUser(MyUser.class));
                 answer.setMission(question.getMission());

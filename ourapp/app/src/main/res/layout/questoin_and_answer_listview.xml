@@ -10,15 +10,18 @@
         <!-- 左侧按钮为返回， 中间内容为 “实名认证” 右侧按钮为 提问-->
     </include>
 
-    <ListView
-        android:id="@+id/QAlistview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:layout_above="@+id/add_question"
-        android:divider="#dddddd"
-        android:dividerHeight="1.5dp"/>
+    <!--<ListView-->
+        <!--android:id="@+id/QAlistview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/header"-->
+        <!--android:layout_above="@+id/add_question"-->
+        <!--android:divider="#dddddd"-->
 
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
 
 
 </LinearLayout>
