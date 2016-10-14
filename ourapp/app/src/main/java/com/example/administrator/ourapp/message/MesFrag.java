@@ -416,4 +416,11 @@ public class MesFrag extends ProgressFragment implements IListener {
 
     }
 
+    public void hasNesMesRefresh()
+    {
+
+            setContentShown(false);
+            initMission();
+    }
+
 }
