@@ -43,4 +43,9 @@ public class Frag_pub extends Fragment {
         slidingTabLayout.setViewPager(viewPager);
         return rootView;
     }
+
+    public Fragment getFragment(int i)
+    {
+        return fragments.get(i);
+    }
 }

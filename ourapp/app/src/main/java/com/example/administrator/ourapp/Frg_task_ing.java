@@ -1,7 +1,9 @@
 package com.example.administrator.ourapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by dell-pc on 2016/8/21.
@@ -61,5 +65,30 @@ public class Frg_task_ing extends MyMissionFrag {
         query.order("-createdAt");
         query.setLimit(7);
         query.include("pub_user[name|orgDescription].userimage");
+    }
+
+    public void handleResult(Intent data)
+     {
+         final int position=data.getIntExtra("position",-1);
+            Log.i("z","成功接收返回结果"+position);
+            if (position!=-1)
+            {
+                Mission missionPointer=new Mission();
+                        missionPointer.setObjectId(mlist.get(position).getObjectId());
+                        missionPointer.setState(new Integer(4));
+                        missionPointer.update(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e==null)
+                                {
+                                    Log.i("z","完成任务"+position);
+                                    mlist.remove(position);
+                                    mAdapter.notifyDataSetChanged();
+                                }
+
+                            }
+                        });
+            }
+
     }
 }

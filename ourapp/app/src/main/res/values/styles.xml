@@ -59,5 +59,11 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    //星级评分条的style
+    <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/room_rating_bar</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+    </style>
 
 </resources>

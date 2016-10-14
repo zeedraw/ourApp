@@ -141,6 +141,7 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(), ChoosePeople.class);
                 intent.putExtra("missionId",mission.getObjectId());
+                Log.i("z",mission.getName()+".................");
                 getContext().startActivity(intent);
             }
         });

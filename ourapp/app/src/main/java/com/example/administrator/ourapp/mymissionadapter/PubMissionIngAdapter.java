@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +23,10 @@ import com.example.administrator.ourapp.CheckPeople;
 import com.example.administrator.ourapp.ChoosePeople;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MissionInfo;
+import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.RatingUser;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
 import com.example.administrator.ourapp.imageloader.TagInfo;
 
@@ -42,12 +46,14 @@ public class PubMissionIngAdapter extends ArrayAdapter<Mission> {
     // HashMap<Integer, TagInfo> tag_map;      // TagInfo缓存
     private int res;                        //item布局
     private List<Mission> mlist;
+    private Context mContext;
     public PubMissionIngAdapter(Context context, int resource, List<Mission> objects) {
         super(context, resource, objects);
         imgCache=new HashMap<String,Drawable>();
         loader=new AsyncImageLoader(getContext());
         res=resource;
         mlist=objects;
+        mContext=context;
     }
 
     @Override
@@ -129,6 +135,7 @@ public class PubMissionIngAdapter extends ArrayAdapter<Mission> {
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(), CheckPeople.class);
                 intent.putExtra("missionId",mission.getObjectId());
+                Log.i("z",mission.getName()+".................");
                 intent.putExtra("origin","publisher");
                 getContext().startActivity(intent);
             }
@@ -137,29 +144,33 @@ public class PubMissionIngAdapter extends ArrayAdapter<Mission> {
         viewHolder.finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
-                builder.setMessage("确认完成当前任务？");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Mission missionPointer=new Mission();
-                        missionPointer.setObjectId(mission.getObjectId());
-                        missionPointer.setState(new Integer(4));
-                        missionPointer.update(new UpdateListener() {
-                            @Override
-                            public void done(BmobException e) {
-                                if (e==null)
-                                {
-                                    Log.i("z","完成任务");
-                                    mlist.remove(mission);
-                                    PubMissionIngAdapter.this.notifyDataSetChanged();
-                                }
-
-                            }
-                        });
-                    }
-                });
-                builder.create().show();
+//                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+//                builder.setMessage("确认完成当前任务？");
+//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Mission missionPointer=new Mission();
+//                        missionPointer.setObjectId(mission.getObjectId());
+//                        missionPointer.setState(new Integer(4));
+//                        missionPointer.update(new UpdateListener() {
+//                            @Override
+//                            public void done(BmobException e) {
+//                                if (e==null)
+//                                {
+//                                    Log.i("z","完成任务");
+//                                    mlist.remove(mission);
+//                                    PubMissionIngAdapter.this.notifyDataSetChanged();
+//                                }
+//
+//                            }
+//                        });
+//                    }
+//                });
+//                builder.create().show();
+                Intent intent=new Intent(getContext(), RatingUser.class);
+                intent.putExtra("missionId",mission.getObjectId());
+                intent.putExtra("position",position);
+                ((MyTask)getContext()).startActivityForResult(intent,1000);
             }
         });
 

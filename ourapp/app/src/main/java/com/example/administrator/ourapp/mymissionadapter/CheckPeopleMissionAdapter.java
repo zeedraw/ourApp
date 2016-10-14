@@ -37,13 +37,15 @@ public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
     // HashMap<Integer, TagInfo> tag_map;      // TagInfo缓存
     private int res;                        //item布局
     private List<Mission> mlist;
+    private String au;//暂时权限
 
-    public CheckPeopleMissionAdapter(Context context, int resource, List<Mission> objects) {
+    public CheckPeopleMissionAdapter(Context context, int resource, List<Mission> objects,String au) {
         super(context, resource, objects);
         imgCache = new HashMap<String, Drawable>();
         loader = new AsyncImageLoader(getContext());
         res = resource;
         mlist = objects;
+        this.au=au;
     }
 
     @Override
@@ -119,6 +121,7 @@ public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CheckPeople.class);
                 intent.putExtra("missionId", mission.getObjectId());
+                intent.putExtra("origin",au);
                 getContext().startActivity(intent);
             }
         });
