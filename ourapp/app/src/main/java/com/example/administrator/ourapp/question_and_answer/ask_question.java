@@ -84,7 +84,6 @@ public class ask_question extends Activity {
                                     AlertDialog.Builder builder=new AlertDialog.Builder(ask_question.this);
                                     if(e==null){
                                         Log.i("bmob","上传数据成功");
-                                        //TODO 添加发布问题的通知[已完成 未调试]
 
                                         SendMessage sm = new SendMessage();
                                         sm.send(BmobUser.getCurrentUser(MyUser.class), mission.getPub_user(),

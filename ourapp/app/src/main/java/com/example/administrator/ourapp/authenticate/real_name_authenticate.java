@@ -53,6 +53,7 @@ public class real_name_authenticate extends AppCompatActivity {
     private EditText school_name = null;
     private String pic_path[] = new String[4];
     private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
+    private boolean is_upload_pic[] = {false, false, false, false};
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,10 +79,25 @@ public class real_name_authenticate extends AppCompatActivity {
     }//init
 
     private View.OnClickListener upLoad_listener = new View.OnClickListener(){
-
         @Override
         public void onClick(View v){
-            UpLoad();
+
+                if(real_name.getText().length() !=0 &&
+                        ID_number.getText().length() !=0  && school_name.getText().length() !=0){
+                    if(is_upload_pic[0] && is_upload_pic[1] && is_upload_pic[2] && is_upload_pic[3]) {
+                        UpLoad();
+                    }//if 图片
+                    else{
+                        Toast.makeText(getApplicationContext(),"您还有证件照没有上传，不能提交！",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }//if 信息
+                else{
+                    Toast.makeText(getApplicationContext(),"您还有必填信息没有填写，不能提交！",
+                            Toast.LENGTH_SHORT).show();
+                }// else 信息
+
+
         }//onClick
     };//upLoad_listener
 
@@ -159,6 +175,8 @@ public class real_name_authenticate extends AppCompatActivity {
                 imgShow.setImageBitmap(bm);
                 String path = getImageAbsolutePath(this, originalUri);
                 pic_path[num] = path;
+                is_upload_pic[num] = true;
+                Log.i("test_upload", "选中图片"+ num);
             }catch (IOException e) {
 
                 Log.e("TAG-->Error",e.toString());
@@ -262,8 +280,7 @@ public class real_name_authenticate extends AppCompatActivity {
 
     //将本页面图片上传到服务器
     public void UpLoad(){
-        //TODO 判断是否四个图片都已经选择、以及文本是否都填上
-        Toast.makeText(getApplicationContext(), "开始上传",
+        Toast.makeText(getApplicationContext(), "开始上传,请不要关闭此页面或进行其他操作",
                 Toast.LENGTH_SHORT).show();
 
         BmobFile.uploadBatch(pic_path, new UploadBatchListener() {
@@ -299,6 +316,7 @@ public class real_name_authenticate extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "上传成功",
                             Toast.LENGTH_SHORT).show();
                     Log.i("z","上传文件成功");
+                    real_name_authenticate.this.finish();
 
                 }
             }

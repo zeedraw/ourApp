@@ -95,7 +95,6 @@ public class edit_answer extends Activity {
             public void onClick(View view) {
 
                 //若答案有变更才上传
-                //TODO 添加有回答的通知[需要判断原来的文本和现在的文本不一样才通知] [已完成  未调试]
                 if(!(EditAnswer.getText().toString().equals(question.getanswer().getContent()))){
                     answer.setContent(EditAnswer.getText().toString());
 

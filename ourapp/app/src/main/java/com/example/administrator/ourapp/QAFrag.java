@@ -76,7 +76,6 @@ public class QAFrag extends ProgressFragment {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setContentShown(false);
-        //// TODO: 问答列表的点击事件传输
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

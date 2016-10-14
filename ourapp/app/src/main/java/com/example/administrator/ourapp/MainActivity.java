@@ -323,7 +323,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                             switch (which) {
                                 case 0: // 选择实名认证
-                                    //TODO 添加是否已经通过认证的判断
                                     if(state_stu == 1){
 //                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
 //                                        builder.setMessage("正在认证");

@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.message;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
             viewHolder.message_content=(TextView)convertView.findViewById(R.id.message_content);
             viewHolder.message_date=(TextView)convertView.findViewById(R.id.message_date);
             viewHolder.message_type=(TextView)convertView.findViewById(R.id.message_type);
+            viewHolder.be_viewed=(ImageView) convertView.findViewById(R.id.be_viewed);
             convertView.setTag(viewHolder);
         }
         else
@@ -94,11 +96,11 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                 break;
             case 5:
                 MessageType = "任务已开始";
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.ask);
                 break;
             case 7:
                 MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.jinji);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_ask);
                 break;
             case 8:
                 MessageType = "新的回答";       //发布者对用户的问题进行了回答 看到此消息的是提问者
@@ -112,14 +114,21 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
         viewHolder.message_date.setText(message.getCreatedAt().substring(5,16));
         viewHolder.message_type.setText(MessageType);
         viewHolder.message_image.setImageDrawable(MessageImage);
-
+        viewHolder.be_viewed.setVisibility(View.INVISIBLE);
+//        viewHolder.message_content.setBackgroundColor(Color.WHITE);
+//        convertView.setBackgroundColor(Color.RED);
         //判断小红点
-        if(!message.getBe_viewed()) {
-            BadgeView badgeView = new BadgeView(getContext());
-            badgeView.setTargetView(viewHolder.message_image);
-            badgeView.setBadgeMargin(0, 0, 0, 0); //左上右下
-            badgeView.setBadgeCount(1);
+//        BadgeView badgeView = new BadgeView(getContext());
+//        badgeView.setTargetView(viewHolder.message_image);
+//        badgeView.setBadgeMargin(0, 0, 0, 0); //左上右下
+//        badgeView.setBadgeCount(1);
+//        badgeView.setVisibility(badgeView.INVISIBLE);
+
+        if(!message.getBe_viewed()){
+//            badgeView.setVisibility(badgeView.VISIBLE);
+            viewHolder.be_viewed.setVisibility(View.VISIBLE);
         }
+
 
         delete_btn = (Button) convertView.findViewById(R.id.delete);
         delete_btn.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +169,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
         TextView message_type;
         TextView message_content;
         TextView message_date;
+        ImageView be_viewed;
 
     }
 }
