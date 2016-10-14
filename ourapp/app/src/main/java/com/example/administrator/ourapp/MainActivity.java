@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -41,6 +42,7 @@ import cn.bmob.v3.BmobUser;
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
     private RelativeLayout tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
     private TextView title;//上方标题
+    private ImageView mesSignal;
 //    private FragmentManager mfragManager;
 //    private FragmentTransaction mTransaction;
     private TextView r_button;
@@ -67,6 +69,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
     private  void initWidget(){
+        //新消息的提示红点
+        mesSignal=(ImageView)findViewById(R.id.mesSignal);
         //下部tabs中的3个组件
         tv_main=(RelativeLayout) findViewById(R.id.main);
         tv_main.setOnClickListener(this);
@@ -233,7 +237,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
             else
             {
+
                 ft.show(mes);
+                if (mesSignal.getVisibility()==View.VISIBLE) {
+                    ((MesFrag) mes).hasNesMesRefresh();
+                    mesSignal.setVisibility(View.INVISIBLE);
+                }
+
             }
         }
 
@@ -415,6 +425,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         loadingDialog.setContentView(layout);// 设置布局
         return loadingDialog;
 
+    }
+
+    private void checkNewMes()
+    {
+        // TODO: 2016/10/14 checknewmes
+        Log.i("z","开始检测消息");
+        boolean has=true;
+        if (has==true)
+        {
+            Log.i("z","检测到新消息");
+            mesSignal.setVisibility(View.VISIBLE);
+        }
     }
 
 

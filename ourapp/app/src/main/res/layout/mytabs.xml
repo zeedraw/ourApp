@@ -60,7 +60,14 @@
                 android:layout_centerHorizontal="true"
                 android:textColor="@drawable/tab_tv"
                 />
-
+        <ImageView
+            android:id="@+id/mesSignal"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/redcircle"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="55dp"
+            android:visibility="invisible"/>
 
 
         </RelativeLayout>
