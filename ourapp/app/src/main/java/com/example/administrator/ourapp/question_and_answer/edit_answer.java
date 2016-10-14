@@ -1,7 +1,6 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,22 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
-import com.example.administrator.ourapp.authenticate.real_name_authenticate;
-import com.example.administrator.ourapp.message.SendMessage;
-
-import java.util.List;
+import com.example.administrator.ourapp.message.Message_tools;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -108,7 +100,7 @@ public class edit_answer extends Activity {
 
 
 
-                                SendMessage sm = new SendMessage();
+                                Message_tools sm = new Message_tools();
                                 sm.send(BmobUser.getCurrentUser(MyUser.class), question.getUser(),
                                         "您的提问有新回答啦", 8 , false, question.getObjectId());
                                 //8代表提问有回答的消息

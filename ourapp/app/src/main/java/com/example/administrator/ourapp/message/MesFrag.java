@@ -21,13 +21,15 @@ import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MissionInfo;
+import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.RefreshLayout;
+import com.example.administrator.ourapp.UserInfo;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
-import com.example.administrator.ourapp.my_task;
+import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 import com.example.administrator.ourapp.question_and_answer.QA_adapter;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
@@ -116,20 +118,33 @@ public class MesFrag extends ProgressFragment implements IListener {
                         if(e==null){
                             Log.i("bmob","更新成功");
 
-//                            MyUser current_user = new MyUser();
-//                            current_user.setIs_new_message(true);
-//                            current_user.update(BmobUser.getCurrentUser(MyUser.class).getObjectId()
-//                                    , new UpdateListener() {
-//
-//                                        @Override
-//                                        public void done(BmobException e) {
-//                                            if(e==null){
-//                                                Log.i("bmob","更新成功");
-//                                            }else{
-//                                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-//                                            }
-//                                        }
-//                                    });
+                            BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                            query.addWhereEqualTo("user" ,BmobUser.getCurrentUser(MyUser.class));
+                            query.setLimit(50);
+                            query.findObjects(new FindListener<UserInfo>() {
+                                @Override
+                                public void done(List<UserInfo> object, BmobException e) {
+                                    if(e==null){
+
+                                        for (UserInfo user : object) {
+                                            user.subtractUnread_message_num();
+                                            user.update(user.getObjectId(), new UpdateListener() {
+
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if(e==null){
+                                                        Log.i("bmob","未读消息数更新成功");
+                                                    }else{
+                                                        Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }else{
+                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    }
+                                }
+                            });
 
                         }else{
                             Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
@@ -178,7 +193,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                         break;
 
                     case 4: //有用户报名 跳转到我的任务界面
-                        Intent intent4 = new Intent(getActivity(), my_task.class);
+                        Intent intent4 = new Intent(getActivity(), MyTask.class);
 //                        intent4.putExtra("message_ID", message_ID.get(i));
                         startActivity(intent4);
                         break;

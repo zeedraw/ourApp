@@ -1,32 +1,26 @@
 package com.example.administrator.ourapp;
 
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.message.SendMessage;
+import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
@@ -102,7 +96,7 @@ public class MissionInfo extends AppCompatActivity {
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     mes.setMessage("报名成功");
-                                                    SendMessage sm = new SendMessage();
+                                                    Message_tools sm = new Message_tools();
                                                     sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
                                                             "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
                                                                     + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId());

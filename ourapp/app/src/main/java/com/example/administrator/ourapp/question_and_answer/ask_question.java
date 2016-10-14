@@ -13,7 +13,7 @@ import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
-import com.example.administrator.ourapp.message.SendMessage;
+import com.example.administrator.ourapp.message.Message_tools;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -85,7 +85,7 @@ public class ask_question extends Activity {
                                     if(e==null){
                                         Log.i("bmob","上传数据成功");
 
-                                        SendMessage sm = new SendMessage();
+                                        Message_tools sm = new Message_tools();
                                         sm.send(BmobUser.getCurrentUser(MyUser.class), mission.getPub_user(),
                                                 question.getContent(), 7, false, question.getObjectId()); //7代表有人提问的消息
 
