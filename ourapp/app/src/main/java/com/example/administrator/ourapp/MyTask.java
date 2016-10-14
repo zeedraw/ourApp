@@ -1,35 +1,30 @@
 package com.example.administrator.ourapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.administrator.ourapp.authenticate.agency_authenticate;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Created by dell-pc on 2016/8/21.
  */
-public class my_task extends FragmentActivity implements View.OnClickListener {
+public class MyTask extends FragmentActivity implements View.OnClickListener {
     private CheckedTextView pub_tv,do_tv;
     private TextView rt_button,pub_button;
     private TextView missionTitle;
@@ -93,16 +88,35 @@ public class my_task extends FragmentActivity implements View.OnClickListener {
         pub_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BmobUser.getObjectByKey("tag")!=null)
-                {
-                    //TODO 没有发布任务的权限 则弹出对话框的提醒
-                    Intent intent=new Intent(my_task.this,MissionPub.class);
-                    startActivity(intent);
-                }
-                else
-                {
-
-                }
+                BmobQuery<MyUser> query=new BmobQuery<MyUser>();
+                query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
+                    @Override
+                    public void done(MyUser myUser, BmobException e) {
+                        if (e==null)
+                        {
+                            if (myUser.getTag()!=null)
+                            {
+                                //TODO 没有发布任务的权限 则弹出对话框的提醒
+                                Intent intent=new Intent(MyTask.this,MissionPub.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                AlertDialog.Builder builder=new AlertDialog.Builder(MyTask.this);
+                                builder.setMessage("您还未获得机构认证，是否现在认证");
+                                builder.setPositiveButton("是的", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Intent intent=new Intent(MyTask.this,agency_authenticate.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                                builder.setNegativeButton("取消",null);
+                                builder.create().show();
+                            }
+                        }
+                    }
+                });
             }
         });
 
@@ -171,5 +185,18 @@ public class my_task extends FragmentActivity implements View.OnClickListener {
 
         ft.commit();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1000&&resultCode==1001) {
+            Log.i("z", "activity收到信息"+data.getIntExtra("position",-1));
+            FragmentManager fm = getSupportFragmentManager();
+            Frag_pub pubFrag = (Frag_pub) fm.findFragmentByTag("pub");
+            Frg_task_ing ing=(Frg_task_ing)pubFrag.getFragment(2);
+            ing.handleResult(data);
+
+        }
     }
 }

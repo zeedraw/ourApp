@@ -1,5 +1,10 @@
 package com.example.administrator.ourapp;
 
+import android.provider.ContactsContract;
+
+import java.lang.reflect.Array;
+import java.util.List;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobFile;
@@ -14,10 +19,11 @@ public class MyUser extends BmobUser {
     private Boolean sex;//true为男 false 为女
     private String qualification;//学历
     private String location;//所在地
-    private Double rating;//评分
+    private Float rating;//评分
     private BmobRelation friends;//好友
     private Boolean isIdentifiedStudent;//是否被认证 true被认证 false没被认证
     private Boolean isIdentifiedPublish;
+    private String tag;//被认证为的类型 教育，活动，社区，交通
     private Integer ident_state_stu; //学生认证的状态 0为未认证 1为审核中 2为已通过
     private Integer ident_state_pub; //机构的认证状态 0为未认证 1为审核中 2为已通过
     private String tag;//被认证为的类型 教育，活动，社区，景点
@@ -33,6 +39,7 @@ public class MyUser extends BmobUser {
     private BmobFile halfpicture;
     private String stuDescription; //学生认证描述
     private String orgDescription;//机构认证描述
+    private Integer missionSum;
     //以下为机构认证所需资料
     private BmobFile agency_pic1;
     private BmobFile agency_pic2;
@@ -185,7 +192,7 @@ public class MyUser extends BmobUser {
         this.location = location;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
@@ -236,7 +243,7 @@ public class MyUser extends BmobUser {
         return qualification;
     }
 
-    public Double getRating() {
+    public Float getRating() {
         return rating;
     }
 

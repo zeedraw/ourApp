@@ -51,7 +51,7 @@ public class DoIngFrag extends MyMissionFrag {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new CheckPeopleMissionAdapter(getContext(), R.layout.missionitem2, list);
+                mAdapter = new CheckPeopleMissionAdapter(getContext(), R.layout.missionitem2, list,"publisher");
                 listView.setAdapter(mAdapter);
 
             }

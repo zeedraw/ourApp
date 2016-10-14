@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.example.administrator.ourapp.mymissionadapter.CheckPeopleMissionAdapter;
 import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
+import com.example.administrator.ourapp.mymissionadapter.PubMissionComAdapter;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import cn.bmob.v3.BmobUser;
  * Created by dell-pc on 2016/8/21.
  */
 public class Frg_task_completed extends MyMissionFrag {
-    private CheckPeopleMissionAdapter mAdapter;
+    private PubMissionComAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class Frg_task_completed extends MyMissionFrag {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new CheckPeopleMissionAdapter(getContext(), R.layout.missionitem2, list);
+                mAdapter = new PubMissionComAdapter(getContext(), R.layout.missionitem2, list);
                 listView.setAdapter(mAdapter);
 
             }

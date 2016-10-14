@@ -30,7 +30,7 @@ import cn.bmob.v3.listener.FindListener;
 public class MyMissionFrag extends ProgressFragment {
     private View mContentView;
     private String lastTime;
-    private List<Mission> mlist;
+    protected List<Mission> mlist;
     protected ListView mlistview;
     private boolean mIsStart = true;
     private RefreshLayout refreshLayout;

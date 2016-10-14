@@ -161,7 +161,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 Log.i("z", "获取更新iv--" + MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png"
                         + "userid:" + current);
             } catch (Exception e) {
-                // TODO: handle exception
+                // TODO: handleResult exception
             }
         }
         else
@@ -324,6 +324,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                     else
                     {
                         Toast.makeText(getApplicationContext(), "修改简介失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 }
             });
@@ -577,6 +578,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                         {
                             Toast.makeText(getApplicationContext(), "修改昵称失败", Toast.LENGTH_SHORT).show();
                             Log.i("z","更新用户姓名失败");
+                            dialog.dismiss();
                         }
                     }
                 });
@@ -621,7 +623,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                             else
                             {
                                 Toast.makeText(getApplicationContext(), "修改性别失败", Toast.LENGTH_SHORT).show();
-
+                                dialog.dismiss();
                             }
                         }
                 });
@@ -672,7 +674,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 else
                 {
                     Toast.makeText(getApplicationContext(), "修改年龄失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                    dialog.dismiss();
                 }
             }
         });
@@ -704,7 +706,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 else
                 {
                     Toast.makeText(getApplicationContext(), "修改所在地失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                    dialog.dismiss();
                 }
             }
         });
