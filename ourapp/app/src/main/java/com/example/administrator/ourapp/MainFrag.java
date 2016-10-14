@@ -48,7 +48,7 @@ public class MainFrag extends Fragment {
 //        initCursorPos();
 //        InitTextView();
         MainFragAdapter adapter = new MainFragAdapter(getActivity().getSupportFragmentManager(), fragments);
-//        tab.setSelectedIndicatorColors(R.color.white);//滑动条颜色
+        tab.setSelectedIndicatorColors(R.color.blue);//滑动条颜色
         //设定适配器
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);

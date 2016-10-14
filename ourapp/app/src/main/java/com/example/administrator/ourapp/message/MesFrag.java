@@ -19,12 +19,15 @@ import android.widget.ListView;
 import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MissionInfo;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.RefreshLayout;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
+import com.example.administrator.ourapp.my_task;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 import com.example.administrator.ourapp.question_and_answer.QA_adapter;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
@@ -102,103 +105,148 @@ public class MesFrag extends ProgressFragment implements IListener {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setContentShown(false);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                message_list.get(i).setBe_viewed(true);
+                message_list.get(i).update(message_list.get(i).getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","更新成功");
+
+//                            MyUser current_user = new MyUser();
+//                            current_user.setIs_new_message(true);
+//                            current_user.update(BmobUser.getCurrentUser(MyUser.class).getObjectId()
+//                                    , new UpdateListener() {
 //
-//                message_list.get(i).setBe_viewed(true);
-//                message_list.get(i).update(message_list.get(i).getObjectId(), new UpdateListener() {
-//                    @Override
-//                    public void done(BmobException e) {
-//                        if(e==null){
-//                            Log.i("bmob","更新成功");
-//
-////                            MyUser current_user = new MyUser();
-////                            current_user.setIs_new_message(true);
-////                            current_user.update(BmobUser.getCurrentUser(MyUser.class).getObjectId()
-////                                    , new UpdateListener() {
-////
-////                                        @Override
-////                                        public void done(BmobException e) {
-////                                            if(e==null){
-////                                                Log.i("bmob","更新成功");
-////                                            }else{
-////                                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-////                                            }
-////                                        }
-////                                    });
-//
-//                        }else{
-//                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-//                        }
-//                    }
-//                });
-//
-//
-//                switch(message_type.get(i)){
-//
-//                    case 0: //跳转到好友申请详情界面
-//                        Intent intent0 = new Intent(getActivity(), friend_application.class);
-//                        intent0.putExtra("message_ID", message_ID.get(i));
-//                        startActivity(intent0);
+//                                        @Override
+//                                        public void done(BmobException e) {
+//                                            if(e==null){
+//                                                Log.i("bmob","更新成功");
+//                                            }else{
+//                                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+//                                            }
+//                                        }
+//                                    });
+
+                        }else{
+                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+
+
+                switch(message_list.get(i).getType()){
+
+                    case 0: //跳转到好友申请详情界面
+                        Intent intent0 = new Intent(getActivity(), friend_application.class);
+                        intent0.putExtra("message_ID", message_ID.get(i));
+                        startActivity(intent0);
+                        break;
+
+                    case 1: //跳转到确认好友页面（同意添加好友）
+//                        Intent intent1 = new Intent(getActivity(), confirm_friend.class);
+//                        intent1.putExtra("message_ID", message_ID.get(i));
+//                        startActivity(intent1);
 //                        break;
-//
-//                    case 1: //跳转到确认好友页面（同意添加好友）
-////                        Intent intent1 = new Intent(getActivity(), confirm_friend.class);
-////                        intent1.putExtra("message_ID", message_ID.get(i));
-////                        startActivity(intent1);
-////                        break;
-//                    case 2: //跳转到确认好友界面（拒绝添加好友）
-//                        Intent intent2 = new Intent(getActivity(), confirm_friend.class);
-//                        intent2.putExtra("message_ID", message_ID.get(i));
-//                        startActivity(intent2);
-//                        break;
-//                    case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
-//
-//                        BmobQuery<Mission_question> query7 = new BmobQuery<Mission_question>();
-//                        query7.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
-//
-//                            @Override
-//                            public void done(Mission_question object, BmobException e) {
-//                                if(e==null){
-//                                    Intent intent7 = new Intent(getActivity(), question_and_answer_detail_publisher.class);
-//                                    intent7.putExtra("question_content", object.getContent());
-//                                    intent7.putExtra("answer_content",object.getanswer().getContent());
-//                                    intent7.putExtra("question_ID", object.getObjectId());
-//                                    intent7.putExtra("question_date", object.getCreatedAt());
-//                                    startActivity(intent7);
-//                                }else{
-//                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-//                                }
-//                            }
-//
-//                        });
-//                        break;
-//                    case 8: //跳转到问答详情界面(提问者）（有新的提问）
-//                        BmobQuery<Mission_question> query8 = new BmobQuery<Mission_question>();
-//                        query8.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
-//
-//                            @Override
-//                            public void done(Mission_question object, BmobException e) {
-//                                if(e==null){
-//                                    Intent intent8 = new Intent(getActivity(), question_and_answer_detail_publisher.class);
-//                                    intent8.putExtra("question_content", object.getContent());
-//                                    intent8.putExtra("answer_content",object.getanswer().getContent());
-//                                    intent8.putExtra("question_ID", object.getObjectId());
-//                                    intent8.putExtra("question_date", object.getCreatedAt());
-//                                    startActivity(intent8);
-//                                }else{
-//                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-//                                }
-//                            }
-//
-//                        });
-//                        break;
-//
-//                }//switch 通过switch判断 type分别进入不同的消息页面
-//                //TODO 通过switch判断 type分别进入不同的消息页面 进入后be_viewed置为true 并修改服务器的数据
-//            }//onItemClick
-//        });
+                    case 2: //跳转到确认好友界面（拒绝添加好友）
+                        Intent intent2 = new Intent(getActivity(), confirm_friend.class);
+                        intent2.putExtra("message_ID", message_ID.get(i));
+                        startActivity(intent2);
+                        break;
+                    case 3: //跳转到任务详情界面（通过任务申请）
+                        BmobQuery<Mission> query3 = new BmobQuery<Mission>();
+                        query3.include("pub_user[userimage]");
+                        query3.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
+
+                            @Override
+                            public void done(Mission object, BmobException e) {
+                                if(e==null){
+                                    Intent intent=new Intent(getContext(), MissionInfo.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("mission",object);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        break;
+
+                    case 4: //有用户报名 跳转到我的任务界面
+                        Intent intent4 = new Intent(getActivity(), my_task.class);
+//                        intent4.putExtra("message_ID", message_ID.get(i));
+                        startActivity(intent4);
+                        break;
+
+                    case 5: //跳转到任务详情界面（任务开始）
+                        BmobQuery<Mission> query5 = new BmobQuery<Mission>();
+                        query5.include("pub_user[userimage]");
+                        query5.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
+
+                            @Override
+                            public void done(Mission object, BmobException e) {
+                                if(e==null){
+                                    Intent intent=new Intent(getContext(), MissionInfo.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("mission",object);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+                        });
+                        break;
+
+                    case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
+                        BmobQuery<Mission_question> query7 = new BmobQuery<Mission_question>();
+                        query7.include("answer[content]");
+                        query7.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
+
+                            @Override
+                            public void done(Mission_question object, BmobException e) {
+                                if(e==null){
+                                    Intent intent7 = new Intent(getContext(), question_and_answer_detail_publisher.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("question",object);
+                                    intent7.putExtras(bundle);
+                                    startActivity(intent7);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        break;
+                    case 8: //跳转到问答详情界面(提问者）（有新的提问）
+                        BmobQuery<Mission_question> query8 = new BmobQuery<Mission_question>();
+                        query8.include("answer[content]");
+                        query8.getObject(message_list.get(i).getRemark(), new QueryListener<Mission_question>() {
+
+                            @Override
+                            public void done(Mission_question object, BmobException e) {
+                                if(e==null){
+                                    Intent intent8 = new Intent(getContext(), question_and_answer_detail.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("question",object);
+                                    intent8.putExtras(bundle);
+                                    startActivity(intent8);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        break;
+
+                }//switch 通过switch判断 type分别进入不同的消息页面
+            }//onItemClick
+        });
 
         setmEmptyListener(new View.OnClickListener() {
             @Override
@@ -217,7 +265,7 @@ public class MesFrag extends ProgressFragment implements IListener {
 ////        query.include("answer[content],User[objectId|userimage]");
 //        query.addWhereEqualTo("receiver", User_ID);
 //        query.order("-createdAt");
-//        query.setLimit(100);//TODO 分页加载
+//        query.setLimit(100);
 //        query.findObjects(new FindListener<Message>() {
 //
 //            @Override
@@ -263,7 +311,6 @@ public class MesFrag extends ProgressFragment implements IListener {
 //                    }
 //                    else
 //                    {
-//                        //Todo: 提示 还没有消息
 //                    }
 //                }//if
 //                else{
@@ -305,8 +352,31 @@ public class MesFrag extends ProgressFragment implements IListener {
                         message_adapter = new Message_Adapter(getContext(),
                                 R.layout.message_listview_item, message_list);
                         listView.setAdapter(message_adapter);
+                        message_adapter.setMode(Attributes.Mode.Single);
                         setContentShown(true);
                         setContentEmpty(false);
+
+
+                        //更新最后加载消息的时间属性
+                        Date cur_date = new Date(System.currentTimeMillis());
+                        MyUser cur_user = new MyUser();
+                        cur_user.setMessage_refresh_time(new BmobDate(cur_date));
+                        cur_user.update(BmobUser.getCurrentUser(MyUser.class).getObjectId(),
+                                new UpdateListener() {
+
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null){
+                                    Log.i("bmob","时间更新成功");
+                                }else{
+                                    Log.i("bmob","时间更新失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+                        });
+
+
+
+
                     }
                     else
                     {

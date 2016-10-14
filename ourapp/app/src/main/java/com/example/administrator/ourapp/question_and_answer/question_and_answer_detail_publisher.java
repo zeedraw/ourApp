@@ -23,6 +23,7 @@ public class question_and_answer_detail_publisher extends Activity {
     private String s_question_date;
     private String s_answer_content;
     private String s_question_ID;
+    private Mission_question question;
 //    private Mission mission;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,13 @@ public class question_and_answer_detail_publisher extends Activity {
         question_date = (TextView) findViewById(R.id.detail_question_date);
 
         Intent intent = getIntent();
-        s_answer_content = intent.getStringExtra("answer_content");
-        s_question_content = intent.getStringExtra("question_content");
-        s_question_date = intent.getStringExtra("question_date");
-        s_question_ID = intent.getStringExtra("question_ID");
+
+        question = (Mission_question)intent.getSerializableExtra("question");
+
+        s_answer_content = question.getanswer().getContent();
+        s_question_content = question.getContent();
+        s_question_date = question.getCreatedAt();
+        s_question_ID = question.getObjectId();
 //        Bundle bundle = new Bundle();
 //        bundle = this.getIntent().getExtras();
 //        mission = (Mission) bundle.getSerializable("mission");

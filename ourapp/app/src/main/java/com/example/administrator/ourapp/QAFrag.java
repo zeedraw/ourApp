@@ -76,38 +76,37 @@ public class QAFrag extends ProgressFragment {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setContentShown(false);
-        //// TODO: 问答列表的点击事件传输
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                if(mission.getPub_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
-//                    //若是任务发布者则跳转到编辑回答界面
-//                    // 在Intent中传递数据
-//                    Intent intent = new Intent(getContext(), question_and_answer_detail_publisher.class);
-////                    Bundle bundle=new Bundle();
-////                    bundle.putSerializable("mission",mission);
-////                    intent.putExtras(bundle);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if(mission.getPub_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
+                    //若是任务发布者则跳转到编辑回答界面
+                    // 在Intent中传递数据
+                    Intent intent = new Intent(getContext(), question_and_answer_detail_publisher.class);
 //                    Bundle bundle=new Bundle();
-//                    bundle.putSerializable("question",qa_list.get(i));
+//                    bundle.putSerializable("mission",mission);
 //                    intent.putExtras(bundle);
-//                    // 启动Intent
-//                    startActivity(intent);
-//                }//if
-//                //若不是任务发布者则跳转到提问界面
-//                else{
-//                    Intent intent = new Intent(getContext(), question_and_answer_detail.class);
-//                    // 在Intent中传递数据
-//                    Bundle bundle=new Bundle();
-//                    bundle.putSerializable("question",qa_list.get(i));
-//                    intent.putExtras(bundle);
-//                    // 启动Intent
-//                    startActivity(intent);
-//                }//else
-//
-//
-//            }
-//        });
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("question",qa_list.get(i));
+                    intent.putExtras(bundle);
+                    // 启动Intent
+                    startActivity(intent);
+                }//if
+                //若不是任务发布者则跳转到提问界面
+                else{
+                    Intent intent = new Intent(getContext(), question_and_answer_detail.class);
+                    // 在Intent中传递数据
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("question",qa_list.get(i));
+                    intent.putExtras(bundle);
+                    // 启动Intent
+                    startActivity(intent);
+                }//else
+
+
+            }
+        });
 
         setmEmptyListener(new View.OnClickListener() {
             @Override
@@ -259,6 +258,7 @@ public class QAFrag extends ProgressFragment {
 
     public void upDate()
     {
+//        Log.i("z","send mes to qa");
         setContentShown(false);
         initMission();
     }

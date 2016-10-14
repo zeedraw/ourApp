@@ -128,6 +128,7 @@ public class ChoosePeople extends AppCompatActivity {
                                             message.setReceiver(addList.get(i));
                                             message.setType(3); //3为申请任务成功的消息
                                             message.setBe_viewed(false);
+                                            message.setRemark(mission.getObjectId());
                                             message.setContent("恭喜您，您申请的"+ mission.getName() +
                                                     "活动已经通过！");
                                             messages.add(message);

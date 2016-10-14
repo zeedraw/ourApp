@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -47,8 +48,11 @@ public class agency_authenticate extends Activity {
     private EditText agency_name = null;
     private EditText agency_web = null;
     private EditText contact_number = null;
-    private String pic_path[] = new String[4];
-    private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
+    private String pic_path[] = {"", "", "", ""};
+    private int num = 0; //num代表图片位置
+    private boolean is_upload_pic[] = {false, false, false, false};
+    private int upload_pic_count = 0;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +81,20 @@ public class agency_authenticate extends Activity {
 
         @Override
         public void onClick(View v){
-            UpLoad();
+            if(agency_name.getText().length() !=0 &&
+                    agency_web.getText().length() !=0  && contact_number.getText().length() !=0){
+                if(is_upload_pic[0] || is_upload_pic[1] || is_upload_pic[2] || is_upload_pic[3]) {
+                    UpLoad();
+                }//if 图片
+                else{
+                    Toast.makeText(getApplicationContext(),"您一张照片都没有上传，不能提交！",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }//if 信息
+            else{
+                Toast.makeText(getApplicationContext(),"您还有必填信息没有填写，不能提交！",
+                        Toast.LENGTH_SHORT).show();
+            }// else 信息
         }//onClick
     };//upLoad_listener
 
@@ -155,6 +172,8 @@ public class agency_authenticate extends Activity {
                 imgShow.setImageBitmap(bm);
                 String path = getImageAbsolutePath(this, originalUri);
                 pic_path[num] = path;
+                is_upload_pic[num] = true;
+                ++upload_pic_count;
             }catch (IOException e) {
 
                 Log.e("TAG-->Error",e.toString());
@@ -258,9 +277,21 @@ public class agency_authenticate extends Activity {
 
     //将本页面图片上传到服务器
     public void UpLoad(){
-        //TODO 判断是否四个图片都已经选择、以及文本是否都填上
         Toast.makeText(getApplicationContext(), "开始上传",
                 Toast.LENGTH_SHORT).show();
+        String path = "";
+        for(int i = 0; i < pic_path.length; ++i){
+            if(pic_path[i].length() > 0){
+                path = pic_path[i];
+                break;
+            }
+        }//for
+
+        for(int i = 0; i < pic_path.length; ++i){
+            if(pic_path[i].length() == 0){
+                pic_path[i] = path;
+            }
+        }//for
 
         BmobFile.uploadBatch(pic_path, new UploadBatchListener() {
 
@@ -278,6 +309,7 @@ public class agency_authenticate extends Activity {
                     user.setAgency_pic2(new BmobFile("agency_pic2", null, urls.get(1)));
                     user.setAgency_pic3(new BmobFile("agency_pic3", null, urls.get(2)));
                     user.setAgency_pic4(new BmobFile("agency_pic4", null, urls.get(3)));
+                    user.setIdent_state_pub(1); //1代表审核中
                     user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
@@ -294,6 +326,7 @@ public class agency_authenticate extends Activity {
                     Toast.makeText(getApplicationContext(), "上传成功",
                             Toast.LENGTH_SHORT).show();
                     Log.i("z","上传文件成功");
+                    agency_authenticate.this.finish();
 
                 }
             }
@@ -302,7 +335,7 @@ public class agency_authenticate extends Activity {
             public void onError(int statuscode, String errormsg) {
                 Toast.makeText(getApplicationContext(), "上传失败",
                         Toast.LENGTH_SHORT).show();
-                Log.i("z","上传文件失败");
+                Log.i("z","上传文件失败"+ errormsg + statuscode);
 
             }
 
