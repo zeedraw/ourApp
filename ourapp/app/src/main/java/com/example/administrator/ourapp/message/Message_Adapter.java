@@ -17,14 +17,20 @@ import android.widget.Toast;
 
 import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.daimajia.swipe.util.Attributes;
+import com.example.administrator.ourapp.MainActivity;
+import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.UserInfo;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
 import com.jauker.widget.BadgeView;
 
 import java.util.HashMap;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -100,7 +106,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                 break;
             case 7:
                 MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_ask);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.ask);
                 break;
             case 8:
                 MessageType = "新的回答";       //发布者对用户的问题进行了回答 看到此消息的是提问者
@@ -125,8 +131,11 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
 //        badgeView.setVisibility(badgeView.INVISIBLE);
 
         if(!message.getBe_viewed()){
-//            badgeView.setVisibility(badgeView.VISIBLE);
             viewHolder.be_viewed.setVisibility(View.VISIBLE);
+        }
+        else{
+            viewHolder.be_viewed.setVisibility(View.INVISIBLE);
+
         }
 
 
@@ -135,6 +144,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
             @Override
             public void onClick(View view) {
                 //TODO 添加删除信息的处理方法
+
                 Message message = query_list.get(position);
                 message.setObjectId(message.getObjectId());
                 message.delete(new UpdateListener() {
@@ -143,6 +153,41 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                     public void done(BmobException e) {
                         if(e==null){
                             Log.i("bmob","成功");
+
+
+                            BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                            query.addWhereEqualTo("user" , BmobUser.getCurrentUser(MyUser.class));
+                            query.setLimit(50);
+                            query.findObjects(new FindListener<UserInfo>() {
+                                @Override
+                                public void done(List<UserInfo> object, BmobException e) {
+                                    if(e==null){
+
+                                        for (UserInfo user : object) {
+                                            if(!query_list.get(position).getBe_viewed())
+                                                user.subtractUnread_message_num();
+                                            if(user.getUnread_message_num() ==0){
+                                                ((MainActivity)getContext()).change_signal();
+                                            }//if ==0
+
+                                            user.update(user.getObjectId(), new UpdateListener() {
+
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if(e==null){
+                                                        Log.i("bmob","未读消息数更新成功");
+                                                    }else{
+                                                        Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }else{
+                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    }
+                                }
+                            });
+
                             query_list.remove(position);
                             notifyDataSetChanged();
                             Toast.makeText(getContext(), "消息已删除", Toast.LENGTH_SHORT).show();
@@ -163,6 +208,8 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
     public int getSwipeLayoutResourceId(int i) {
         return R.id.swipe;
     }
+
+
 
     class ViewHolder{
         ImageView message_image;

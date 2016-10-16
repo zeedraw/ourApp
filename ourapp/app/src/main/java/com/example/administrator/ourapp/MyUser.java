@@ -49,6 +49,15 @@ public class MyUser extends BmobUser {
     private String agency_contact_num;
     private Boolean is_new_message = false;
     private BmobDate message_refresh_time; //最后一次在本地加载新消息的时间
+    private String contact_numer; //联系方式
+
+    public String getContact_numer() {
+        return contact_numer;
+    }
+
+    public void setContact_numer(String contact_numer) {
+        this.contact_numer = contact_numer;
+    }
 
     public BmobDate getMessage_refresh_time() {
         return message_refresh_time;

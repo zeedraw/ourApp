@@ -1,7 +1,10 @@
 package com.example.administrator.ourapp.message;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.util.Log;
 
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.UserInfo;
 
@@ -23,7 +26,8 @@ public class Message_tools {
     boolean IsUnreadMessage = false;
 
     public void send(final MyUser sender, final MyUser receiver, final String content,
-                     Integer type, boolean be_viewed, String remark){
+                     Integer type, boolean be_viewed, String remark, final Context context){
+
         final Message message = new Message();
         message.setContent(content);
         message.setType(type); //7代表有人提问的消息
@@ -35,6 +39,8 @@ public class Message_tools {
 
             @Override
             public void done(String objectId, BmobException e) {
+                final Dialog loading_dialog = MainActivity.createLoadingDialog(context);
+                loading_dialog.show();
                 if(e==null){
                     Log.i("bomb","发送信息成功：" + objectId);
 
@@ -54,14 +60,17 @@ public class Message_tools {
                                         public void done(BmobException e) {
                                             if(e==null){
                                                 Log.i("bmob","未读消息数更新成功");
+                                                loading_dialog.dismiss();
                                             }else{
                                                 Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                loading_dialog.dismiss();
                                             }
                                         }
                                     });
                                 }
                             }else{
                                 Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                loading_dialog.dismiss();
                             }
                         }
                     });
@@ -80,29 +89,30 @@ public class Message_tools {
 //                    Log.i("bomb","已发送推送");
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    loading_dialog.dismiss();
                 }//else
             }//done
         });
     }//send
 
-    public boolean is_unread_message(String user_Id){
-        BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
-        query.addWhereEqualTo("user", user_Id);
-        query.setLimit(50);
-        query.findObjects(new FindListener<UserInfo>() {
-            @Override
-            public void done(List<UserInfo> object, BmobException e) {
-                if(e==null){
-                    if(object.get(0).getUnread_message_num() == 0)
-                        IsUnreadMessage = false;
-                    else if (object.get(0).getUnread_message_num() > 0)
-                        IsUnreadMessage = true;
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                }
-            }
-        });
-
-        return IsUnreadMessage;
-    }//is_unread_message
+//    public boolean is_unread_message(String user_Id){
+//        BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+//        query.addWhereEqualTo("user", user_Id);
+//        query.setLimit(50);
+//        query.findObjects(new FindListener<UserInfo>() {
+//            @Override
+//            public void done(List<UserInfo> object, BmobException e) {
+//                if(e==null){
+//                    if(object.get(0).getUnread_message_num() == 0)
+//                        IsUnreadMessage = false;
+//                    else if (object.get(0).getUnread_message_num() > 0)
+//                        IsUnreadMessage = true;
+//                }else{
+//                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                }
+//            }
+//        });
+//
+//        return IsUnreadMessage;
+//    }//is_unread_message
 }

@@ -178,7 +178,7 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                                             for(int i = 0; i < object.size(); ++i){
                                                 sm.send(BmobUser.getCurrentUser(MyUser.class), object.get(i),
                                                         "恭喜您，您参加的"+ mission.getName() + "活动已经开始！",
-                                                        5, false, mission.getObjectId() );
+                                                        5, false, mission.getObjectId(), getContext());
                                             }//for
 //                                            List<BmobObject> messages = new ArrayList<BmobObject>();
 //                                            for (int i = 0; i < object.size(); i++) {

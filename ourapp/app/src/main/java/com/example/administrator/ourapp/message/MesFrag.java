@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MissionInfo;
 import com.example.administrator.ourapp.MyTask;
@@ -110,47 +111,53 @@ public class MesFrag extends ProgressFragment implements IListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(!message_list.get(i).getBe_viewed()){
+                    message_list.get(i).setBe_viewed(true);
+                    message_list.get(i).update(message_list.get(i).getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(e==null){
+                                Log.i("bmob","更新成功");
 
-                message_list.get(i).setBe_viewed(true);
-                message_list.get(i).update(message_list.get(i).getObjectId(), new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if(e==null){
-                            Log.i("bmob","更新成功");
+                                BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                                query.addWhereEqualTo("user" ,BmobUser.getCurrentUser(MyUser.class));
+                                query.setLimit(50);
+                                query.findObjects(new FindListener<UserInfo>() {
+                                    @Override
+                                    public void done(List<UserInfo> object, BmobException e) {
+                                        if(e==null){
 
-                            BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
-                            query.addWhereEqualTo("user" ,BmobUser.getCurrentUser(MyUser.class));
-                            query.setLimit(50);
-                            query.findObjects(new FindListener<UserInfo>() {
-                                @Override
-                                public void done(List<UserInfo> object, BmobException e) {
-                                    if(e==null){
+                                            for (UserInfo user : object) {
+                                                user.subtractUnread_message_num();
 
-                                        for (UserInfo user : object) {
-                                            user.subtractUnread_message_num();
-                                            user.update(user.getObjectId(), new UpdateListener() {
+                                                if(user.getUnread_message_num() ==0) {
+                                                    ((MainActivity) getContext()).change_signal();
+                                                }//if ==0
+                                                user.update(user.getObjectId(), new UpdateListener() {
 
-                                                @Override
-                                                public void done(BmobException e) {
-                                                    if(e==null){
-                                                        Log.i("bmob","未读消息数更新成功");
-                                                    }else{
-                                                        Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                    @Override
+                                                    public void done(BmobException e) {
+                                                        if(e==null){
+                                                            Log.i("bmob","未读消息数更新成功");
+                                                        }else{
+                                                            Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+                                            }
+                                        }else{
+                                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                                         }
-                                    }else{
-                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                                     }
-                                }
-                            });
+                                });
 
-                        }else{
-                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                            }else{
+                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
 
 
                 switch(message_list.get(i).getType()){
@@ -414,6 +421,7 @@ public class MesFrag extends ProgressFragment implements IListener {
             public void onRefresh() {
                 mIsStart=true;
                 queryData();
+                ((MainActivity)getContext()).checkNewMes();
 
             }
         });
@@ -498,7 +506,7 @@ public class MesFrag extends ProgressFragment implements IListener {
 
     @Override
     public void upData() {
-
+        ((MainActivity)getContext()).checkNewMes();
     }
 
     public void hasNesMesRefresh()

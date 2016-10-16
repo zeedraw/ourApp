@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.message.Message_tools;
@@ -94,15 +96,15 @@ public class edit_answer extends Activity {
 
                         @Override
                         public void done(BmobException e) {
+                            final Dialog loading_dialog = MainActivity.createLoadingDialog(edit_answer.this);
+                            loading_dialog.show();
                             AlertDialog.Builder builder=new AlertDialog.Builder(edit_answer.this);
                             if(e==null){
                                 Log.i("bmob","回答更新成功");
-
-
-
                                 Message_tools sm = new Message_tools();
                                 sm.send(BmobUser.getCurrentUser(MyUser.class), question.getUser(),
-                                        "您的提问有新回答啦", 8 , false, question.getObjectId());
+                                        "您的提问有新回答啦", 8 , false, question.getObjectId(), edit_answer.this);
+
                                 //8代表提问有回答的消息
 
                                 builder.setMessage("答案编辑成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -112,6 +114,7 @@ public class edit_answer extends Activity {
                                     }
                                 }).create().show();
                             }else{
+                                loading_dialog.dismiss();
                                 Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                                 builder.setMessage("答案编辑失败").create().show();
                             }

@@ -44,18 +44,39 @@
     <LinearLayout
         android:id="@+id/messagItem"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="75dp"
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/message_image"
-            android:layout_width="54dp"
+
+        <RelativeLayout
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:src="@drawable/bg"
-            android:padding="3dp"
             android:layout_marginRight="8dp"
-            />
+            >
+
+            <ImageView
+                android:id="@+id/message_image"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ask"
+                android:padding="3dp"
+                android:layout_marginTop="5dp"
+
+                />
+            <ImageView
+                android:id="@+id/be_viewed"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/redcircle"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="40dp"
+                android:visibility="invisible"
+                />
+
+        </RelativeLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,15 +111,10 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/message_content"
-                    android:layout_width="270dp"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textSize="@dimen/text_size_small"
                     android:layout_marginRight="@dimen/widget_margin_medium"/>
-                <ImageView
-                    android:id="@+id/be_viewed"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_info_outline_black_24dp"/>
             </LinearLayout>
 
 

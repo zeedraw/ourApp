@@ -122,7 +122,7 @@ public class ChoosePeople extends AppCompatActivity {
                                             for (int i = 0; i < addList.size(); ++i) {
                                                 sm.send(BmobUser.getCurrentUser(MyUser.class), addList.get(i),
                                                         "恭喜您，您参加的" + mission.getName() + "活动已经开始！",
-                                                        5, false, mission.getObjectId());
+                                                        5, false, mission.getObjectId(), ChoosePeople.this);
                                             }//for
                                         }
 //                                        List<BmobObject> messages = new ArrayList<BmobObject>();
