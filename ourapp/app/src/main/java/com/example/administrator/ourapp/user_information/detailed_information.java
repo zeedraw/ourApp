@@ -1,7 +1,6 @@
 package com.example.administrator.ourapp.user_information;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -35,7 +34,7 @@ public class detailed_information extends Activity {
 
     private void initWidget() {
         return_bt = (TextView) findViewById(R.id.lbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         delete_friend = (TextView) findViewById(R.id.delete_friend);
         Intent intent =  getIntent();
 

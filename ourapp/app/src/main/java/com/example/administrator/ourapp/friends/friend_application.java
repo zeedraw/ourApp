@@ -53,7 +53,7 @@ public class friend_application extends Activity {
 //        commit_bt = (TextView) findViewById(R.id.rbt);
         agree_to_add_friend = (TextView) findViewById(R.id.agree_to_add_friend);
         refuse_to_add_friend = (TextView) findViewById(R.id.refuse_to_add_friend);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         apply_information_widget = (TextView) findViewById(R.id.apply_information);
         fre_username = (TextView) findViewById(R.id.fre_username);
         fre_introduction = (TextView) findViewById(R.id.fre_introduction);

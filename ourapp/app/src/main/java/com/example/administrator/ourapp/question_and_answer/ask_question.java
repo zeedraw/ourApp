@@ -43,7 +43,7 @@ public class ask_question extends Activity {
         EditQuestion = (EditText) findViewById(R.id.edit_question);
         submit = (TextView) findViewById(R.id.submit);
         return_bt = (TextView) findViewById(R.id.lbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
 
         return_bt.setText("返回");
         info_title.setText("提问");

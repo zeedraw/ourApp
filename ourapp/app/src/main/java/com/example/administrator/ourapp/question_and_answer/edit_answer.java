@@ -1,7 +1,6 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,22 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
-import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.message.SendMessage;
-
-import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -54,7 +46,7 @@ public class edit_answer extends Activity {
         EditAnswer = (EditText) findViewById(R.id.edit_question);
         return_bt = (TextView) findViewById(R.id.lbt);
         commit_bt = (TextView) findViewById(R.id.rbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         question_content = (TextView) findViewById(R.id.question_content);
         Intent intent = getIntent();
 

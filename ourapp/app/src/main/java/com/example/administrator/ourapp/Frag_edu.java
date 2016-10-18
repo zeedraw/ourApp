@@ -54,7 +54,7 @@ public class Frag_edu extends MyMissionFrag {
         callBack = new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new MissionAdapter(getContext(), R.layout.missionitem, list);
+                mAdapter = new MissionAdapter(getContext(), R.layout.mission_item, list);
                 listView.setAdapter(mAdapter);
 
             }

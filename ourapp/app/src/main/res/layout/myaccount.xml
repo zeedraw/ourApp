@@ -274,9 +274,37 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/colorbj"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#dddddd"
+                        />
+                    <TextView
+                        android:id="@+id/checkMission"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:text="查看任务履历及评价"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_size_large"
+                        android:textColor="@color/gray"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#dddddd"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@color/colorbj"
+                    android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <View
@@ -297,14 +325,19 @@
                             android:textColor="@color/grey"
                             android:paddingLeft="15dp"
                             android:paddingTop="12dp" />
-                        <ImageView
-                            android:layout_marginLeft="100dp"
+                        <RatingBar
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/star05"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ratingbar"
+                            style="@style/roomRatingBar"
+                            android:numStars="5"
+                            android:rating="5"
+                            android:stepSize="0.5"
+                            android:layout_marginLeft="100dp"
+                            android:layout_gravity="center"
+                            android:layout_centerVertical="true"
+                            android:isIndicator="true"
                             />
-
-
                     </RelativeLayout>
 
                     <View
@@ -357,7 +390,88 @@
                         android:layout_height="1px"
                         android:background="#dddddd"
                         />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="43dp"
+                            android:text="联系电话"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textColor="@color/grey"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="12dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/contact_number"
+                            android:layout_marginLeft="100dp"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/text_size_medium"
+                            android:paddingTop="12dp"
+                            android:maxLength="120"
+                            />
+                    </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#dddddd"
+                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="otherClick"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="43dp"
+                            android:text="其它联系方式"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textColor="@color/grey"
+                            android:paddingLeft="15dp"
+                            android:paddingTop="12dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/other_contact_tv"
+                            android:layout_marginLeft="120dp"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/text_size_medium"
+                            android:paddingTop="12dp"
+                            android:maxLength="120"
+                            android:hint="如QQ，微信，邮箱等"
+                            />
+                        <ImageView
+                            android:layout_alignParentRight="true"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="#00000000"
+                            android:src="@drawable/g17"
+                            android:layout_marginRight="10dp"
+                            android:padding="10dp"
+                            />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#dddddd"
+                        />
+
+
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+
+
 
             </LinearLayout>
         </LinearLayout>

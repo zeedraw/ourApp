@@ -74,7 +74,7 @@ public class DoComFrag extends MyMissionFrag {
 
         List<String> list=new ArrayList<String>();
         list.add(BmobUser.getCurrentUser(MyUser.class).getObjectId());
-        query.addWhereContainsAll("cur_people",list);
+        query.addWhereContainsAll("get_user",list);
         query.addWhereEqualTo("state",new Integer(4));
         query.order("-createdAt");
         query.setLimit(7);

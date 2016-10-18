@@ -59,7 +59,11 @@ public class ListenerManager {
     {
             for (int i=0;i<tag.length;i++)
             {
-                iListenerMap.get(tag[i]).upData();
+                IListener iListener= iListenerMap.get(tag[i]);
+                if (iListener!=null)
+                {
+                    iListener.upData();
+                }
             }
     }
 }

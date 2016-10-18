@@ -72,6 +72,7 @@
         <activity android:name=".RatingUser"
             android:windowSoftInputMode="adjustPan">
         </activity>
+        <activity android:name=".CheckMission"></activity>
 
     </application>
 

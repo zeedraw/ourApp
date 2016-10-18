@@ -31,7 +31,7 @@ public class EditIntro extends AppCompatActivity {
         setContentView(R.layout.edit_intro);
         Intent intent=getIntent();
         key=intent.getStringExtra("from");
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("编辑信息");
 
         complete=(TextView)findViewById(R.id.rbt);

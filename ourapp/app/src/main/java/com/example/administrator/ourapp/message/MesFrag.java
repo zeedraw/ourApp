@@ -21,13 +21,14 @@ import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MissionInfo;
+import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.RefreshLayout;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
-import com.example.administrator.ourapp.my_task;
+
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 import com.example.administrator.ourapp.question_and_answer.QA_adapter;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
@@ -178,7 +179,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                         break;
 
                     case 4: //有用户报名 跳转到我的任务界面
-                        Intent intent4 = new Intent(getActivity(), my_task.class);
+                        Intent intent4 = new Intent(getActivity(), MyTask.class);
 //                        intent4.putExtra("message_ID", message_ID.get(i));
                         startActivity(intent4);
                         break;

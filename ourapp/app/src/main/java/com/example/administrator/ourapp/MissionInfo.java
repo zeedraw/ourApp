@@ -1,15 +1,12 @@
 package com.example.administrator.ourapp;
 
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,14 +16,11 @@ import com.example.administrator.ourapp.message.SendMessage;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
@@ -68,7 +62,7 @@ public class MissionInfo extends AppCompatActivity {
            commit_bt.setVisibility(View.INVISIBLE);
         }
 
-        info_title=(TextView)findViewById(R.id.title);
+        info_title=(TextView)findViewById(R.id.mission_title);
         info_title.setText("任务详情");
 
         return_bt.setOnClickListener(new View.OnClickListener() {

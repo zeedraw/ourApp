@@ -24,7 +24,7 @@
 
         />
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/mission_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/view_height_custom"
         android:layout_weight="3"

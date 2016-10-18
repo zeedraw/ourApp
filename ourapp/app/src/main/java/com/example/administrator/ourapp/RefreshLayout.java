@@ -52,6 +52,8 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     /**
      * @param context
      */
+
+    private boolean loadState=true;//true上拉可用，false禁用
     public RefreshLayout(Context context) {
         this(context, null);
     }
@@ -129,8 +131,9 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
      *
      * @return
      */
+    private void loadEnable(boolean state){  loadState=state;};
     private boolean canLoad() {
-        return isBottom() && !isLoading && isPullUp();
+        return isBottom() && !isLoading && isPullUp()&&loadState;
     }
 
     /**
@@ -176,7 +179,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
             }
             else
             {
-                mListViewFooter.setVisibility(VISIBLE);
+               mListViewFooter.setVisibility(VISIBLE);
             }
         } else {
             mListViewFooter.setVisibility(GONE);
@@ -200,10 +203,19 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
                          int totalItemCount) {
+        if (totalItemCount==visibleItemCount)
+        {
+            loadEnable(false);
+        }
+        else
+        {
+            loadEnable(true);
+        }
         // 滚动时到了最底部也可以加载更多
         if (canLoad()) {
             loadData();
         }
+
     }
 
     /**

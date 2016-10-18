@@ -1,7 +1,6 @@
 package com.example.administrator.ourapp;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.example.administrator.ourapp.mymissionadapter.TestAdpter;
-import com.example.administrator.ourapp.mymissionadapter.UserItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +23,6 @@ import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
-import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -41,7 +35,7 @@ public class RatingUser extends AppCompatActivity {
     private String missionId;
     private int position;
     private List<MyUser> userList;
-    private TextView title,complete;
+    private TextView title,complete,rt;
     private Float scoreList[];//储存评分
     private String commentList[];//储存评语
     @Override
@@ -55,7 +49,14 @@ public class RatingUser extends AppCompatActivity {
     private void initWidget()
     {
         listView=(ListView)findViewById(R.id.user_list);
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
+        rt=(TextView)findViewById(R.id.lbt);
+        rt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         complete=(TextView)findViewById(R.id.rbt);
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +226,7 @@ public class RatingUser extends AppCompatActivity {
         position=getIntent().getIntExtra("position",-1);
         title.setText("评价");
         complete.setText("完成");
+        rt.setText("返回");
         query();
     }
 
