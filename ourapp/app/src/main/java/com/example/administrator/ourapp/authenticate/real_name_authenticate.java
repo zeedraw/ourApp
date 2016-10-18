@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.authenticate;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 
@@ -51,6 +53,7 @@ public class real_name_authenticate extends AppCompatActivity {
     private EditText real_name = null;
     private EditText ID_number = null;
     private EditText school_name = null;
+    private EditText contact_number = null;
     private String pic_path[] = new String[4];
     private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
     private boolean is_upload_pic[] = {false, false, false, false};
@@ -71,6 +74,7 @@ public class real_name_authenticate extends AppCompatActivity {
         real_name = (EditText) findViewById(R.id.real_name);
         ID_number = (EditText) findViewById(R.id.ID_number);
         school_name= (EditText) findViewById(R.id.school_name);
+        contact_number= (EditText) findViewById(R.id.contact_number);
         cardFront.setOnClickListener(listener);
         cardBack.setOnClickListener(listener);
         halfPic.setOnClickListener(listener);
@@ -83,7 +87,9 @@ public class real_name_authenticate extends AppCompatActivity {
         public void onClick(View v){
 
                 if(real_name.getText().length() !=0 &&
-                        ID_number.getText().length() !=0  && school_name.getText().length() !=0){
+                        ID_number.getText().length() !=0  &&
+                        contact_number.getText().length() != 0 &&
+                        school_name.getText().length() !=0){
                     if(is_upload_pic[0] && is_upload_pic[1] && is_upload_pic[2] && is_upload_pic[3]) {
                         UpLoad();
                     }//if 图片
@@ -283,6 +289,8 @@ public class real_name_authenticate extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "开始上传,请不要关闭此页面或进行其他操作",
                 Toast.LENGTH_SHORT).show();
 
+        final Dialog loading_dialog = MainActivity.createLoadingDialog(real_name_authenticate.this);
+        loading_dialog.show();
         BmobFile.uploadBatch(pic_path, new UploadBatchListener() {
 
             @Override
@@ -295,6 +303,7 @@ public class real_name_authenticate extends AppCompatActivity {
                     user.setRealname(real_name.getText().toString().trim());
                     user.setIdCard(ID_number.getText().toString().trim());
                     user.setSchoolname(school_name.getText().toString().trim());
+                    user.setContact_numer(contact_number.getText().toString().trim());
                     user.setCardfront(new BmobFile("CardFront", null, urls.get(0)));
                     user.setCardback(new BmobFile("CardBack", null, urls.get(1)));
                     user.setHalfpicture(new BmobFile("halfPic", null, urls.get(2)));
@@ -305,7 +314,12 @@ public class real_name_authenticate extends AppCompatActivity {
                         public void done(BmobException e) {
                             if (e==null)
                             {
+                                loading_dialog.dismiss();
                                 Log.i("s","更新用户成功");
+                                Toast.makeText(getApplicationContext(), "上传成功",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.i("z","上传文件成功");
+                                real_name_authenticate.this.finish();
                             }
                             else
                             {
@@ -313,21 +327,20 @@ public class real_name_authenticate extends AppCompatActivity {
                             }
                         }
                     });
-                    Toast.makeText(getApplicationContext(), "上传成功",
-                            Toast.LENGTH_SHORT).show();
-                    Log.i("z","上传文件成功");
-                    real_name_authenticate.this.finish();
+
 
                 }
             }
 
             @Override
             public void onError(int statuscode, String errormsg) {
+                loading_dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "上传失败",
                         Toast.LENGTH_SHORT).show();
                 Log.i("z","上传文件失败");
 
             }
+
 
             @Override
             public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {

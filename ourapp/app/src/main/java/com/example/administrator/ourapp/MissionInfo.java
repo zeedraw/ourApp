@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.message.SendMessage;
+import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 
 import java.io.InputStream;
@@ -96,10 +96,10 @@ public class MissionInfo extends AppCompatActivity {
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     mes.setMessage("报名成功");
-                                                    SendMessage sm = new SendMessage();
+                                                    Message_tools sm = new Message_tools();
                                                     sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
                                                             "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
-                                                                    + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId());
+                                                                    + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId(), MissionInfo.this);
                                                     //4代表报名任务成功的消息
 
                                                 } else {

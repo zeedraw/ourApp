@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,21 +25,16 @@ import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
 import com.example.administrator.ourapp.imageloader.TagInfo;
-import com.example.administrator.ourapp.message.Message;
+import com.example.administrator.ourapp.message.Message_tools;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.bmob.v3.BmobBatch;
-import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -162,7 +156,7 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                            Mission missionPointer=new Mission();
+                        Mission missionPointer=new Mission();
                         missionPointer.setObjectId(mission.getObjectId());
                         missionPointer.setState(new Integer(3));
                         missionPointer.update(new UpdateListener() {
@@ -180,39 +174,43 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                                     public void done(List<MyUser> object,BmobException e) {
                                         if(e==null){
                                             Log.i("bmob","查询个数："+object.size());
-
-                                            List<BmobObject> messages = new ArrayList<BmobObject>();
-                                            for (int i = 0; i < object.size(); i++) {
-                                                Message message = new Message();
-                                                message.setSender(BmobUser.getCurrentUser(MyUser.class));
-                                                message.setReceiver(object.get(i));
-                                                message.setType(5); //5为申请的任务开始信息
-                                                message.setBe_viewed(false);
-                                                message.setRemark(mission.getObjectId());
-                                                message.setContent("恭喜您，您参加的"+ mission.getName() +
-                                                        "活动已经开始！");
-                                                messages.add(message);
-                                            }
-//第二种方式：v3.5.0开始提供
-                                            new BmobBatch().insertBatch(messages).doBatch(new QueryListListener<BatchResult>() {
-
-                                                @Override
-                                                public void done(List<BatchResult> o, BmobException e) {
-                                                    if(e==null){
-                                                        for(int i=0;i<o.size();i++){
-                                                            BatchResult result = o.get(i);
-                                                            BmobException ex =result.getError();
-                                                            if(ex==null){
-                                                                Log.i("给申请者发送成功消息", "第"+i+"个数据批量添加成功："+result.getCreatedAt()+","+result.getObjectId()+","+result.getUpdatedAt());
-                                                            }else{
-                                                                Log.i("给申请者发送成功消息", "第"+i+"个数据批量添加失败："+ex.getMessage()+","+ex.getErrorCode());
-                                                            }
-                                                        }
-                                                    }else{
-                                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                                                    }
-                                                }
-                                            });
+                                            Message_tools sm = new Message_tools();
+                                            for(int i = 0; i < object.size(); ++i){
+                                                sm.send(BmobUser.getCurrentUser(MyUser.class), object.get(i),
+                                                        "恭喜您，您参加的"+ mission.getName() + "活动已经开始！",
+                                                        5, false, mission.getObjectId(), getContext());
+                                            }//for
+//                                            List<BmobObject> messages = new ArrayList<BmobObject>();
+//                                            for (int i = 0; i < object.size(); i++) {
+//                                                Message message = new Message();
+//                                                message.setSender(BmobUser.getCurrentUser(MyUser.class));
+//                                                message.setReceiver(object.get(i));
+//                                                message.setType(5); //5为申请的任务开始信息
+//                                                message.setBe_viewed(false);
+//                                                message.setRemark(mission.getObjectId());
+//                                                message.setContent("恭喜您，您参加的"+ mission.getName() +
+//                                                        "活动已经开始！");
+//                                                messages.add(message);
+//                                            }
+//                                            new BmobBatch().insertBatch(messages).doBatch(new QueryListListener<BatchResult>() {
+//
+//                                                @Override
+//                                                public void done(List<BatchResult> o, BmobException e) {
+//                                                    if(e==null){
+//                                                        for(int i=0;i<o.size();i++){
+//                                                            BatchResult result = o.get(i);
+//                                                            BmobException ex =result.getError();
+//                                                            if(ex==null){
+//                                                                Log.i("给申请者发送成功消息", "第"+i+"个数据批量添加成功："+result.getCreatedAt()+","+result.getObjectId()+","+result.getUpdatedAt());
+//                                                            }else{
+//                                                                Log.i("给申请者发送成功消息", "第"+i+"个数据批量添加失败："+ex.getMessage()+","+ex.getErrorCode());
+//                                                            }
+//                                                        }
+//                                                    }else{
+//                                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                                                    }
+//                                                }
+//                                            });
 
 
 

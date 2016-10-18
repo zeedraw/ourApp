@@ -23,16 +23,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.friends.FreFrag;
 import com.example.administrator.ourapp.friends.search_user;
 import com.example.administrator.ourapp.message.MesFrag;
+import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.user_information.MyAccount;
 
+import java.util.List;
+
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,IListener{
@@ -42,6 +51,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //    private FragmentManager mfragManager;
 //    private FragmentTransaction mTransaction;
     private TextView r_button;
+    private Integer state_stu;
+    private Integer state_pub;
 
 
     @Override
@@ -211,10 +222,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         {
             ft.hide(fre);
         }
-        if (mesOnNotLogin!=null)
-        {
-            ft.hide(mesOnNotLogin);
-        }
         //判断显示的frag
         if (view==tv_main)
         {
@@ -346,21 +353,65 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         builder.setItems(items, new DialogInterface.OnClickListener() {
 
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0: // 选择实名认证
-                        ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
-                        Intent intent=new Intent();
-                        intent.setComponent(comp);
-                        startActivity(intent);
-                        break;
-                    case 1: // 选择机构认证
-                        comp=new ComponentName(MainActivity.this,agency_authenticate.class);
-                        intent=new Intent();
-                        intent.setComponent(comp);
-                        startActivity(intent);
-                        break;
-                }//swtich
+            public void onClick(DialogInterface dialog, final int which) {
+
+                BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+                query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
+
+                    @Override
+                    public void done(MyUser object, BmobException e) {
+                        if(e==null){
+                            state_stu = object.getIdent_state_stu();
+                            state_pub = object.getIdent_state_pub();
+
+                            switch (which) {
+                                case 0: // 选择实名认证
+                                    if(state_stu == 1){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("正在认证");
+                                        Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else if(state_stu == 2){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("认证已通过，不能重复认证");
+                                        Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
+
+                                    }else{
+                                        ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
+                                        Intent intent=new Intent();
+                                        intent.setComponent(comp);
+                                        startActivity(intent);
+                                    }
+                                    break;
+                                case 1: // 选择机构认证
+                                    if(state_pub == 1){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("正在认证");
+                                        Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if(state_pub == 2){
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+//                                        builder.setMessage("认证已通过，不能重复认证");
+                                        Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
+
+                                    }else{
+                                        ComponentName comp=new ComponentName(MainActivity.this,agency_authenticate.class);
+                                        Intent intent=new Intent();
+                                        intent.setComponent(comp);
+                                        startActivity(intent);
+                                    }
+                                    break;
+                            }//swtich
+
+
+                        }else{
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+
+                });
+
             }//onClick
         });
         builder.create().show();
@@ -464,22 +515,50 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    private void checkNewMes()
+    public void checkNewMes()
     {
-        // TODO: 2016/10/14 checknewmes
+        Message_tools mt = new Message_tools();
         Log.i("z","开始检测消息");
-        boolean has=true;
-        if (has==true)
-        {
-            Log.i("z","检测到新消息");
-            mesSignal.setVisibility(View.VISIBLE);
+
+        BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+        query.addWhereEqualTo("user", BmobUser.getCurrentUser());
+        query.setLimit(50);
+        query.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> object, BmobException e) {
+                if(e==null){
+                    if(object.get(0).getUnread_message_num() > 0){
+                        Log.i("z","检测到新消息");
+                        mesSignal.setVisibility(View.VISIBLE);
+                    }//if
+
+                    else if (object.get(0).getUnread_message_num() == 0){
+                        Log.i("z","检测到没有新消息");
+                        mesSignal.setVisibility(View.INVISIBLE);
+                    }//else if
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkNewMes();
+        FragmentManager fm=getSupportFragmentManager();
+        Fragment mes=fm.findFragmentByTag("mes");
+        if (mes!=null) {
+            ((MesFrag) mes).hasNesMesRefresh();
         }
     }
 
-
-
-
-
+    public void change_signal(){
+        Log.i("z","没有未读消息");
+        mesSignal.setVisibility(View.INVISIBLE);
+    }//change_signal
 }
 
 

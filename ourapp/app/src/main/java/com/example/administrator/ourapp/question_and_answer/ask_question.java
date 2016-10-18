@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -10,10 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
-import com.example.administrator.ourapp.message.SendMessage;
+import com.example.administrator.ourapp.message.Message_tools;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -63,6 +65,8 @@ public class ask_question extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final Dialog loading_dialog = MainActivity.createLoadingDialog(ask_question.this);
+                loading_dialog.show();
                 answer.setContent("暂无回答");
                 answer.setMyUser(BmobUser.getCurrentUser(MyUser.class));
                 answer.setMission(question.getMission());
@@ -85,19 +89,19 @@ public class ask_question extends Activity {
                                     if(e==null){
                                         Log.i("bmob","上传数据成功");
 
-                                        SendMessage sm = new SendMessage();
+                                        Message_tools sm = new Message_tools();
                                         sm.send(BmobUser.getCurrentUser(MyUser.class), mission.getPub_user(),
-                                                question.getContent(), 7, false, question.getObjectId()); //7代表有人提问的消息
-
-
+                                                question.getContent(), 7, false, question.getObjectId(), ask_question.this); //7代表有人提问的消息
                                         builder.setMessage("问题发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 ListenerManager.getInstance().sendBroadCast(new String[]{"QA"});
                                                 finish();
+
                                             }
                                         }).create().show();
                                     }else{
+                                        loading_dialog.dismiss();
                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                                         builder.setMessage("问题发布失败").create().show();
                                     }

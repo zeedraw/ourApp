@@ -23,7 +23,6 @@ public class MyUser extends BmobUser {
     private BmobRelation friends;//好友
     private Boolean isIdentifiedStudent;//是否被认证 true被认证 false没被认证
     private Boolean isIdentifiedPublish;
-    private String tag;//被认证为的类型 教育，活动，社区，交通
     private Integer ident_state_stu; //学生认证的状态 0为未认证 1为审核中 2为已通过
     private Integer ident_state_pub; //机构的认证状态 0为未认证 1为审核中 2为已通过
     private String name;
@@ -49,6 +48,15 @@ public class MyUser extends BmobUser {
     private String agency_contact_num;
     private Boolean is_new_message = false;
     private BmobDate message_refresh_time; //最后一次在本地加载新消息的时间
+    private String contact_numer; //联系方式
+
+    public String getContact_numer() {
+        return contact_numer;
+    }
+
+    public void setContact_numer(String contact_numer) {
+        this.contact_numer = contact_numer;
+    }
 
     public BmobDate getMessage_refresh_time() {
         return message_refresh_time;

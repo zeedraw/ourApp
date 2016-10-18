@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.authenticate;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 
@@ -279,6 +281,8 @@ public class agency_authenticate extends Activity {
     public void UpLoad(){
         Toast.makeText(getApplicationContext(), "开始上传",
                 Toast.LENGTH_SHORT).show();
+        final Dialog loading_dialog = MainActivity.createLoadingDialog(agency_authenticate.this);
+        loading_dialog.show();
         String path = "";
         for(int i = 0; i < pic_path.length; ++i){
             if(pic_path[i].length() > 0){
@@ -315,18 +319,21 @@ public class agency_authenticate extends Activity {
                         public void done(BmobException e) {
                             if (e==null)
                             {
+                                loading_dialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "上传成功",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.i("z","上传文件成功");
+                                agency_authenticate.this.finish();
                                 Log.i("s","更新用户成功");
                             }
                             else
                             {
+                                loading_dialog.dismiss();
                                 Log.i("s","更新失败"+e.getMessage());
                             }
                         }
                     });
-                    Toast.makeText(getApplicationContext(), "上传成功",
-                            Toast.LENGTH_SHORT).show();
-                    Log.i("z","上传文件成功");
-                    agency_authenticate.this.finish();
+
 
                 }
             }
