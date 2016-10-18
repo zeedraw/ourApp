@@ -17,6 +17,8 @@ import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.message.Message_tools;
 
+import com.example.administrator.ourapp.message.SendMessage;
+
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -49,7 +51,7 @@ public class edit_answer extends Activity {
         EditAnswer = (EditText) findViewById(R.id.edit_question);
         return_bt = (TextView) findViewById(R.id.lbt);
         commit_bt = (TextView) findViewById(R.id.rbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         question_content = (TextView) findViewById(R.id.question_content);
         Intent intent = getIntent();
 

@@ -117,7 +117,7 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
         });
         rt_bt.setVisibility(View.VISIBLE);
 
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("编辑");
 
         personal_icon_iv=(ImageView)findViewById(R.id.personal_icon_iv);

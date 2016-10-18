@@ -120,7 +120,7 @@ public class MyTask extends FragmentActivity implements View.OnClickListener {
             }
         });
 
-        missionTitle=(TextView)findViewById(R.id.title);
+        missionTitle=(TextView)findViewById(R.id.mission_title);
         missionTitle.setText("我的任务");
     }
 

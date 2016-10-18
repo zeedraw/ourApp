@@ -2,7 +2,6 @@ package com.example.administrator.ourapp.friends;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
@@ -60,7 +58,7 @@ public class search_user extends Activity {
 
     private void initwidget() {
         return_bt = (TextView) findViewById(R.id.lbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         search_bar = (EditText) findViewById(R.id.search_bar);
         return_bt.setText("返回");
         info_title.setText("搜索");

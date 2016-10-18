@@ -1,35 +1,18 @@
 package com.example.administrator.ourapp.question_and_answer;
 
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.Fragment1;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Mission;
-import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.QAFrag;
 import com.example.administrator.ourapp.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Longze on 2016/9/18.
@@ -55,7 +38,7 @@ public class question_and_answer extends FragmentActivity implements IListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.questoin_and_answer_listview);
+        setContentView(R.layout.refresh_listview);
         ListenerManager.getInstance().registerListtener("QA",this);
 //        listView  = (ListView) findViewById(R.id.QAlistview);
 //        final Context context = this.getBaseContext();
@@ -144,7 +127,7 @@ public class question_and_answer extends FragmentActivity implements IListener{
         commit_bt.setText("提问");
 //        commit_bt.setTextSize(21);
 
-        info_title=(TextView)findViewById(R.id.title);
+        info_title=(TextView)findViewById(R.id.mission_title);
         info_title.setText("问答");
 
         Bundle bundle = new Bundle();

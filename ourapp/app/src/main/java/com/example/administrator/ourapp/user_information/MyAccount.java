@@ -28,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.example.administrator.ourapp.CheckMission;
 import com.example.administrator.ourapp.ChoosePicPopupWindow;
 import com.example.administrator.ourapp.EditIntro;
 import com.example.administrator.ourapp.ListenerManager;
@@ -46,13 +48,19 @@ import com.example.administrator.ourapp.LocationPickerDialog;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.RatingUser;
+import com.example.administrator.ourapp.UserInfo;
 import com.example.administrator.ourapp.widget.PullScrollView;
 
 import java.util.Calendar;
+import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
@@ -62,12 +70,16 @@ import cn.bmob.v3.listener.UploadFileListener;
 public class MyAccount extends AppCompatActivity implements PullScrollView.OnTurnListener, DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
     private PullScrollView mScrollView;
     private ImageView mHeadImg;
-    private TextView rt_button,edit_button;
+    private TextView rt_button;
     private TextView title;
     private TextView name_tv,sex_tv,age_tv,location_tv,intro_tv;
     private ImageView user_image_iv;
     private MyUser current;
     private TextView studentDes,organizationDes;
+    private TextView checkMission;
+    private TextView number,otherContact;
+    private RatingBar ratingBar;
+
 
     private static final int CHOOSE_PICTURE = 0;
     private static final int TAKE_PICTURE = 1;
@@ -86,15 +98,30 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 setContentView(R.layout.myaccount);
                 initWidget();
                 Intent intent=getIntent();
-                current=(MyUser) intent.getSerializableExtra("user");
-                if (current!=null)
+                current=(MyUser)intent.getSerializableExtra("user");
+                if (current!=null)//他人查看
                 {
                     initInfo(false);
                     setUnEditable();
                 }
-                else {
-                    current = BmobUser.getCurrentUser(MyUser.class);
-                    initInfo(true);
+                else {//本人查看
+                    BmobQuery<MyUser> query=new BmobQuery<MyUser>();
+                    query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
+                        @Override
+                        public void done(MyUser myUser, BmobException e) {
+                            if(e==null)
+                            {
+                                current=myUser;
+
+
+                            }
+                            else
+                            {
+                                current=BmobUser.getCurrentUser(MyUser.class);
+                            }
+                            initInfo(true);
+                        }
+                    });
                 }
 
     }
@@ -118,12 +145,24 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         location_tv=(TextView)findViewById(R.id.info_location_tv);
         intro_tv=(TextView)findViewById(R.id.info_intro_tv);
 
+        checkMission=(TextView)findViewById(R.id.checkMission);
+        checkMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MyAccount.this, CheckMission.class);
+                startActivity(intent);
+            }
+        });
+
+        ratingBar=(RatingBar)findViewById(R.id.ratingbar);
+        number=(TextView)findViewById(R.id.contact_number);
+        otherContact=(TextView)findViewById(R.id.other_contact_tv);
 
 
 
         rt_button=(TextView)findViewById(R.id.lbt);
    //     edit_button=(TextView)findViewById(R.id.rbt);
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
 
         rt_button.setText("返回");
      //   edit_button.setText("编辑");
@@ -188,6 +227,25 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         if (current.getIntroduction()!=null)
         {intro_tv.setText(current.getIntroduction());}
 
+        //初始化评分信息
+        BmobQuery<UserInfo> query=new BmobQuery<UserInfo>();
+        MyUser user=new MyUser();
+        user.setObjectId(current.getObjectId());
+        query.addWhereEqualTo("user",user);
+        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
+        query.findObjects(new FindListener<UserInfo>() {
+            @Override
+            public void done(List<UserInfo> list, BmobException e) {
+                if (e==null)
+                {
+                    ratingBar.setRating(list.get(0).getRating().floatValue());
+                }
+                else
+                {
+                    Log.i("z","查询评分失败");
+                }
+            }
+        });
 
     }
 
@@ -720,6 +778,10 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         startActivityForResult(intent,FOR_INTRO);
     }
 
+    public void otherClick(View view)
+    {
+
+    }
     private void setUnEditable()
     {
 

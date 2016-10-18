@@ -62,7 +62,7 @@ public class MissionInfo extends AppCompatActivity {
            commit_bt.setVisibility(View.INVISIBLE);
         }
 
-        info_title=(TextView)findViewById(R.id.title);
+        info_title=(TextView)findViewById(R.id.mission_title);
         info_title.setText("任务详情");
 
         return_bt.setOnClickListener(new View.OnClickListener() {

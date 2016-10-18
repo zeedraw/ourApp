@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,7 +32,6 @@ import com.example.administrator.ourapp.friends.search_user;
 import com.example.administrator.ourapp.message.MesFrag;
 import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.user_information.MyAccount;
-import com.example.administrator.ourapp.user_information.other_information;
 
 import java.util.List;
 
@@ -47,7 +44,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener{
+public class MainActivity extends FragmentActivity implements View.OnClickListener,IListener{
     private RelativeLayout tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
     private TextView title;//上方标题
     private ImageView mesSignal;
@@ -65,7 +62,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
         setContentView(R.layout.maininterface);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
-
+        ListenerManager.getInstance().registerListtener("Main",this);
         // 初始化BmobSDK
 //        Bmob.initialize(this, "f7ff174553704fa24b1a4f83dea2e4aa");
 //        // 使用推送服务时的初始化操作
@@ -92,7 +89,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tv_fre.setOnClickListener(this);
 
         //设置activity的标题
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("首页");
 
         //默认首页
@@ -201,7 +198,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     }
-
+    //显示frag
     private void myCheckedChaged(View view)
     {
         FragmentManager fm=getSupportFragmentManager();
@@ -210,6 +207,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Fragment main=fm.findFragmentByTag("main");
         Fragment mes=fm.findFragmentByTag("mes");
         Fragment fre=fm.findFragmentByTag("fre");
+        Fragment mesOnNotLogin=fm.findFragmentByTag("mesNot");
 
         if (mine!=null)
         {
@@ -243,18 +241,29 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         else if(view==tv_mes)
         {
-            if (mes==null)
-            {
-                mes=new MesFrag();
-                ft.add(R.id.frag_container,mes,"mes");
+            if (BmobUser.getCurrentUser()!=null) {
+                   if (mes == null) {
+                        mes = new MesFrag();
+                    ft.add(R.id.frag_container, mes, "mes");
+                } else {
+
+                    ft.show(mes);
+                    if (mesSignal.getVisibility() == View.VISIBLE) {
+                        ((MesFrag) mes).hasNesMesRefresh();
+                    }
+
+                }
             }
             else
             {
-
-                ft.show(mes);
-                if (mesSignal.getVisibility()==View.VISIBLE) {
-                    ((MesFrag) mes).hasNesMesRefresh();
-//                    mesSignal.setVisibility(View.INVISIBLE);
+                if (mesOnNotLogin==null)
+                {
+                    mesOnNotLogin=new FragMesOnNotLogin();
+                    ft.add(R.id.frag_container,mesOnNotLogin,"mesNot");
+                }
+                else
+                {
+                    ft.show(mesOnNotLogin);
                 }
 
             }
@@ -290,7 +299,32 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
+    @Override
+    public void upData() {
+        Log.i("z","登陆返回....................");
+//        FragmentManager fm=getSupportFragmentManager();
+//        FragmentTransaction ft=fm.beginTransaction();
+//        Fragment mes=fm.findFragmentByTag("mes");
+//        Fragment mesNot=fm.findFragmentByTag("mesNot");
+//        if (mesNot!=null)
+//        {
+//            ft.hide(mesNot);
+//        }
+//        if (mes == null) {
+//            mes = new MesFrag();
+//            ft.add(R.id.frag_container, mes, "mes");
+//        } else {
+//
+//            ft.show(mes);
+//            if (mesSignal.getVisibility() == View.VISIBLE) {
+//                ((MesFrag) mes).hasNesMesRefresh();
+//            }
+//
+//        }
+//        ft.commit();
+        myCheckedChaged(tv_main);
 
+    }
 
     //以下五个方法对应MineFrag中的点击事件
     public void Myaccount_click(View view)

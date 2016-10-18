@@ -1,9 +1,7 @@
 package com.example.administrator.ourapp;
 
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -16,9 +14,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.io.File;
-import java.net.URI;
-import java.sql.Time;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,7 +70,7 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
         signup_bt=(Button)findViewById(R.id.signup_bt);
         signup_bt.setOnClickListener(this);
 
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("注册");
 
         rt=(TextView)findViewById(R.id.lbt);
@@ -159,7 +154,7 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
                             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag"});
+                                    ListenerManager.getInstance().sendBroadCast(new String[]{"Main"});
                                     finish();
                                 }
                             });

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBJ">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/grey1"
+        android:text="登录后，可以在这里接受到来自任务"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/mes" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/grey1"
+        android:text="和系统的相关消息。"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/mes1"
+        android:layout_below="@id/mes"/>
+    <TextView
+        android:id="@+id/signup"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:background="@drawable/mybotton_press"
+        android:layout_marginLeft="65dp"
+        android:layout_below="@id/mes1"
+        android:layout_marginTop="20dp"
+        android:text="注册"
+        android:textSize="@dimen/text_size_large"
+        android:gravity="center"
+        android:textColor="@color/selected"/>
+    <TextView
+        android:id="@+id/login"
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:background="@drawable/mybotton_press"
+        android:layout_marginRight="65dp"
+        android:layout_below="@id/mes1"
+        android:layout_marginTop="20dp"
+        android:text="登录"
+        android:textSize="@dimen/text_size_large"
+        android:gravity="center"/>
+
+
+
+</RelativeLayout>

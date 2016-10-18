@@ -23,7 +23,7 @@ public class apply extends AppCompatActivity {
     {
         rt_button=(TextView)findViewById(R.id.lbt);
         sub_button=(TextView)findViewById(R.id.rbt);
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         rt_button.setText("返回");
         sub_button.setText("提交");
         rt_button.setVisibility(View.VISIBLE);

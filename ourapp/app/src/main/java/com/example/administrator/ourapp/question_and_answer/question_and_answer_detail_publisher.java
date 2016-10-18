@@ -43,7 +43,7 @@ public class question_and_answer_detail_publisher extends Activity implements IL
     private void initWidget() {
         return_bt = (TextView) findViewById(R.id.lbt);
         edit = (TextView) findViewById(R.id.rbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         question_content = (TextView) findViewById(R.id.detail_question_content);
         answer_content = (TextView) findViewById((R.id.detail_answer_content));
         question_date = (TextView) findViewById(R.id.detail_question_date);

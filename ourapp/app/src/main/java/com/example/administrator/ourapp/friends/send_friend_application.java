@@ -43,7 +43,7 @@ public class send_friend_application extends Activity {
 
         return_bt = (TextView) findViewById(R.id.lbt);
         commit_bt = (TextView) findViewById(R.id.rbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
         apply_information = (EditText) findViewById(R.id.apply_information);
 
         Intent intent =  getIntent();

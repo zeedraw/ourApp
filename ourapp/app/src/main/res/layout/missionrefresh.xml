@@ -13,8 +13,9 @@
             android:id="@+id/mission_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:dividerHeight="9dp"
             android:divider="@color/divider"
-            android:dividerHeight="9dp"/>
+            />
     </com.example.administrator.ourapp.RefreshLayout>
 
 </LinearLayout>

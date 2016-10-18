@@ -48,7 +48,7 @@ public class CheckPeople extends AppCompatActivity {
     private void initWidget()
     {
         listView=(ListView)findViewById(R.id.checkpeople_lv);
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("查看人员");
         rt_bt=(TextView)findViewById(R.id.lbt);
         rt_bt.setText("返回");

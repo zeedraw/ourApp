@@ -42,7 +42,7 @@ public class confirm_friend extends Activity {
         return_bt = (TextView) findViewById(R.id.lbt);
 //        commit_bt = (TextView) findViewById(R.id.rbt);
         agree_to_add_friend = (TextView) findViewById(R.id.agree_to_add_friend);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
 
         return_bt.setText("返回");
         info_title.setText("好友确认");

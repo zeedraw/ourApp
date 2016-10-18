@@ -61,7 +61,7 @@ public class ChoosePeople extends AppCompatActivity {
     private void initWidget()
     {
         edit_bar=(RelativeLayout)findViewById(R.id.edit_bar);
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("筛选人员");
         rt_bt=(TextView)findViewById(R.id.lbt);
         rt_bt.setText("返回");

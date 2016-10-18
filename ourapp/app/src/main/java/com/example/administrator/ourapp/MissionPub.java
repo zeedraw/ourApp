@@ -13,8 +13,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.administrator.ourapp.user_information.MyAccount;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +20,6 @@ import java.util.Date;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-import rx.internal.operators.OnSubscribeLift;
 
 /**
  * Created by Administrator on 2016/9/17.
@@ -82,7 +79,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
             }
         });
 
-        title=(TextView)findViewById(R.id.title);
+        title=(TextView)findViewById(R.id.mission_title);
         title.setText("发布任务");
     }
 

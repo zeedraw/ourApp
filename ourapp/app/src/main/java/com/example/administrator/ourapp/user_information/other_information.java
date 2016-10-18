@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -12,18 +11,14 @@ import android.widget.TextView;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.friends.send_friend_application;
-import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail_publisher;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Longze on 2016/9/22.
@@ -51,7 +46,7 @@ public class other_information extends Activity {
         context = getBaseContext();
         commit_bt = (TextView) findViewById(R.id.rbt);
         return_bt = (TextView) findViewById(R.id.lbt);
-        info_title = (TextView) findViewById(R.id.title);
+        info_title = (TextView) findViewById(R.id.mission_title);
 
         Intent intent =  getIntent();
 
