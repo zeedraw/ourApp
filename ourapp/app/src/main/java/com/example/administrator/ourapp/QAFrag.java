@@ -60,6 +60,7 @@ public class QAFrag extends ProgressFragment {
 
         mContentView=inflater.inflate(R.layout.missionrefresh,container,false);
         listView=(ListView)mContentView.findViewById(R.id.mission_listview);
+        listView.setDividerHeight(5);
         refreshLayout=(RefreshLayout) mContentView.findViewById(R.id.mission_refreshlayout);
         refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
@@ -76,6 +77,7 @@ public class QAFrag extends ProgressFragment {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setContentShown(false);
+        setEmptyText("还没有提问，快来创建第一个问题吧");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

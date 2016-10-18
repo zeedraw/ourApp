@@ -1,6 +1,7 @@
 package com.example.administrator.ourapp.message;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -9,12 +10,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.IListener;
@@ -89,8 +93,8 @@ public class MesFrag extends ProgressFragment implements IListener {
                              Bundle savedInstanceState) {
         ListenerManager.getInstance().registerListtener("MesFrag",this);
 
-        mContentView=inflater.inflate(R.layout.missionrefresh,container,false);
-        listView=(ListView)mContentView.findViewById(R.id.mission_listview);
+        mContentView=inflater.inflate(R.layout.message_listview,container,false);
+        listView=(ListView)mContentView.findViewById(R.id.message_listview);
         refreshLayout=(RefreshLayout) mContentView.findViewById(R.id.mission_refreshlayout);
         refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
@@ -99,15 +103,25 @@ public class MesFrag extends ProgressFragment implements IListener {
         refreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
+        listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+//                contextMenu.setHeaderTitle("选择操作");
+                contextMenu.add(0, 0, 0, "                      删除此消息");
+            }
+        });
 
         return inflater.inflate(R.layout.fragment_progress,container,false);
     }//onCreateView
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setContentShown(false);
+        setEmptyText("暂无消息，去看看别的吧");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -157,9 +171,6 @@ public class MesFrag extends ProgressFragment implements IListener {
                         }
                     });
                 }
-
-
-
                 switch(message_list.get(i).getType()){
 
                     case 0: //跳转到好友申请详情界面
@@ -345,6 +356,75 @@ public class MesFrag extends ProgressFragment implements IListener {
 //
 //    }//Load_Message
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        //info.id得到listview中选择的条目绑定的id
+        String id = String.valueOf(info.id);
+        final int item_postion = info.position;
+        switch (item.getItemId()) {
+            case 0:
+//                Toast.makeText(getContext(), "长按删除测试", Toast.LENGTH_SHORT).show();
+                Message message = message_list.get(item_postion);
+                message.setObjectId(message.getObjectId());
+                message.delete(new UpdateListener() {
+
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","成功");
+
+                            final boolean is_viewed = message_list.get(item_postion).getBe_viewed();
+                            BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                            query.addWhereEqualTo("user" , BmobUser.getCurrentUser(MyUser.class));
+                            query.setLimit(50);
+                            query.findObjects(new FindListener<UserInfo>() {
+                                @Override
+                                public void done(List<UserInfo> object, BmobException e) {
+                                    if(e==null){
+
+                                        for (UserInfo user : object) {
+                                            if(!is_viewed)
+                                                user.subtractUnread_message_num();
+                                            if(user.getUnread_message_num() ==0){
+                                                ((MainActivity)getContext()).change_signal();
+                                            }//if ==0
+
+                                            user.update(user.getObjectId(), new UpdateListener() {
+
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if(e==null){
+                                                        Log.i("bmob","未读消息数更新成功");
+                                                    }else{
+                                                        Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }else{
+                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    }
+                                }
+                            });
+
+                            message_list.remove(item_postion);
+                            message_adapter.notifyDataSetChanged();
+//                            closeAllItems();
+                            Toast.makeText(getContext(), "消息已删除", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }//onContextItemSelected
+    }
+
     protected void initMission()
     {
         final BmobQuery<Message> query=new BmobQuery<Message>();
@@ -395,10 +475,6 @@ public class MesFrag extends ProgressFragment implements IListener {
                                 }
                             }
                         });
-
-
-
-
                     }
                     else
                     {
@@ -433,8 +509,6 @@ public class MesFrag extends ProgressFragment implements IListener {
                 queryData();
             }
         });
-
-
     }
 
     private void queryData()

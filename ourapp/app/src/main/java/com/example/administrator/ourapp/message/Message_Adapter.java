@@ -77,7 +77,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
 
 
         String MessageType = "未知消息";
-        Drawable MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+        Drawable MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
 
         switch(message.getType()){
             case 0:
@@ -102,11 +102,11 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                 break;
             case 5:
                 MessageType = "任务已开始";
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.ask);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
                 break;
             case 7:
                 MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.ask);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
                 break;
             case 8:
                 MessageType = "新的回答";       //发布者对用户的问题进行了回答 看到此消息的是提问者
@@ -143,7 +143,6 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO 添加删除信息的处理方法
 
                 Message message = query_list.get(position);
                 message.setObjectId(message.getObjectId());
@@ -154,7 +153,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                         if(e==null){
                             Log.i("bmob","成功");
 
-
+                            final boolean is_viewed = query_list.get(position).getBe_viewed();
                             BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
                             query.addWhereEqualTo("user" , BmobUser.getCurrentUser(MyUser.class));
                             query.setLimit(50);
@@ -164,7 +163,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
                                     if(e==null){
 
                                         for (UserInfo user : object) {
-                                            if(!query_list.get(position).getBe_viewed())
+                                            if(!is_viewed)
                                                 user.subtractUnread_message_num();
                                             if(user.getUnread_message_num() ==0){
                                                 ((MainActivity)getContext()).change_signal();
@@ -190,6 +189,7 @@ public class Message_Adapter extends ArraySwipeAdapter<Message> {
 
                             query_list.remove(position);
                             notifyDataSetChanged();
+//                            closeAllItems();
                             Toast.makeText(getContext(), "消息已删除", Toast.LENGTH_SHORT).show();
                         }else{
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());

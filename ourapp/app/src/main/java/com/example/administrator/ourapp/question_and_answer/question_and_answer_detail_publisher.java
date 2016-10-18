@@ -3,17 +3,24 @@ package com.example.administrator.ourapp.question_and_answer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.IListener;
+import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.R;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Created by Longze on 2016/9/21.
  */
-public class question_and_answer_detail_publisher extends Activity {
+public class question_and_answer_detail_publisher extends Activity implements IListener {
     private TextView return_bt, edit;//标题上的返回按钮
     private TextView info_title;//标题
     private TextView question_content;
@@ -29,6 +36,7 @@ public class question_and_answer_detail_publisher extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_and_answer_detail);
+        ListenerManager.getInstance().registerListtener("qa",this);
         initWidget();
     }//onCreate
 
@@ -62,10 +70,10 @@ public class question_and_answer_detail_publisher extends Activity {
         return_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 question_and_answer_detail_publisher.this.finish();
             }
         });
+
 
         edit.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -82,7 +90,27 @@ public class question_and_answer_detail_publisher extends Activity {
                 startActivity(intents);
             }
         });
+
+
     }//initWidget
 
+    @Override
+    public void upData() {
+        BmobQuery<Mission_answer> query = new BmobQuery<Mission_answer>();
+        query.getObject(question.getanswer().getObjectId(), new QueryListener<Mission_answer>() {
 
+            @Override
+            public void done(Mission_answer object, BmobException e) {
+                if(e==null){
+                    s_answer_content = object.getContent();
+                    answer_content.setText(s_answer_content);
+//                    Toast.makeText(getApplicationContext(), "刷新确认",
+//                            Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+
+        });
+    }
 }

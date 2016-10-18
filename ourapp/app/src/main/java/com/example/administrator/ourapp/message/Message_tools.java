@@ -39,8 +39,8 @@ public class Message_tools {
 
             @Override
             public void done(String objectId, BmobException e) {
-                final Dialog loading_dialog = MainActivity.createLoadingDialog(context);
-                loading_dialog.show();
+//                final Dialog loading_dialog = MainActivity.createLoadingDialog(context);
+//                loading_dialog.show();
                 if(e==null){
                     Log.i("bomb","发送信息成功：" + objectId);
 
@@ -60,17 +60,17 @@ public class Message_tools {
                                         public void done(BmobException e) {
                                             if(e==null){
                                                 Log.i("bmob","未读消息数更新成功");
-                                                loading_dialog.dismiss();
+//                                                loading_dialog.dismiss();
                                             }else{
                                                 Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
-                                                loading_dialog.dismiss();
+//                                                loading_dialog.dismiss();
                                             }
                                         }
                                     });
                                 }
                             }else{
                                 Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                                loading_dialog.dismiss();
+//                                loading_dialog.dismiss();
                             }
                         }
                     });
@@ -89,7 +89,7 @@ public class Message_tools {
 //                    Log.i("bomb","已发送推送");
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                    loading_dialog.dismiss();
+//                    loading_dialog.dismiss();
                 }//else
             }//done
         });

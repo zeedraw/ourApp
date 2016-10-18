@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
@@ -87,7 +88,6 @@ public class edit_answer extends Activity {
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //若答案有变更才上传
                 if(!(EditAnswer.getText().toString().equals(question.getanswer().getContent()))){
                     answer.setContent(EditAnswer.getText().toString());
@@ -110,6 +110,8 @@ public class edit_answer extends Activity {
                                 builder.setMessage("答案编辑成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                        loading_dialog.dismiss();
+                                        ListenerManager.getInstance().sendBroadCast(new String[]{"qa"});
                                         finish();
                                     }
                                 }).create().show();

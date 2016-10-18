@@ -42,7 +42,6 @@ public class FreFrag extends Fragment implements IListener {
     private Vector<String> user_ID = new Vector<String>();//用户的objectId
     final private boolean IS_FRIEND = true; //表明从本页面点击跳转到的用户的界面都是自己的好友界面
 //    final Context context = this.getBaseContext();
-    //TODO 添加刷新机制
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

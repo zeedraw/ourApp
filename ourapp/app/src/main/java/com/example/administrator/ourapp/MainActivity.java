@@ -137,6 +137,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         else if (view==tv_mes)
         {
+            if(BmobUser.getCurrentUser() == null){
+                //TODO 新的界面
+            }
             tv_main.setSelected(false);
             tv_mes.setSelected(true);
             tv_mine.setSelected(false);
@@ -513,12 +516,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        checkNewMes();
-        FragmentManager fm=getSupportFragmentManager();
-        Fragment mes=fm.findFragmentByTag("mes");
-        if (mes!=null) {
-            ((MesFrag) mes).hasNesMesRefresh();
-        }
+        if(BmobUser.getCurrentUser() != null){
+            checkNewMes();
+            FragmentManager fm=getSupportFragmentManager();
+            Fragment mes=fm.findFragmentByTag("mes");
+            if (mes!=null) {
+                ((MesFrag) mes).hasNesMesRefresh();
+            } //if mes!=null
+        }//if
+
     }
 
     public void change_signal(){

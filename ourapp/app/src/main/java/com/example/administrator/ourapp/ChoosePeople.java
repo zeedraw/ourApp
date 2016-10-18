@@ -121,8 +121,8 @@ public class ChoosePeople extends AppCompatActivity {
                                             Message_tools sm = new Message_tools();
                                             for (int i = 0; i < addList.size(); ++i) {
                                                 sm.send(BmobUser.getCurrentUser(MyUser.class), addList.get(i),
-                                                        "恭喜您，您参加的" + mission.getName() + "活动已经开始！",
-                                                        5, false, mission.getObjectId(), ChoosePeople.this);
+                                                        "恭喜您，您已被" + mission.getName() + "活动选为志愿者！",
+                                                        4, false, mission.getObjectId(), ChoosePeople.this);
                                             }//for
                                         }
 //                                        List<BmobObject> messages = new ArrayList<BmobObject>();
