@@ -17,8 +17,6 @@ import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.message.Message_tools;
 
-import com.example.administrator.ourapp.message.SendMessage;
-
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;

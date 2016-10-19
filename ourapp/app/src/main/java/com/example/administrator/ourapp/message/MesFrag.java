@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.daimajia.swipe.util.Attributes;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MainActivity;
@@ -455,7 +454,6 @@ public class MesFrag extends ProgressFragment implements IListener {
                         message_adapter = new Message_Adapter(getContext(),
                                 R.layout.message_listview_item, message_list);
                         listView.setAdapter(message_adapter);
-                        message_adapter.setMode(Attributes.Mode.Single);
                         setContentShown(true);
                         setContentEmpty(false);
 

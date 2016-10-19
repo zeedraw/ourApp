@@ -123,7 +123,7 @@ public class QAFrag extends ProgressFragment {
     protected void initMission()
     {
         final BmobQuery<Mission_question> query=new BmobQuery<Mission_question>();
-        query.include("answer[content],User[objectId|userimage]");
+        query.include("answer[content],User");
         query.addWhereEqualTo("mission",mission.getObjectId());
         query.order("-createdAt");
         query.setLimit(7);
