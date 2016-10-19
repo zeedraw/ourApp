@@ -94,7 +94,7 @@ public class MyTask extends FragmentActivity implements View.OnClickListener {
                     public void done(MyUser myUser, BmobException e) {
                         if (e==null)
                         {
-                            if (myUser.getTag()!=null)
+                            if (myUser.getIdentifiedPublish())
                             {
                                 //TODO 没有发布任务的权限 则弹出对话框的提醒
                                 Intent intent=new Intent(MyTask.this,MissionPub.class);

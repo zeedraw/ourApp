@@ -133,7 +133,7 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
                 Resources r =getResources();
                 MyUser newuser=new MyUser();
 
-                BmobFile image=new BmobFile("defaultimage",null,"http://bmob-cdn-6218.b0.upaiyun.com/2016/09/24/be697b3a401676fd80ecfc00bc8dabd4.png");
+                BmobFile image=new BmobFile("defaultimage",null,"http://bmob-cdn-6218.b0.upaiyun.com/2016/10/19/c565a6fa4034de09806e2e5d441b2eac.png");
                 newuser.setUserimage(image);
                 newuser.setUsername(phonenum_ed.getText().toString());
                 newuser.setPassword(pw_ed.getText().toString());
@@ -146,30 +146,46 @@ public class SignUp extends AppCompatActivity implements View.OnFocusChangeListe
                 newuser.signUp(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser myUser, BmobException e) {
-                        AlertDialog.Builder builder=new AlertDialog.Builder(SignUp.this);
-                        builder.setCancelable(false);
                         if (e==null)
                         {
-                            builder.setMessage("注册成功");
-                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            UserInfo userInfo=new UserInfo();
+                            userInfo.setUser(myUser);
+                            userInfo.save(new SaveListener<String>() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    ListenerManager.getInstance().sendBroadCast(new String[]{"Main"});
-                                    finish();
+                                public void done(String s, BmobException e) {
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(SignUp.this);
+                                    builder.setCancelable(false);
+                                    if (e==null)
+                                    {
+                                        builder.setMessage("注册成功");
+                                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag","Main"});
+                                                finish();
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        builder.setMessage("注册失败"+e.getMessage());
+                                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                            }
+                                        });
+                                    }
+                                    builder.create().show();
                                 }
                             });
+
 
                         }
                         else
                         {
-                            builder.setMessage("注册失败"+e.getMessage());
-                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            });
+                            Log.i("z","创建用户失败");
                         }
-                        builder.create().show();
+
                     }
                 });
             }
