@@ -8,8 +8,8 @@ import cn.bmob.v3.BmobObject;
 
 public class UserInfo extends BmobObject {
     private MyUser user;
-    private Float rating;
-    private Integer missionSum;
+    private Float rating=new Float(0);
+    private Integer missionSum=0;
     private Integer unread_message_num = 0;
 
     public Integer getUnread_message_num() {

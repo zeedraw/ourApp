@@ -106,6 +106,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 }
                 else {//本人查看
                     BmobQuery<MyUser> query=new BmobQuery<MyUser>();
+                    query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
                     query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
                         @Override
                         public void done(MyUser myUser, BmobException e) {
@@ -445,7 +446,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                         //bmobFile.getFileUrl()--返回的上传文件的完整地址
                         Log.i("z","上传头像成功:" + newbf.getFileUrl());
                         //删除原头像
-                        if (current.getUserimage().getUrl()!=null) {
+                        if (current.getUserimage().getUrl()!=null&&!(current.getUserimage().getUrl().equals("http://bmob-cdn-6218.b0.upaiyun.com/2016/10/19/c565a6fa4034de09806e2e5d441b2eac.png"))) {
                             BmobFile oldbf = new BmobFile();
                             oldbf.setUrl(current.getUserimage().getUrl());
                             oldbf.delete(new UpdateListener() {

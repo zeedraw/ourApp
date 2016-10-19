@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
                                 public void done(String s, BmobException e) {
                                     if (e==null){
                                         Log.i("z","下载用户头像成功");
-                                    ListenerManager.getInstance().sendBroadCast(new String[]{"Main"});
+                                    ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag","Main"});
                                     finish();
                                     }
                                     else

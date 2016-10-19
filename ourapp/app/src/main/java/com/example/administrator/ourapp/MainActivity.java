@@ -3,12 +3,16 @@ package com.example.administrator.ourapp;
 
 import android.app.Dialog;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -39,9 +43,11 @@ import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,IListener{
@@ -53,6 +59,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private TextView r_button;
     private Integer state_stu;
     private Integer state_pub;
+    private boolean toMain=false;
 
 
     @Override
@@ -134,9 +141,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         else if (view==tv_mes)
         {
-            if(BmobUser.getCurrentUser() == null){
-                //TODO 新的界面
-            }
             tv_main.setSelected(false);
             tv_mes.setSelected(true);
             tv_mine.setSelected(false);
@@ -224,6 +228,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (fre!=null)
         {
             ft.hide(fre);
+        }
+        if (mesOnNotLogin!=null)
+        {
+            ft.hide(mesOnNotLogin);
         }
         //判断显示的frag
         if (view==tv_main)
@@ -322,7 +330,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //
 //        }
 //        ft.commit();
-        myCheckedChaged(tv_main);
+            toMain=true;
+
+
+
+
 
     }
 
@@ -550,14 +562,55 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        if(BmobUser.getCurrentUser() != null){
+        if(BmobUser.getCurrentUser()!=null) {
             checkNewMes();
-            FragmentManager fm=getSupportFragmentManager();
-            Fragment mes=fm.findFragmentByTag("mes");
-            if (mes!=null) {
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment mes = fm.findFragmentByTag("mes");
+            if (mes != null) {
                 ((MesFrag) mes).hasNesMesRefresh();
-            } //if mes!=null
-        }//if
+            }
+        }
+        //判断是否需要返回首页
+        if (toMain)
+        {
+            tv_main.setSelected(true);
+            tv_mes.setSelected(false);
+            tv_mine.setSelected(false);
+            tv_fre.setSelected(false);
+            title.setText("首页");
+            myCheckedChaged(tv_main);
+            toMain=false;
+        }
+//        FragmentManager fm=getSupportFragmentManager();
+//        FragmentTransaction ft=fm.beginTransaction();
+//        Fragment mine=fm.findFragmentByTag("mine");
+//        Fragment main=fm.findFragmentByTag("main");
+//        Fragment mes=fm.findFragmentByTag("mes");
+//        Fragment fre=fm.findFragmentByTag("fre");
+//        Fragment mesOnNotLogin=fm.findFragmentByTag("mesNot");
+//
+//        if (mine!=null)
+//        {
+//            Log.i("z","mine依旧存在");
+//        }
+//        if (main!=null)
+//        {
+//            Log.i("z","main依旧存在");
+//        }
+//        if (mes!=null)
+//        {
+//            Log.i("z","main依旧存在");
+//        }
+//        if (fre!=null)
+//        {
+//            Log.i("z","main依旧存在");
+//        }
+//
+//        if (mesOnNotLogin!=null)
+//        {
+//            Log.i("z","mesnot依旧存在");
+//        }
+
 
     }
 
@@ -565,6 +618,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Log.i("z","没有未读消息");
         mesSignal.setVisibility(View.INVISIBLE);
     }//change_signal
+
+
 }
 
 
