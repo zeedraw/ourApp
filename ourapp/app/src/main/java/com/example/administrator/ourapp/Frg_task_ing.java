@@ -64,7 +64,7 @@ public class Frg_task_ing extends MyMissionFrag {
         query.addWhereEqualTo("state",new Integer(3));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name|orgDescription].userimage");
+        query.include("pub_user[orgDescription]");
     }
 
     public void handleResult(Intent data)

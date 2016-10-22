@@ -14,7 +14,8 @@
         android:layout_marginTop="-52dp"
         android:contentDescription="@null"
         android:scaleType="fitXY"
-        android:src="@drawable/scrollview_header" />
+        android:src="@drawable/scrollview_header"
+        />
 
     <include layout="@layout/header"
         android:id="@+id/account_header"
@@ -38,6 +39,12 @@
             android:orientation="vertical"
             android:background="@color/transparent"
             >
+            <LinearLayout
+                android:id="@+id/background_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:orientation="vertical">
             <ImageView
                 android:id="@+id/info_user_image_iv"
                 android:layout_marginTop="60dp"
@@ -100,9 +107,8 @@
                     android:text="未认证"
                     android:textSize="@dimen/text_size_medium"/>
             </LinearLayout>
-
+            </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -424,6 +430,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="otherClick"
+                        android:id="@+id/rl_other"
                         >
 
                         <TextView

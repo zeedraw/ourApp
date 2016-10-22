@@ -121,7 +121,9 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         viewHolder.mission_title.setText(mission.getName());
         viewHolder.mission_abs.setText(mission.getIntro());
         viewHolder.mission_time.setText(mission.getStart_time()+"到"+mission.getEnd_time());
-        viewHolder.location_abs.setText(mission.getLocation_abs());
+        List<String> list=mission.getLocation_abs();
+        String locationAbs=list.get(0)+"-"+list.get(1)+"-"+list.get(2);
+        viewHolder.location_abs.setText(locationAbs);
 
         return convertView;
     }

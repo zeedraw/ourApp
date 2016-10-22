@@ -58,7 +58,7 @@
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:src="@drawable/g34"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginTop="2.5dp"/>
 
                 <TextView
                 android:id="@+id/organization"

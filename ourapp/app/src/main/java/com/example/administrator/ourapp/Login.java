@@ -134,6 +134,30 @@ public class Login extends AppCompatActivity {
                                 }
                             });
 
+                            BmobFile backGround=BmobUser.getCurrentUser(MyUser.class).getBackground();
+                            if (backGround!=null) {
+                                File saveBack = new File(MainActivity.getDiskFileDir(getApplicationContext()) + "/background.png");
+                                backGround.download(saveBack, new DownloadFileListener() {
+                                    @Override
+                                    public void done(String s, BmobException e) {
+                                        if (e == null) {
+                                            Log.i("z", "缓存用户背景成功");
+                                        } else {
+                                            Log.i("z", "缓存用户背景失败");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onProgress(Integer integer, long l) {
+
+                                    }
+
+                                    @Override
+                                    public void doneError(int code, String msg) {
+                                        super.doneError(code, msg);
+                                    }
+                                });
+                            }
                         }
                         else
                         {

@@ -14,8 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -107,7 +110,12 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
             Mission mission=new Mission();
             mission.setName(name.getText().toString().trim());
             mission.setIntro(intro.getText().toString().trim());
-            mission.setLocation_abs(location.getText().toString().trim());
+            String[] sourceStrArray = location.getText().toString().trim().split("-");
+            List<String> list= new ArrayList<String>();
+            list.add(sourceStrArray[0]);
+            list.add(sourceStrArray[1]);
+            list.add(sourceStrArray[2]);
+            mission.setLocation_abs(list);
             mission.setPub_user(BmobUser.getCurrentUser(MyUser.class));
             mission.setLocation(detail_location.getText().toString().trim());
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -135,7 +143,8 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
                     }
                     else
                     {
-                        builder.setMessage("发布失败").create().show();
+                        builder.setMessage("发布失败"+e.getMessage()).create().show();
+                        dialog.dismiss();
                     }
                 }
             });

@@ -97,8 +97,36 @@ public class MissionHistoryAdapter extends ArrayAdapter<Mission> {
             viewHolder.avater.setImageDrawable(getContext().getResources().getDrawable(R.drawable.defaulticon));
         }
 
+        String missionTag=mission.getTag();
+        if (missionTag.equals("活动"))
+        {
+            viewHolder.missionTag.setText("活动");
+            viewHolder.missionTag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.act_tag));
+
+        }
+        else if(missionTag.equals("教育"))
+        {
+            viewHolder.missionTag.setText("教育");
+            viewHolder.missionTag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.edu_tag));
+
+        }
+        else if(missionTag.equals("交通"))
+        {
+            viewHolder.missionTag.setText("交通");
+            viewHolder.missionTag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.trans_tag));
+
+        }
+        else if(missionTag.equals("社区"))
+        {
+            viewHolder.missionTag.setText("社区");
+            viewHolder.missionTag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.com_tag));
+
+        }
+
+
+
+
         viewHolder.title.setText(mission.getName());
-        viewHolder.missionTag.setText(mission.getTag());
         viewHolder.comTime.setText("完成于"+" "+mission.getEnd_time());
         viewHolder.abs.setText(mission.getIntro());
         viewHolder.comment.setText(comments.get(position));

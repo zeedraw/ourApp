@@ -13,6 +13,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.icu.text.CollationKey;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,6 +65,8 @@ import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
+import  com.example.administrator.ourapp.BitmapTools;
+
 /**
  * Created by Administrator on 2016/8/21.
  */
@@ -79,19 +82,28 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
     private TextView checkMission;
     private TextView number,otherContact;
     private RatingBar ratingBar;
+    private ImageView background;
+    private LinearLayout backGroundClick;
 
 
-    private static final int CHOOSE_PICTURE = 0;
-    private static final int TAKE_PICTURE = 1;
+    private static final int CHOOSE_PICTURE_IMAGE = 0;
+    private static final int TAKE_PICTURE_IMAGE = 1;
+    private static final int CHOOSE_PICTURE_BACKGROUND =10;
+    private static final int TAKE_PICTURE_BACKGROUND =11;
     private static final int CROP_SMALL_PICTURE = 2;
     private static final int FOR_INTRO=1000;
     private static final int GET_INTRO=1001;
+    private static final int FOR_OTHER=1002;
+    private static final int GET_OTHER=1003;
     private static Uri tempUri;
+
+    private static final int IMAGE=100;
+    private static final int BACKGROUND=101;
 
     private ChoosePicPopupWindow choosePicPopupWindow;
     private LocationPickerDialog locationPickerDialog;//选择地点
 
-    private RelativeLayout rlName,rlSex,rlAge,rlLocation,rlIntro;
+    private RelativeLayout rlName,rlSex,rlAge,rlLocation,rlIntro,rlOther;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -106,7 +118,6 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 }
                 else {//本人查看
                     BmobQuery<MyUser> query=new BmobQuery<MyUser>();
-                    query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
                     query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
                         @Override
                         public void done(MyUser myUser, BmobException e) {
@@ -136,7 +147,15 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         mScrollView.setOnTurnListener(this);
 
         user_image_iv=(ImageView)findViewById(R.id.info_user_image_iv);
-
+        background=(ImageView)findViewById(R.id.account_header_img);
+        backGroundClick=(LinearLayout)findViewById(R.id.background_click);
+        backGroundClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("z","点击了更换背景");
+                showChoosePicDialog(BACKGROUND);
+            }
+        });
         studentDes=(TextView)findViewById(R.id.studentDes);
         organizationDes=(TextView)findViewById(R.id.organizationDes);
 
@@ -193,21 +212,47 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
 //
     private void initInfo(boolean state)//state true 加载本地用户，false加载其他用户
     {
+        //加载头像和背景图
         if (state) {
-            Bitmap bitmap = null;
+            Bitmap userImage = null;
+            Bitmap backGround =null;
             try {
-                bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
-                user_image_iv.setImageBitmap(bitmap);
+                userImage = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
+                user_image_iv.setImageBitmap(userImage);
+                if (current.getBackground()!=null) {
+                    backGround = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getApplicationContext()) + "/background.png");
+                    background.setImageBitmap(backGround);
+                }
+                else
+                {
+                    background.setImageDrawable(getResources().getDrawable(R.drawable.scrollview_header));
+                }
+
+//                if (backGround!=null) {
+//                    background.setImageBitmap(backGround);
+//                }
+//                else
+//                {
+//                    background.setImageDrawable(getResources().getDrawable(R.drawable.scrollview_header));
+//
+//                }
                 Log.i("z", "获取更新iv--" + MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png"
                         + "userid:" + current);
             } catch (Exception e) {
                 // TODO: handleResult exception
+
             }
         }
         else
         {
-            new LoadImage().execute(current.getUserimage().getUrl());
+            if (current.getBackground()!=null)
+            {new LoadImage().execute(current.getUserimage().getUrl(),current.getBackground().getUrl());}
+            else
+            {
+                new LoadImage().execute(current.getUserimage().getUrl(),null);
+            }
         }
+
 
         if(current.getIdentifiedStudent())
         {
@@ -227,6 +272,10 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         {location_tv.setText(current.getLocation());}
         if (current.getIntroduction()!=null)
         {intro_tv.setText(current.getIntroduction());}
+        if (current.getOtherContact()!=null)
+        {
+            otherContact.setText(current.getOtherContact());
+        }
 
         //初始化评分信息
         BmobQuery<UserInfo> query=new BmobQuery<UserInfo>();
@@ -292,18 +341,30 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
 
     //
     //异步加载图片
-    public class LoadImage extends AsyncTask<String,Void,Drawable>
+    public class LoadImage extends AsyncTask<String,Void,Drawable[]>
     {
         @Override
-        protected Drawable doInBackground(String... strs) {
+        protected Drawable[] doInBackground(String... strs) {
             URL request;
             InputStream input;
-            Drawable drawable = null;
+            Drawable[] drawable = new Drawable[2];
 
             try {
                 request =new URL(strs[0]);
                 input=(InputStream)request.getContent();
-                drawable = Drawable.createFromStream(input, "src");
+                drawable[0] = Drawable.createFromStream(input, "src");
+                if (strs[1]!=null) {
+                    request = new URL(strs[1]);
+                    input = (InputStream) request.getContent();
+                    drawable[1] = Drawable.createFromStream(input, "src");
+                }
+                else
+                {
+                    drawable[1]=getResources().getDrawable(R.drawable.scrollview_header);
+                }
+
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -313,12 +374,13 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         }
 
         @Override
-        protected void onPostExecute(Drawable drawable) {
-            user_image_iv.setImageDrawable(drawable);
+        protected void onPostExecute(Drawable[] drawable) {
+            user_image_iv.setImageDrawable(drawable[0]);
+            background.setImageDrawable(drawable[1]);
         }
     }
     //选择图片
-    private void showChoosePicDialog()
+    private void showChoosePicDialog(final int state)
     {
           choosePicPopupWindow=new ChoosePicPopupWindow(this, new View.OnClickListener() {
             @Override
@@ -329,7 +391,13 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                         Intent openAlbumIntent = new Intent(
                                 Intent.ACTION_GET_CONTENT);
                         openAlbumIntent.setType("image/*");
-                        startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
+                        if (state==IMAGE)
+                        {
+                        startActivityForResult(openAlbumIntent, CHOOSE_PICTURE_IMAGE);}
+                        else if(state==BACKGROUND)
+                        {
+                            startActivityForResult(openAlbumIntent, CHOOSE_PICTURE_BACKGROUND);
+                        }
                         break;
                     case R.id.take_photo: // 拍照
                         Intent openCameraIntent = new Intent(
@@ -337,12 +405,25 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                         tempUri = Uri.fromFile(new File(MainActivity.getDiskCacheDir(getApplicationContext()), "image.jpg"));
                         // 指定照片保存路径（内存），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
                         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+                        if (state==IMAGE){
+                        startActivityForResult(openCameraIntent, TAKE_PICTURE_IMAGE);}
+                        else if(state==BACKGROUND)
+                    {
+                        startActivityForResult(openCameraIntent, TAKE_PICTURE_BACKGROUND);
+                    }
                         break;
                 }
 
             }
         });
+        if (state==IMAGE)
+        {
+            choosePicPopupWindow.setTitle("更换头像");
+        }
+        else if(state==BACKGROUND)
+        {
+            choosePicPopupWindow.setTitle("更换背景");
+        }
         choosePicPopupWindow.showAtLocation(findViewById(R.id.main),Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
@@ -351,18 +432,24 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) { // 如果返回码是可以用的
             switch (requestCode) {
-                case TAKE_PICTURE:
+                case TAKE_PICTURE_IMAGE:
                     startPhotoZoom(tempUri); // 开始对图片进行裁剪处理
                     break;
-                case CHOOSE_PICTURE:
+                case CHOOSE_PICTURE_IMAGE:
                     startPhotoZoom(data.getData()); // 开始对图片进行裁剪处理
                     break;
                 case CROP_SMALL_PICTURE:
                     if (data != null) {
                         setImageToViewAndSave(data); // 让刚才选择裁剪得到的图片显示在界面上
-
                     }
                     break;
+                case TAKE_PICTURE_BACKGROUND:
+                    setBackgroundToViewAndSave(tempUri);
+                    break;
+                case CHOOSE_PICTURE_BACKGROUND:
+                    setBackgroundToViewAndSave(data.getData());
+                    break;
+
             }
         }
         else if(resultCode==GET_INTRO&&requestCode==FOR_INTRO)
@@ -388,6 +475,27 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 }
             });
 
+        }
+
+        else if(requestCode==FOR_OTHER&&resultCode==GET_OTHER){
+            final String other=data.getStringExtra("info");
+            final Dialog dialog=MainActivity.createLoadingDialog(MyAccount.this);
+            dialog.show();
+            MyUser user=new MyUser();
+            user.setOtherContact(other);
+            user.update(current.getObjectId(), new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e==null){
+                        otherContact.setText(other);
+                        dialog.dismiss();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "修改其他方式失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }
+            });
         }
     }
 
@@ -446,22 +554,23 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                         //bmobFile.getFileUrl()--返回的上传文件的完整地址
                         Log.i("z","上传头像成功:" + newbf.getFileUrl());
                         //删除原头像
-                        if (current.getUserimage().getUrl()!=null&&!(current.getUserimage().getUrl().equals("http://bmob-cdn-6218.b0.upaiyun.com/2016/10/19/c565a6fa4034de09806e2e5d441b2eac.png"))) {
-                            BmobFile oldbf = new BmobFile();
-                            oldbf.setUrl(current.getUserimage().getUrl());
-                            oldbf.delete(new UpdateListener() {
-                                @Override
-                                public void done(BmobException e) {
-                                    if(e==null)
-                                    {
-                                        Log.i("z","原头像删除成功");
-                                    }
-                                    else {
-                                        Log.i("z","原头像删除失败");
-                                    }
-                                }
-                            });
-                        }
+
+//                        if (current.getUserimage().getUrl()!=null&&!(current.getUserimage().getUrl().equals("http://bmob-cdn-6218.b0.upaiyun.com/2016/10/19/c565a6fa4034de09806e2e5d441b2eac.png"))) {
+//                            BmobFile oldbf = new BmobFile();
+//                            oldbf.setUrl(current.getUserimage().getUrl());
+//                            oldbf.delete(new UpdateListener() {
+//                                @Override
+//                                public void done(BmobException e) {
+//                                    if(e==null)
+//                                    {
+//                                        Log.i("z","原头像删除成功");
+//                                    }
+//                                    else {
+//                                        Log.i("z","原头像删除失败");
+//                                    }
+//                                }
+//                            });
+//                        }
 
                         user.setUserimage(newbf);
                         user.update(current.getObjectId(), new UpdateListener() {
@@ -475,6 +584,23 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                                     savePhoto(photoFinal,MainActivity.getDiskFileDir(getApplicationContext()),"user_image");
                                     ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag"});
                                     loadingDialog.dismiss();
+                                    //删除旧头像
+                                    if (current.getUserimage().getUrl()!=null&&!(current.getUserimage().getUrl().equals("http://bmob-cdn-6218.b0.upaiyun.com/2016/10/19/c565a6fa4034de09806e2e5d441b2eac.png"))) {
+                                        BmobFile oldbf = new BmobFile();
+                                        oldbf.setUrl(current.getUserimage().getUrl());
+                                        oldbf.delete(new UpdateListener() {
+                                            @Override
+                                            public void done(BmobException e) {
+                                                if(e==null)
+                                                {
+                                                    Log.i("z","原头像删除成功");
+                                                }
+                                                else {
+                                                    Log.i("z","原头像删除失败");
+                                                }
+                                            }
+                                        });
+                                    }
                                 }else{
                                     Toast.makeText(getApplicationContext(), "修改头像失败", Toast.LENGTH_SHORT).show();
                                     Log.i("z","更新用户信息失败:" + e.getMessage());
@@ -498,6 +624,133 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
 
 
         }
+
+    private void setBackgroundToViewAndSave(Uri uri)
+    {
+        Bitmap photoBmp = null;
+        Uri originalUri = null;
+        File file = null;
+        if (uri != null) {
+            originalUri = uri;
+            file = BitmapTools.getFileFromMediaUri(this, originalUri);
+        }
+        try {
+            photoBmp = BitmapTools.getBitmapFormUri(this, Uri.fromFile(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int degree = BitmapTools.getBitmapDegree(file.getAbsolutePath());
+        /**
+         * 把图片旋转为正的方向
+         */
+        photoBmp = BitmapTools.rotateBitmapByDegree(photoBmp, degree);
+
+//        if (uri != null) {
+//            try {
+//                photoBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        String backgroundPath=savePhoto(photoBmp,MainActivity.getDiskCacheDir(getApplicationContext()),"background");
+        final Dialog loadingDialog=MainActivity.createLoadingDialog(this);
+        loadingDialog.show();
+        //上传新背景
+        final MyUser user=new MyUser();
+        final BmobFile newbf=new BmobFile(new File(backgroundPath));
+        final Bitmap finalPhotoBmp = photoBmp;
+        newbf.uploadblock(new UploadFileListener() {
+            @Override
+            public void doneError(int code, String msg) {
+                super.doneError(code, msg);
+            }
+
+            @Override
+            public void done(BmobException e) {
+                if (e == null)
+                {
+                    Log.i("z","上传新背景成功");
+//                    //删除原背景
+//                    if (current.getBackground()!=null)
+//                    {
+//                        BmobFile oldbf=new BmobFile();
+//                        oldbf.setUrl(current.getBackground().getUrl());
+//                        oldbf.delete(new UpdateListener() {
+//                            @Override
+//                            public void done(BmobException e) {
+//                                    if (e==null)
+//                                    {
+//                                        Log.i("z","删除原背景成功");
+//                                    }
+//                                else {
+//                                        Log.i("z","删除原背景失败"+e.getMessage());
+//                                    }
+//                            }
+//                        });
+//                    }
+
+                    user.setBackground(newbf);
+                    user.update(current.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e==null)
+                            {
+                                background.setImageBitmap(finalPhotoBmp);
+                                savePhoto(finalPhotoBmp,MainActivity.getDiskFileDir(getApplicationContext()),"background");
+                                loadingDialog.dismiss();
+                                //删除原背景
+                                if (current.getBackground()!=null)
+                                {
+                                    BmobFile oldbf=new BmobFile();
+                                    oldbf.setUrl(current.getBackground().getUrl());
+                                    oldbf.delete(new UpdateListener() {
+                                        @Override
+                                        public void done(BmobException e) {
+                                            if (e==null)
+                                            {
+                                                Log.i("z","删除原背景成功");
+                                            }
+                                            else {
+                                                Log.i("z","删除原背景失败"+e.getMessage());
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "修改背景失败", Toast.LENGTH_SHORT).show();
+                                Log.i("z","更新用户信息失败:" + e.getMessage());
+                            }
+                        }
+                    });
+
+                }
+                else
+                {
+                    Log.i("z","上传文件失败"+e.getMessage());
+                }
+
+
+            }
+
+            @Override
+            public void onProgress(Integer value) {
+                super.onProgress(value);
+            }
+        });
+
+
+
+//        if (photoBmp!=null)
+//        {
+//            background.setImageBitmap(photoBmp);
+//        }
+//        else
+//        {
+//            background.setImageDrawable(getResources().getDrawable(R.drawable.scrollview_header));
+//        }
+
+    }
 
     private Bitmap toRoundBitmap(Bitmap bitmap, Uri tempUri) {
         int width = bitmap.getWidth();
@@ -606,8 +859,13 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
     }
     public void imageClick(View view)
     {
-        showChoosePicDialog();
+        Log.i("z","点击了更换头像");
+        showChoosePicDialog(IMAGE);
     }
+//    public void backgroundClick(View view)
+//    {
+//        Log.i("z","点击了更换背景");
+//        showChoosePicDialog(BACKGROUND);}
     public void nameClick(View view)
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
@@ -781,7 +1039,10 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
 
     public void otherClick(View view)
     {
-
+        Intent intent=new Intent(this,EditIntro.class);
+        intent.putExtra("mes",otherContact.getText().toString().trim());
+        intent.putExtra("from","for_other");
+        startActivityForResult(intent,FOR_OTHER);
     }
     private void setUnEditable()
     {
@@ -791,13 +1052,16 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
          rlAge=(RelativeLayout)findViewById(R.id.rl_age);
         rlLocation=(RelativeLayout)findViewById(R.id.rl_location);
         rlIntro=(RelativeLayout)findViewById(R.id.rl_intro);
+        rlOther=(RelativeLayout)findViewById(R.id.rl_other);
 
         user_image_iv.setClickable(false);
+        backGroundClick.setClickable(false);
         rlIntro.setClickable(false);
         rlLocation.setClickable(false);
         rlName.setClickable(false);
         rlSex.setClickable(false);
         rlAge.setClickable(false);
+        rlOther.setClickable(false);
 
         Log.i("z","设置不可编辑222");
 

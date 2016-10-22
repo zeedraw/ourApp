@@ -19,7 +19,7 @@
         android:layout_height="@dimen/view_height_custom"
         android:layout_weight="1"
         android:textSize="@dimen/text_size_medium"
-        android:textColor="@color/white"
+        android:textColor="@drawable/locationtext"
         android:gravity="center_vertical|left"
 
         />

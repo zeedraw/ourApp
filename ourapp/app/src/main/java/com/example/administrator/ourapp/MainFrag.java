@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.administrator.ourapp.message.MesFrag;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,5 +174,22 @@ public class MainFrag extends Fragment {
 //        public void onPageScrollStateChanged(int arg0) {
 //        }
 //    }
+    public void refreshWithCityLimit(String str)
+    {
+        if (fragments.size()!=0) {
+            Frag_edu edu=(Frag_edu) fragments.get(0);
+            Frag_activity activity=(Frag_activity)fragments.get(1);
+            Frag_trans trans=(Frag_trans)fragments.get(2);
+            Frag_community community=(Frag_community)fragments.get(3);
+            edu.setCityLimit(str);
+            edu.initListView();
+            activity.setCityLimit(str);
+            activity.initListView();
+            trans.setCityLimit(str);
+            trans.initListView();
+            community.setCityLimit(str);
+            community.initListView();
+        }
+    }
 
 }
