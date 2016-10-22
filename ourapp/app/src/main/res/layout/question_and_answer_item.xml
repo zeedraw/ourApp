@@ -20,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_search_black_24dp"
+                android:src="@drawable/ask"
                 android:layout_marginRight="@dimen/widget_margin_medium"/>
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_search_black_24dp"
+                android:src="@drawable/answer"
                 android:layout_marginRight="@dimen/widget_margin_medium"/>
 
             <TextView

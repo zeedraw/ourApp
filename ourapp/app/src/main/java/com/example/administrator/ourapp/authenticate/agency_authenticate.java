@@ -50,6 +50,8 @@ public class agency_authenticate extends Activity {
     private EditText agency_name = null;
     private EditText agency_web = null;
     private EditText contact_number = null;
+    private TextView return_bt = null;
+    private TextView info_title = null;
     private String pic_path[] = {"", "", "", ""};
     private int num = 0; //num代表图片位置
     private boolean is_upload_pic[] = {false, false, false, false};
@@ -72,6 +74,17 @@ public class agency_authenticate extends Activity {
         agency_name = (EditText) findViewById(R.id.agency_name);
         agency_web = (EditText) findViewById(R.id.agency_web);
         contact_number= (EditText) findViewById(R.id.contact_number);
+        return_bt = (TextView) findViewById(R.id.lbt);
+        info_title = (TextView) findViewById(R.id.mission_title);
+        return_bt.setText("返回");
+        info_title.setText("机构认证");
+        return_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agency_authenticate.this.finish();
+            }
+        });
+
         agency_pic1.setOnClickListener(listener);
         agency_pic2.setOnClickListener(listener);
         agency_pic3.setOnClickListener(listener);

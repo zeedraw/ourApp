@@ -19,12 +19,11 @@ public class MyUser extends BmobUser {
     private Boolean sex;//true为男 false 为女
     private String qualification;//学历
     private String location;//所在地
-    private Float rating;//评分
     private BmobRelation friends;//好友
     private Boolean isIdentifiedStudent;//是否被认证 true被认证 false没被认证
     private Boolean isIdentifiedPublish;
-    private Integer ident_state_stu; //学生认证的状态 0为未认证 1为审核中 2为已通过
-    private Integer ident_state_pub; //机构的认证状态 0为未认证 1为审核中 2为已通过
+    private Integer ident_state_stu = 0; //学生认证的状态 0为未认证 1为审核中 2为已通过
+    private Integer ident_state_pub = 0; //机构的认证状态 0为未认证 1为审核中 2为已通过
     private String name;
     private BmobFile userimage;
     private String introduction;//自我介绍
@@ -200,9 +199,7 @@ public class MyUser extends BmobUser {
         this.location = location;
     }
 
-    public void setRating(Float rating) {
-        this.rating = rating;
-    }
+
 
     public void setFriends(BmobRelation friends) {
         this.friends = friends;
@@ -250,11 +247,7 @@ public class MyUser extends BmobUser {
     public String getQualification() {
         return qualification;
     }
-
-    public Float getRating() {
-        return rating;
-    }
-
+    
     public Boolean getSex() {
         return sex;
     }

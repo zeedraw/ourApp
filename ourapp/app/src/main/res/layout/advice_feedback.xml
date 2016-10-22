@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background">
+
+    <include layout="@layout/header">
+        <!--左侧为返回 中间为 “意见反馈”-->
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:divider="@drawable/divider"
+            android:showDividers="beginning|end|middle">
+
+            <EditText
+                android:id="@+id/edit_feedback"
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="top"
+                android:background="@null"
+                android:lines="10"
+                android:textColor="@color/black"
+                android:maxLength="400"
+                android:hint="请输入遇到的问题或建议，不超过400字" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        android:divider="@drawable/divider"
+        android:showDividers="beginning|end|middle"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_height_custom"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="联系电话"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_large"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/contact_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:lines="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_large"
+                android:maxLength="11"
+                android:hint="选填，便于我们联系您"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_custom"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="@dimen/widget_margin_large"
+        android:layout_marginRight="@dimen/widget_margin_large"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/submit_background"
+            android:text="提交"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -29,6 +29,7 @@ public class Message extends BmobObject {
                 6代表
                 7代表有人对用户的任务进行提问的消息
                 8代表提问有新的回答的消息
+                9代表有新的意见反馈
      */
 
     public String getContent() {

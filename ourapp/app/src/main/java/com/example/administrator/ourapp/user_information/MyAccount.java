@@ -106,7 +106,6 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 }
                 else {//本人查看
                     BmobQuery<MyUser> query=new BmobQuery<MyUser>();
-                    query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
                     query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
                         @Override
                         public void done(MyUser myUser, BmobException e) {
