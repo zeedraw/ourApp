@@ -1,7 +1,9 @@
 package com.example.administrator.ourapp.question_and_answer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
 import com.example.administrator.ourapp.imageloader.TagInfo;
+import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +43,7 @@ public class QA_adapter extends ArrayAdapter<Mission_question> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        Mission_question question = getItem(position); //数据项
+        final Mission_question question = getItem(position); //数据项
         final ListView listView = (ListView)parent;
         ViewHolder viewHolder = null;
         if (convertView == null)
@@ -99,8 +102,15 @@ public class QA_adapter extends ArrayAdapter<Mission_question> {
             @Override
             public void onClick(View view) {
                 //TODO 跳转到个人信息界面
+                Intent intent=new Intent(getContext(),MyAccount.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("user",question.getUser());
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
             }
         });
+
+
 
         return convertView;
     }

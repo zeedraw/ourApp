@@ -199,4 +199,11 @@ public class question_and_answer extends FragmentActivity implements IListener{
     public void upData() {
         qaFrag.upDate();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        qaFrag.upDate();
+
+    }
 }
