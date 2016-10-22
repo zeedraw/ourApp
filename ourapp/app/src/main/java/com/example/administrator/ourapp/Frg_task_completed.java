@@ -34,7 +34,7 @@ public class Frg_task_completed extends MyMissionFrag {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new PubMissionComAdapter(getContext(), R.layout.missionitem2, list);
+                mAdapter = new PubMissionComAdapter(getContext(), R.layout.pubmission_complete_abstract, list);
                 listView.setAdapter(mAdapter);
 
             }
@@ -62,6 +62,6 @@ public class Frg_task_completed extends MyMissionFrag {
         query.addWhereEqualTo("state",new Integer(4));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name|orgDescription].userimage");
+        query.include("pub_user[orgDescription]");
     }
 }

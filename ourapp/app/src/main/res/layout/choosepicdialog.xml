@@ -4,14 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBJ">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dddddd"
+        />
+    <TextView
+        android:id="@+id/title"
+        android:textColor="@color/selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_gravity="center"
+        android:text="更换头像"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:id="@+id/pick_photo"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
-        android:background="@drawable/myframe"
+        android:background="@drawable/mybotton_press"
         android:text="选择本地照片"
         android:textSize="@dimen/text_size_xlarge"
         android:textColor="@color/grey"
@@ -24,7 +38,7 @@
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
-        android:background="@drawable/myframe"
+        android:background="@drawable/mybotton_press"
         android:text="拍照"
         android:textSize="@dimen/text_size_xlarge"
         android:textColor="@color/grey"
@@ -37,7 +51,7 @@
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_height_custom"
-        android:background="@drawable/myframe"
+        android:background="@drawable/mybotton_press"
         android:text="取消"
         android:textSize="@dimen/text_size_xlarge"
         android:textColor="@color/grey"

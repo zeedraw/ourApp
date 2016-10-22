@@ -34,7 +34,7 @@
                 android:paddingEnd="@dimen/small_space"
                 android:paddingTop="@dimen/tiny_space"
                 android:paddingBottom="@dimen/tiny_space"
-                android:background="@drawable/tag_background"
+                android:background="@drawable/edu_tag"
                 android:textSize="@dimen/tiny_text_size"
                 android:textColor="@color/white"
                 android:text="教育"/>

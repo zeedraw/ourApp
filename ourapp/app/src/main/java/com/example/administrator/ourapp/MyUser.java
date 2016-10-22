@@ -26,17 +26,19 @@ public class MyUser extends BmobUser {
     private Integer ident_state_pub = 0; //机构的认证状态 0为未认证 1为审核中 2为已通过
     private String name;
     private BmobFile userimage;
+    private BmobFile background;
     private String introduction;//自我介绍
     private String realname;
     private String idCard;
     private String schoolname;
     private BmobFile cardfront;
+
+
     private BmobFile cardback;
     private BmobFile studentcard;
     private BmobFile halfpicture;
     private String stuDescription; //学生认证描述
     private String orgDescription;//机构认证描述
-    private Integer missionSum;
     //以下为机构认证所需资料
     private BmobFile agency_pic1;
     private BmobFile agency_pic2;
@@ -49,7 +51,23 @@ public class MyUser extends BmobUser {
     private BmobDate message_refresh_time; //最后一次在本地加载新消息的时间
     private String contact_numer; //联系方式
     private String tag;
+    private String otherContact="";
 
+    public String getOtherContact() {
+        return otherContact;
+    }
+
+    public void setOtherContact(String otherContact) {
+        this.otherContact = otherContact;
+    }
+
+    public BmobFile getBackground() {
+        return background;
+    }
+
+    public void setBackground(BmobFile background) {
+        this.background = background;
+    }
     public String getContact_numer() {
         return contact_numer;
     }

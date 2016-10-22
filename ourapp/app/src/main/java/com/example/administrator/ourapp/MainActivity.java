@@ -3,7 +3,6 @@ package com.example.administrator.ourapp;
 
 import android.app.Dialog;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
+import com.example.administrator.ourapp.citylist.CityListActivity;
 import com.example.administrator.ourapp.friends.FreFrag;
 import com.example.administrator.ourapp.friends.search_user;
 import com.example.administrator.ourapp.message.MesFrag;
@@ -39,15 +39,12 @@ import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.util.List;
 
-import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.UploadFileListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,IListener{
@@ -57,6 +54,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //    private FragmentManager mfragManager;
 //    private FragmentTransaction mTransaction;
     private TextView r_button;
+    private TextView l_button;
     private Integer state_stu;
     private Integer state_pub;
     private boolean toMain=false;
@@ -114,6 +112,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         r_button=(TextView)findViewById(R.id.rbt);
+        l_button=(TextView)findViewById(R.id.lbt);
+        l_button.setTextSize(15);
+        l_button.setText("全部");
+        l_button.setPadding(5,0,0,0);
+        l_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this, CityListActivity.class);
+                startActivityForResult(intent,1000);
+            }
+        });
 
     }
 
@@ -130,6 +139,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_fre.setSelected(false);
             title.setText("首页");
             r_button.setVisibility(View.INVISIBLE);
+            l_button.setVisibility(View.VISIBLE);
             myCheckedChaged(view);
 //            mTransaction=mfragManager.beginTransaction();
 //            mTransaction.show(mfragManager.findFragmentByTag("main"))
@@ -147,6 +157,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_fre.setSelected(false);
             title.setText("消息");
             r_button.setVisibility(View.INVISIBLE);
+            l_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
 //            mTransaction=mfragManager.beginTransaction();
 //            mTransaction.hide(mfragManager.findFragmentByTag("main"))
@@ -163,6 +174,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_fre.setSelected(false);
             title.setText("我的");
             r_button.setVisibility(View.INVISIBLE);
+            l_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
 //            mTransaction=mfragManager.beginTransaction();
 //            mTransaction.hide(mfragManager.findFragmentByTag("main"))
@@ -181,6 +193,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             title.setText("好友");
             r_button.setText("添加");
             r_button.setVisibility(View.VISIBLE);
+            l_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
             r_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -560,6 +573,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1000&&resultCode==1001)
+        {
+            String city=data.getStringExtra("city");
+            Log.i("z","返回了city名"+city);
+            FragmentManager fm=getSupportFragmentManager();
+            Fragment main=fm.findFragmentByTag("main");
+            if (main!=null)
+            {
+                l_button.setText(city);
+                ((MainFrag)main).refreshWithCityLimit(city+"市");
+            }
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if(BmobUser.getCurrentUser()!=null) {
@@ -581,6 +611,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             myCheckedChaged(tv_main);
             toMain=false;
         }
+
 //        FragmentManager fm=getSupportFragmentManager();
 //        FragmentTransaction ft=fm.beginTransaction();
 //        Fragment mine=fm.findFragmentByTag("mine");
@@ -613,6 +644,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     }
+
+
 
     public void change_signal(){
         Log.i("z","没有未读消息");

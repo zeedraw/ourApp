@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
 
+import java.util.Arrays;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -20,6 +21,7 @@ import cn.bmob.v3.BmobQuery;
 public class Frag_activity extends MyMissionFrag {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
+    private String cityLimit="全部";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,5 +64,21 @@ public class Frag_activity extends MyMissionFrag {
         query.order("-createdAt");
         query.setLimit(7);
         query.include("pub_user[name|orgDescription].userimage");
+        if (!cityLimit.equals("全部")&&cityLimit!=null&&cityLimit.length()!=0)
+        {
+            query.addWhereContainsAll("location_abs", Arrays.asList(new String[]{cityLimit}));
+        }
+    }
+
+
+    public void setCityLimit(String str)
+    {
+        cityLimit=str;
+    }
+
+    public void initListView()
+    {
+        setContentShown(false);
+        initMission(callBack);
     }
 }

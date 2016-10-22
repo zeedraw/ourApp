@@ -55,7 +55,7 @@ public class DoApplyingFrag extends MyMissionFrag{
             callBack=new MissionAdapterCallBack() {
                 @Override
                 public void setAdapter(ListView listView, List<Mission> list) {
-                    mAdapter = new MissionAdapter(getContext(), R.layout.missionitem, list);
+                    mAdapter = new MissionAdapter(getContext(), R.layout.domission_apply_abstract, list);
                     listView.setAdapter(mAdapter);
 
                 }
@@ -79,11 +79,18 @@ public class DoApplyingFrag extends MyMissionFrag{
         protected void addCondition(BmobQuery query) {
             List<String> list=new ArrayList<String>();
             list.add(BmobUser.getCurrentUser(MyUser.class).getObjectId());
-            query.addWhereContainsAll("cur_people",list);
+            BmobQuery<Mission> query1=new BmobQuery<Mission>();
+            query1.addWhereContainsAll("cur_people",list);
+            BmobQuery<Mission> query2=new BmobQuery<Mission>();
+            query2.addWhereContainsAll("get_user",list);
+            List<BmobQuery<Mission>> querylist=new ArrayList<BmobQuery<Mission>>();
+            querylist.add(query1);
+            querylist.add(query2);
+            query.or(querylist);
             query.addWhereEqualTo("state",new Integer(2));
             query.order("-createdAt");
             query.setLimit(7);
-            query.include("pub_user[name|orgDescription].userimage");
+            query.include("pub_user[orgDescription].userimage");
         }
     }
 

@@ -203,4 +203,19 @@
     <color name="dark_gray">#4C535B</color>
     <color name="dark_gray_press">#ff7e8a97</color>
 
+    <color name="edu">#66cdff</color>
+    <color name="act">#ffea00</color>
+    <color name="trans">#64dd17</color>
+    <color name="com">#ec407a</color>
+
+    <color name="divider_line">#FF575757</color>
+
+    <color name="listview_item_normal">#eef0ed</color>
+    <color name="listview_item_pressed">#d4d4d4</color>
+
+    <color name="message_checked">#90918f</color>
+    <color name="message_no_check">#323232</color>
+
+    <color name="stick_color_bg">#e2e2e2</color>
+
 </resources>

@@ -58,6 +58,7 @@ public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(res, null);
             viewHolder = new ViewHolder();
+            viewHolder.mission_tag=(TextView)convertView.findViewById(R.id.mission_tag);
             viewHolder.person_image = (ImageView) convertView.findViewById(R.id.person_image);
             viewHolder.mission_title = (TextView) convertView.findViewById(R.id.mission_title);
             viewHolder.mission_abs = (TextView) convertView.findViewById(R.id.mission_abs);
@@ -69,12 +70,7 @@ public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (mission.getPub_user().getObjectId().equals(BmobUser.getObjectByKey("objectId"))) {
-            Bitmap bitmap = BitmapFactory.decodeFile(MainActivity.getDiskFileDir(getContext()) + "/user_image.png");
-            Drawable localdrawable = new BitmapDrawable(bitmap);
-            viewHolder.person_image.setImageDrawable(localdrawable);
-            Log.i("z", "本地任务用户头像加载成功");
-        } else {
+
             if (mission.getPub_user().getUserimage() != null) {
                 String imgurl = mission.getPub_user().getUserimage().getUrl(); // 得到该项所代表的url地址
                 Drawable drawable = imgCache.get(imgurl);  // 先去缓存中找
@@ -109,12 +105,42 @@ public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
             } else {
                 viewHolder.person_image.setImageDrawable(getContext().getResources().getDrawable(R.drawable.defaulticon));
             }
+
+        String missionTag=mission.getTag();
+        if (missionTag.equals("活动"))
+        {
+            viewHolder.mission_tag.setText("活动");
+            viewHolder.mission_tag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.act_tag));
+
         }
+        else if(missionTag.equals("教育"))
+        {
+            viewHolder.mission_tag.setText("教育");
+            viewHolder.mission_tag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.edu_tag));
+
+        }
+        else if(missionTag.equals("交通"))
+        {
+            viewHolder.mission_tag.setText("交通");
+            viewHolder.mission_tag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.trans_tag));
+
+        }
+        else if(missionTag.equals("社区"))
+        {
+            viewHolder.mission_tag.setText("社区");
+            viewHolder.mission_tag.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.com_tag));
+
+        }
+
+
+
         viewHolder.organization.setText(mission.getPub_user().getOrgDescription());
         viewHolder.mission_title.setText(mission.getName());
         viewHolder.mission_abs.setText(mission.getIntro());
         viewHolder.mission_time.setText(mission.getStart_time() + "到" + mission.getEnd_time());
-        viewHolder.location_abs.setText(mission.getLocation_abs());
+        List<String> list=mission.getLocation_abs();
+        String locationAbs=list.get(0)+"-"+list.get(1)+"-"+list.get(2);
+        viewHolder.location_abs.setText(locationAbs);
 
         viewHolder.check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +156,7 @@ public class CheckPeopleMissionAdapter extends ArrayAdapter<Mission> {
     }
 
     class ViewHolder {
+        TextView mission_tag;
         ImageView person_image;
         TextView organization;
         TextView mission_title;

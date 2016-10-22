@@ -1,5 +1,7 @@
 package com.example.administrator.ourapp;
 
+import java.util.List;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -21,7 +23,7 @@ public class Mission extends BmobObject {
     private BmobRelation get_user;//接收人
     private Integer state;//任务状态： 1审核中,2等待报名中,3进行中，4完成，0审核失败。
     private String tag;//任务类型 教育,活动,社区,景点
-    private String location_abs;//大致地点
+    private List<String> location_abs;//大致地点
     private String intro;//简介
 
     //getter&setter
@@ -35,11 +37,20 @@ public class Mission extends BmobObject {
         this.intro = intro;
     }
 
-    public String getLocation_abs() {
+//    public String getLocation_abs() {
+//        return location_abs;
+//    }
+//
+//    public void setLocation_abs(String location_abs) {
+//        this.location_abs = location_abs;
+//    }
+
+
+    public List<String> getLocation_abs() {
         return location_abs;
     }
 
-    public void setLocation_abs(String location_abs) {
+    public void setLocation_abs(List<String> location_abs) {
         this.location_abs = location_abs;
     }
 

@@ -74,6 +74,7 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".CheckMission"></activity>
+        <activity android:name=".citylist.CityListActivity"></activity>
 
     </application>
 

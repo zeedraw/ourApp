@@ -19,9 +19,10 @@ import android.widget.TextView;
 public class EditIntro extends AppCompatActivity {
     private TextView rt,title,complete;
     private EditText et;
-    private final int GET_INTRO=1001;
+    private final static int GET_INTRO=1001;
     private final static int GET_DETAIL_LOCATION=1;
     private final static int GET_DETAIL=3;
+    private final static int GET_OTHER=1003;
     private String key;
 
 
@@ -124,6 +125,9 @@ public class EditIntro extends AppCompatActivity {
         else if(key.equals("for_detail"))
         {
             setResult(GET_DETAIL,intent);
+        }
+        if (key.equals("for_other")){
+            setResult(GET_OTHER,intent);
         }
     }
 

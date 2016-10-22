@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
+import com.example.administrator.ourapp.mymissionadapter.PubMissionReviewAdapter;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import cn.bmob.v3.BmobUser;
  * Created by Administrator on 2016/9/17.
  */
 public class Frg_task_reviewing extends MyMissionFrag {
-    private MissionAdapter mAdapter;
+    private PubMissionReviewAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class Frg_task_reviewing extends MyMissionFrag {
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new MissionAdapter(getContext(), R.layout.missionitem, list);
+                mAdapter = new PubMissionReviewAdapter(getContext(), R.layout.pubmission_review_abstract, list);
                 listView.setAdapter(mAdapter);
 
             }
@@ -58,8 +58,8 @@ public class Frg_task_reviewing extends MyMissionFrag {
         user.setObjectId((String) BmobUser.getObjectByKey("objectId"));
         query.addWhereEqualTo("pub_user",user);
         query.addWhereEqualTo("state",new Integer(1));
+        query.include("pub_user[name|orgDescription]");
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[name|orgDescription].userimage");
     }
 }

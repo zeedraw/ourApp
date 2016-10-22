@@ -208,7 +208,9 @@ public class MissionInfo extends AppCompatActivity {
         mName=(TextView)findViewById(R.id.mission_title);
         mName.setText(mMission.getName());
         mLocation=(TextView)findViewById(R.id.mission_location);
-        mLocation.setText(mMission.getLocation_abs());
+        List<String> list=mMission.getLocation_abs();
+        String locationAbs=list.get(0)+"-"+list.get(1)+"-"+list.get(2);
+        mLocation.setText(locationAbs);
 
         mState=(TextView)findViewById(R.id.mission_state);
         switch (mMission.getState())

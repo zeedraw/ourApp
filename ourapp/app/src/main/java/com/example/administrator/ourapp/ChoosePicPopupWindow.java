@@ -16,7 +16,7 @@ import com.example.administrator.ourapp.R;
  */
 
 public class ChoosePicPopupWindow extends PopupWindow {
-    private TextView takePhoto_tv,pickPhoto_tv,cancel_tv;
+    private TextView takePhoto_tv,pickPhoto_tv,cancel_tv,title;
     private View rootView;
 
 
@@ -25,6 +25,7 @@ public class ChoosePicPopupWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         rootView=inflater.inflate(R.layout.choosepicdialog,null);
+        title=(TextView)rootView.findViewById(R.id.title);
         takePhoto_tv=(TextView)rootView.findViewById(R.id.take_photo);
         pickPhoto_tv=(TextView)rootView.findViewById(R.id.pick_photo);
         cancel_tv=(TextView)rootView.findViewById(R.id.cancel);
@@ -67,6 +68,11 @@ public class ChoosePicPopupWindow extends PopupWindow {
             }
         });
 
+    }
+
+    public void setTitle(String str)
+    {
+        title.setText(str);
     }
 
 
