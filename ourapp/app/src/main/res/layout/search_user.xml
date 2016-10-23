@@ -20,8 +20,8 @@
             android:layout_marginBottom="@dimen/widget_margin_large">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/ic_search_black_24dp"
                 android:layout_marginRight="@dimen/widget_margin_medium"
                 />
@@ -29,11 +29,12 @@
             <EditText
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:background="@drawable/editext_with_rim"
                 android:layout_marginRight="@dimen/widget_margin_medium"
                 android:paddingLeft="@dimen/widget_margin_medium"
                 android:hint="请输入要查询的用户名"
+                android:textSize="@dimen/text_size_medium"
                 android:textColor="@color/black"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"/>

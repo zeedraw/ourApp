@@ -103,10 +103,11 @@ public class search_user extends Activity {
                 }//if
                 //若选中的用户的ID不是本人则跳转到他人信息界面（然后判断是否为自己的好友显示不同的接口）
                 else{
-                    Intent intent = new Intent(search_user.this, other_information.class);
-                    // 在Intent中传递数据
-                    intent.putExtra("other_ID", user_ID.get(i));
-                    // 启动Intent
+                    Intent intent = new Intent(search_user.this,
+                            MyAccount.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("user",query_list.get(i));
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }//else
             }//onItemClick

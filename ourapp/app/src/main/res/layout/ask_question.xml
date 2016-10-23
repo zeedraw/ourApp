@@ -15,6 +15,7 @@
         android:layout_marginRight="@dimen/widget_margin_large"
         android:layout_marginLeft="@dimen/widget_margin_large">
 
+
         <EditText
             android:id="@+id/edit_question"
             android:layout_width="match_parent"

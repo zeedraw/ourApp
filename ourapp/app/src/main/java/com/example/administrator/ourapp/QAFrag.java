@@ -81,6 +81,11 @@ public class QAFrag extends ProgressFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(BmobUser.getCurrentUser(MyUser.class) == null){
+                    Intent intent=new Intent(getContext(),Login.class);
+                    startActivity(intent);
+                    return;
+                }//if 未登录
 
                 if(mission.getPub_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
                     //若是任务发布者则跳转到编辑回答界面

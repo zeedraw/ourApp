@@ -1,5 +1,6 @@
 package com.example.administrator.ourapp;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * Created by Administrator on 2016/8/21.
  */
-public class MySetting extends AppCompatActivity {
+public class MySetting extends Activity {
     private TextView rt_button;
     private TextView title;
     private TextView advice_feedback;

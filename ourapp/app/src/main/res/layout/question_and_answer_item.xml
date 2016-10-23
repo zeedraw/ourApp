@@ -14,7 +14,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="@dimen/widget_margin_medium"
             android:layout_marginRight="@dimen/widget_margin_medium"
-            android:layout_marginTop="@dimen/widget_margin_medium"
+            android:layout_marginTop="@dimen/widget_margin_large"
             >
             <ImageView
                 android:layout_width="0dp"

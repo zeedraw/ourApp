@@ -162,40 +162,28 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                                                         "恭喜您，您参加的"+ mission.getName() + "活动已经开始！",
                                                         5, false, mission.getObjectId(), getContext());
                                             }//for
-//                                            List<BmobObject> messages = new ArrayList<BmobObject>();
-//                                            for (int i = 0; i < object.size(); i++) {
-//                                                Message message = new Message();
-//                                                message.setSender(BmobUser.getCurrentUser(MyUser.class));
-//                                                message.setReceiver(object.get(i));
-//                                                message.setType(5); //5为申请的任务开始信息
-//                                                message.setBe_viewed(false);
-//                                                message.setRemark(mission.getObjectId());
-//                                                message.setContent("恭喜您，您参加的"+ mission.getName() +
-//                                                        "活动已经开始！");
-//                                                messages.add(message);
-//                                            }
-//                                            new BmobBatch().insertBatch(messages).doBatch(new QueryListListener<BatchResult>() {
-//
-//                                                @Override
-//                                                public void done(List<BatchResult> o, BmobException e) {
-//                                                    if(e==null){
-//                                                        for(int i=0;i<o.size();i++){
-//                                                            BatchResult result = o.get(i);
-//                                                            BmobException ex =result.getError();
-//                                                            if(ex==null){
-//                                                                Log.i("给申请者发送成功消息", "第"+i+"个数据批量添加成功："+result.getCreatedAt()+","+result.getObjectId()+","+result.getUpdatedAt());
-//                                                            }else{
-//                                                                Log.i("给申请者发送成功消息", "第"+i+"个数据批量添加失败："+ex.getMessage()+","+ex.getErrorCode());
-//                                                            }
-//                                                        }
-//                                                    }else{
-//                                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-//                                                    }
-//                                                }
-//                                            });
+                                        }else{
+                                            Log.i("bmob","失败："+e.getMessage());
+                                        }
+                                    }
 
+                                });
 
+                                BmobQuery<MyUser> query1 = new BmobQuery<MyUser>();
 
+                                query1.addWhereRelatedTo("cur_people", new BmobPointer(mission));
+                                query1.findObjects(new FindListener<MyUser>() {
+
+                                    @Override
+                                    public void done(List<MyUser> object,BmobException e) {
+                                        if(e==null){
+                                            Log.i("bmob","查询个数："+object.size());
+                                            Message_tools sm = new Message_tools();
+                                            for(int i = 0; i < object.size(); ++i){
+                                                sm.send(BmobUser.getCurrentUser(MyUser.class), object.get(i),
+                                                        "很遗憾，您并没有被"+ mission.getName() + "活动选为志愿者，去首页看看其他任务吧。",
+                                                        6, false, mission.getObjectId(), getContext());
+                                            }//for
                                         }else{
                                             Log.i("bmob","失败："+e.getMessage());
                                         }

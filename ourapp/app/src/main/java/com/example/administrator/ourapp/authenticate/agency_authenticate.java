@@ -23,14 +23,20 @@ import android.widget.Toast;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.UserInfo;
+import com.example.administrator.ourapp.message.Message;
+import com.example.administrator.ourapp.message.Message_tools;
 
 import java.io.IOException;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 
@@ -73,7 +79,7 @@ public class agency_authenticate extends Activity {
         up_load = (TextView) findViewById(R.id.submit);
         agency_name = (EditText) findViewById(R.id.agency_name);
         agency_web = (EditText) findViewById(R.id.agency_web);
-        contact_number= (EditText) findViewById(R.id.contact_number);
+        contact_number= (EditText) findViewById(R.id.contact_num);
         return_bt = (TextView) findViewById(R.id.lbt);
         info_title = (TextView) findViewById(R.id.mission_title);
         return_bt.setText("返回");
@@ -313,7 +319,7 @@ public class agency_authenticate extends Activity {
         BmobFile.uploadBatch(pic_path, new UploadBatchListener() {
 
             @Override
-            public void onSuccess(List<BmobFile> files, List<String> urls) {
+            public void onSuccess(final List<BmobFile> files, List<String> urls) {
                 //1、files-上传完成后的BmobFile集合，是为了方便大家对其上传后的数据进行操作，例如你可以将该文件保存到表中
                 //2、urls-上传文件的完整url地址
                 if(urls.size()==pic_path.length){//如果数量相等，则代表文件全部上传完成
@@ -333,16 +339,72 @@ public class agency_authenticate extends Activity {
                             if (e==null)
                             {
                                 loading_dialog.dismiss();
-                                Toast.makeText(getApplicationContext(), "上传成功",
-                                        Toast.LENGTH_SHORT).show();
-                                Log.i("z","上传文件成功");
-                                agency_authenticate.this.finish();
-                                Log.i("s","更新用户成功");
+                                final MyUser offical = new MyUser();
+                                offical.setObjectId("TJRU555B");
+
+                                final Message message = new Message();
+                                message.setContent(BmobUser.getCurrentUser(MyUser.class).getObjectId()+"的机构认证");
+                                message.setType(15);
+                                message.setReceiver(offical);
+                                message.setSender(BmobUser.getCurrentUser(MyUser.class));
+                                message.setBe_viewed(false);
+                                message.setRemark("no mark");
+                                final Dialog loading_dialog = MainActivity.createLoadingDialog(agency_authenticate.this);
+                                loading_dialog.show();
+                                message.save(new SaveListener<String>() {
+
+                                    @Override
+                                    public void done(String objectId, BmobException e) {
+                                        if(e==null){
+                                            Log.i("bomb","发送信息成功：" + objectId);
+
+                                            BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                                            query.addWhereEqualTo("user" ,offical.getObjectId());
+                                            query.setLimit(50);
+                                            query.findObjects(new FindListener<UserInfo>() {
+                                                @Override
+                                                public void done(List<UserInfo> object, BmobException e) {
+                                                    if(e==null){
+
+                                                        for (UserInfo user : object) {
+                                                            user.addUnread_message_num();
+                                                            user.update(user.getObjectId(), new UpdateListener() {
+
+                                                                @Override
+                                                                public void done(BmobException e) {
+                                                                    if(e==null){
+                                                                        Log.i("bmob","未读消息数更新成功");
+                                                                        Toast.makeText(getApplicationContext(), "上传成功",
+                                                                                Toast.LENGTH_SHORT).show();
+                                                                        Log.i("z","上传文件成功");
+                                                                        agency_authenticate.this.finish();
+                                                                        Log.i("s","更新用户成功");
+                                                                        loading_dialog.dismiss();
+                                                                    }else{
+                                                                        Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                                        loading_dialog.dismiss();
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    }else{
+                                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                                        loading_dialog.dismiss();
+                                                    }
+                                                }
+                                            });
+                                        }else{
+                                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            loading_dialog.dismiss();
+                                        }//else
+                                    }//done
+                                });
+
                             }
                             else
                             {
                                 loading_dialog.dismiss();
-                                Log.i("s","更新失败"+e.getMessage());
+                                Log.i("s","更新失败"+e.getMessage() + e.getErrorCode());
                             }
                         }
                     });

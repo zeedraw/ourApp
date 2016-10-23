@@ -10,9 +10,13 @@ import android.widget.TextView;
 
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
+import com.example.administrator.ourapp.Login;
 import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.QAFrag;
 import com.example.administrator.ourapp.R;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by Longze on 2016/9/18.
@@ -100,7 +104,6 @@ public class question_and_answer extends FragmentActivity implements IListener{
 //                    }
 //                    else
 //                    {
-//                        //Todo: 提示 还有没有人提问
 //                    }
 //                }//if
 //                else{
@@ -144,12 +147,20 @@ public class question_and_answer extends FragmentActivity implements IListener{
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(question_and_answer.this,ask_question.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("mission",mission);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+
+                if(BmobUser.getCurrentUser(MyUser.class) == null){
+                    Intent intent=new Intent(question_and_answer.this,Login.class);
+                    startActivity(intent);
+                }//if 未登录
+                else{
+                    Intent intent=new Intent(question_and_answer.this,ask_question.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("mission",mission);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }//else
+
+            }//onClick
         });
 
         FragmentManager fm=getSupportFragmentManager();

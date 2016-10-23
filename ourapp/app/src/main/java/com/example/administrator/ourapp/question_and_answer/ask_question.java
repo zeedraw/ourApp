@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MainActivity;
@@ -65,6 +66,10 @@ public class ask_question extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(EditQuestion.length() < 4){
+                    Toast.makeText(ask_question.this, "问题的内容不得少于4个字符", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final Dialog loading_dialog = MainActivity.createLoadingDialog(ask_question.this);
                 loading_dialog.show();
                 answer.setContent("暂无回答");
@@ -115,8 +120,8 @@ public class ask_question extends Activity {
                 });
 
 
-            }
-        });
+            }//onClick
+        });//submit onClick
 
     }//initWidget
 }

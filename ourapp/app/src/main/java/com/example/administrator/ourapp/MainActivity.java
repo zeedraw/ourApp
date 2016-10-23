@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -38,6 +39,8 @@ import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
@@ -59,6 +62,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Integer state_pub;
     private boolean toMain=false;
 
+    private static Boolean isQuit = false;
+    Timer timer = new Timer();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +83,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initWidget();
 
+    }//onCreate
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //再按一次退出app
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isQuit == false) {
+                isQuit = true;
+                Toast.makeText(getBaseContext(), "再按一次退出", Toast.LENGTH_SHORT).show();
+                TimerTask task = null;
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isQuit = false;
+                    }
+                };
+                timer.schedule(task, 2000);
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
+        return true;
     }
+
+
     private  void initWidget(){
         //新消息的提示红点
         mesSignal=(ImageView)findViewById(R.id.mesSignal);
@@ -374,76 +404,82 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         /**
          * 显示选择实名认证还是机构认证的对话框
          */
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("请选择");
-        String[] items = { "实名认证", "机构认证" };
-        builder.setNegativeButton("取消", null);
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        if(BmobUser.getCurrentUser(MyUser.class) == null){
+            Intent intent=new Intent(MainActivity.this,Login.class);
+            startActivity(intent);
+        }//if 未登录
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("请选择");
+            String[] items = { "实名认证", "机构认证" };
+            builder.setNegativeButton("取消", null);
+            builder.setItems(items, new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, final int which) {
+                @Override
+                public void onClick(DialogInterface dialog, final int which) {
 
-                BmobQuery<MyUser> query = new BmobQuery<MyUser>();
-                query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
+                    BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+                    query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
 
-                    @Override
-                    public void done(MyUser object, BmobException e) {
-                        if(e==null){
-                            state_stu = object.getIdent_state_stu();
-                            state_pub = object.getIdent_state_pub();
+                        @Override
+                        public void done(MyUser object, BmobException e) {
+                            if(e==null){
+                                state_stu = object.getIdent_state_stu();
+                                state_pub = object.getIdent_state_pub();
 
-                            switch (which) {
-                                case 0: // 选择实名认证
-                                    if(state_stu == 1){
+                                switch (which) {
+                                    case 0: // 选择实名认证
+                                        if(state_stu == 1){
 //                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
 //                                        builder.setMessage("正在认证");
-                                        Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
 
-                                    }
-                                    else if(state_stu == 2){
+                                        }
+                                        else if(state_stu == 2){
 //                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
 //                                        builder.setMessage("认证已通过，不能重复认证");
-                                        Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
 
-                                    }else{
-                                        ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
-                                        Intent intent=new Intent();
-                                        intent.setComponent(comp);
-                                        startActivity(intent);
-                                    }
-                                    break;
-                                case 1: // 选择机构认证
-                                    if(state_pub == 1){
+                                        }else{
+                                            ComponentName comp=new ComponentName(MainActivity.this,real_name_authenticate.class);
+                                            Intent intent=new Intent();
+                                            intent.setComponent(comp);
+                                            startActivity(intent);
+                                        }
+                                        break;
+                                    case 1: // 选择机构认证
+                                        if(state_pub == 1){
 //                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
 //                                        builder.setMessage("正在认证");
-                                        Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else if(state_pub == 2){
+                                            Toast.makeText(getBaseContext(), "认证已上传，正在审核中", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else if(state_pub == 2){
 //                                        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
 //                                        builder.setMessage("认证已通过，不能重复认证");
-                                        Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getBaseContext(), "认证已通过，不能重复认证", Toast.LENGTH_SHORT).show();
 
-                                    }else{
-                                        ComponentName comp=new ComponentName(MainActivity.this,agency_authenticate.class);
-                                        Intent intent=new Intent();
-                                        intent.setComponent(comp);
-                                        startActivity(intent);
-                                    }
-                                    break;
-                            }//swtich
+                                        }else{
+                                            ComponentName comp=new ComponentName(MainActivity.this,agency_authenticate.class);
+                                            Intent intent=new Intent();
+                                            intent.setComponent(comp);
+                                            startActivity(intent);
+                                        }
+                                        break;
+                                }//swtich
 
 
-                        }else{
-                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            }else{
+                                Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            }
                         }
-                    }
 
-                });
+                    });
 
-            }//onClick
-        });
-        builder.create().show();
-    }
+                }//onClick
+            });
+            builder.create().show();
+        }//else
+    }//Myauthenticate_click
 
 
     public void Mysetting_click (View view)

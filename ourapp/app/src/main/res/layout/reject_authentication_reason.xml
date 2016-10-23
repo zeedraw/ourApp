@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header">
+        <!--左侧返回 中间 认证失败-->
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <TextView
+            android:id="@+id/reason"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@color/black"
+            android:text="失败原因"
+            android:textSize="@dimen/text_size_large"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height_custom"
+        android:layout_marginTop="@dimen/widget_margin_large"
+        android:layout_marginLeft="@dimen/widget_margin_large"
+        android:layout_marginRight="@dimen/widget_margin_large"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/submit"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/text_size_large"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/submit_background"
+            android:text="确定"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
