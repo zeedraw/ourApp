@@ -619,6 +619,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             Fragment main=fm.findFragmentByTag("main");
             if (main!=null)
             {
+                if (city.equals("#全部"))
+                {
+                    Log.i("z","显示全部");
+                    city="全部";
+                }
                 l_button.setText(city);
                 ((MainFrag)main).refreshWithCityLimit(city+"市");
             }

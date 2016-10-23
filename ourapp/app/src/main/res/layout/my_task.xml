@@ -28,38 +28,45 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/mission_header"
         android:layout_above="@+id/linearLayout" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@drawable/da_tabs"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        >
+
         <CheckedTextView
             android:id="@+id/pub_tv"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:text="我发布的"
             android:textColor="@drawable/tabstext"
-            android:drawableTop="@drawable/tabscheck_selector"
+            android:drawableTop="@drawable/mycreat"
 
             />
+
         <CheckedTextView
             android:id="@+id/do_tv"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:text="我执行的"
             android:textColor="@drawable/tabstext"
-            android:drawableTop="@drawable/tabscheck_selector"
+            android:drawableTop="@drawable/mydo"
             />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/materialGrey300"
+        android:layout_above="@id/linearLayout"/>
 
 </RelativeLayout>

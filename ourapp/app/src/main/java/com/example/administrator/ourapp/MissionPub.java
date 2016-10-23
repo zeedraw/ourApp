@@ -228,6 +228,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
     {
         Intent intent=new Intent(this, EditIntro.class);
         intent.putExtra("from","for_detail_location");
+        intent.putExtra("length",40);
         intent.putExtra("mes",detail_location.getText().toString().trim());
         startActivityForResult(intent,FOR_DETAIL_LOCATION);
     }
@@ -250,6 +251,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
         Intent intent=new Intent(this, EditIntro.class);
         intent.putExtra("from","for_detail");
         intent.putExtra("mes",detail_mission.getText().toString().trim());
+        intent.putExtra("length",1000);
         startActivityForResult(intent,FOR_DETAIL);
     }
 }

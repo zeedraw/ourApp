@@ -2,8 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/colorBJ">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="9dp"
+        />
     <com.example.administrator.ourapp.RefreshLayout
         android:id="@+id/mission_refreshlayout"
         android:layout_width="match_parent"
@@ -14,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="9dp"
-            android:divider="@color/divider"
+            android:divider="@color/colorBJ"
             />
     </com.example.administrator.ourapp.RefreshLayout>
 

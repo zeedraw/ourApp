@@ -1,5 +1,6 @@
 package com.example.administrator.ourapp;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -86,22 +87,25 @@ public class MyTask extends FragmentActivity implements View.OnClickListener {
         pub_button.setText("发布");
         pub_button.setVisibility(View.VISIBLE);
         pub_button.setOnClickListener(new View.OnClickListener() {
+            Dialog loading;
             @Override
             public void onClick(View view) {
+                loading=MainActivity.createLoadingDialog(MyTask.this);
+                loading.show();
                 BmobQuery<MyUser> query=new BmobQuery<MyUser>();
                 query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
                     @Override
                     public void done(MyUser myUser, BmobException e) {
                         if (e==null)
-                        {
+                        {   loading.dismiss();
                             if (myUser.getIdentifiedPublish())
                             {
-                                //TODO 没有发布任务的权限 则弹出对话框的提醒
                                 Intent intent=new Intent(MyTask.this,MissionPub.class);
                                 startActivity(intent);
                             }
                             else
                             {
+
                                 AlertDialog.Builder builder=new AlertDialog.Builder(MyTask.this);
                                 builder.setMessage("您还未获得机构认证，是否现在认证");
                                 builder.setPositiveButton("是的", new DialogInterface.OnClickListener() {

@@ -225,7 +225,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 }
                 else
                 {
-                    background.setImageDrawable(getResources().getDrawable(R.drawable.scrollview_header));
+                    background.setImageDrawable(getResources().getDrawable(R.drawable.scrollview_background));
                 }
 
 //                if (backGround!=null) {
@@ -275,6 +275,11 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
         if (current.getOtherContact()!=null)
         {
             otherContact.setText(current.getOtherContact());
+        }
+
+        if(current.getMobilePhoneNumber()!=null)
+        {
+            number.setText(current.getMobilePhoneNumber());
         }
 
         //初始化评分信息
@@ -360,7 +365,7 @@ public class MyAccount extends AppCompatActivity implements PullScrollView.OnTur
                 }
                 else
                 {
-                    drawable[1]=getResources().getDrawable(R.drawable.scrollview_header);
+                    drawable[1]=getResources().getDrawable(R.drawable.scrollview_background);
                 }
 
 

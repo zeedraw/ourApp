@@ -28,9 +28,9 @@
                 android:layout_height="match_parent"
                 android:text="任务标签"
                 android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:paddingLeft="15dp"
-                android:paddingTop="12dp" />
+                android:gravity="center_vertical"/>
             <TextView
                 android:id="@+id/mission_pub_tag_tv"
                 android:layout_marginLeft="100dp"
@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_medium"
-                android:paddingTop="12dp"
+                android:gravity="center_vertical"
                 />
         </RelativeLayout>
 
@@ -57,9 +57,9 @@
                 android:layout_height="match_parent"
                 android:text="任务名称"
                 android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:paddingLeft="15dp"
-                android:paddingTop="12dp" />
+                android:gravity="center_vertical" />
             <EditText
                 android:id="@+id/mission_pub_name_et"
                 android:layout_marginLeft="100dp"
@@ -67,9 +67,11 @@
                 android:layout_height="match_parent"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_medium"
-                android:paddingTop="12dp"
                 android:maxLength="15"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                android:background="@null"
+                android:hint="填写任务名称"
+                />
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
@@ -86,19 +88,21 @@
                 android:layout_height="43dp"
                 android:text="任务简介"
                 android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:paddingLeft="15dp"
-                android:paddingTop="12dp" />
+                android:gravity="center_vertical" />
             <EditText
                 android:id="@+id/mission_pub_intro_et"
                 android:layout_marginLeft="100dp"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_medium"
-                android:paddingTop="12dp"
                 android:maxLength="30"
-                android:layout_alignParentTop="true" />
+                android:layout_marginTop="12dp"
+                android:hint="填写任务简介"
+                android:background="@null"
+                />
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
@@ -117,9 +121,9 @@
                 android:layout_height="match_parent"
                 android:text="所在地"
                 android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:paddingLeft="15dp"
-                android:paddingTop="12dp" />
+                android:gravity="center_vertical" />
             <TextView
                 android:id="@+id/location_tv"
                 android:layout_marginLeft="100dp"
@@ -127,7 +131,7 @@
                 android:layout_height="match_parent"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_medium"
-                android:paddingTop="12dp"
+                android:gravity="center_vertical"
                 />
             <ImageView
                 android:layout_alignParentRight="true"
@@ -156,9 +160,9 @@
                 android:layout_height="43dp"
                 android:text="详细地址"
                 android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:paddingLeft="15dp"
-                android:paddingTop="12dp" />
+                android:gravity="center_vertical" />
 
             <ImageView
                 android:layout_alignParentRight="true"
@@ -179,7 +183,8 @@
                 android:textSize="@dimen/text_size_medium"
                 android:paddingTop="12dp"
                 android:text=""
-                android:maxLength="120"
+                android:maxLength="50"
+
                 />
         </RelativeLayout>
         <View
@@ -214,9 +219,9 @@
                     android:layout_height="match_parent"
                     android:text="开始时间"
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/black"
                     android:paddingLeft="15dp"
-                    android:paddingTop="12dp"
+                    android:gravity="center_vertical"
                     android:id="@+id/textView" />
 
                 <ImageView
@@ -236,7 +241,7 @@
                     android:layout_height="match_parent"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_medium"
-                    android:paddingTop="12dp"
+                    android:gravity="center_vertical"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/textView" />
             </RelativeLayout>
@@ -257,9 +262,9 @@
                     android:layout_height="match_parent"
                     android:text="结束时间"
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/black"
                     android:paddingLeft="15dp"
-                    android:paddingTop="12dp" />
+                    android:gravity="center_vertical"/>
 
                 <ImageView
                     android:layout_alignParentRight="true"
@@ -277,7 +282,7 @@
                     android:layout_height="match_parent"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_medium"
-                    android:paddingTop="12dp"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="100dp"/>
             </RelativeLayout>
             <View
@@ -296,9 +301,9 @@
                     android:layout_height="43dp"
                     android:text="任务详情"
                     android:textSize="@dimen/text_size_medium"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/black"
                     android:paddingLeft="15dp"
-                    android:paddingTop="12dp" />
+                    android:gravity="center_vertical" />
 
                 <ImageView
                     android:layout_alignParentRight="true"
@@ -317,7 +322,9 @@
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_medium"
                     android:paddingTop="12dp"
-                    android:maxLength="120"
+                    android:maxEms="15"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:layout_marginLeft="100dp"/>
             </RelativeLayout>
             <View

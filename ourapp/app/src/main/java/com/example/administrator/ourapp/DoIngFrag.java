@@ -35,6 +35,7 @@ public class DoIngFrag extends MyMissionFrag {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setEmptyText("暂无任务，点我重新加载");
 
         mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

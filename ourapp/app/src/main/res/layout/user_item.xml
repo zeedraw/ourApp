@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:descendantFocusability="blocksDescendants"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     >
-    <ImageView
-        android:id="@+id/user_image"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/defaulticon"/>
+<ImageView
+    android:id="@+id/user_image"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@drawable/defaulticon"/>
 
-    <CheckBox
-        android:id="@+id/choose_cb"
-        android:clickable="false"
+<CheckBox
+    android:id="@+id/choose_cb"
+    android:clickable="false"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:layout_marginRight="10dp"
+    android:visibility="gone"
+    />
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toRightOf="@+id/user_image">
+    <TextView
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:visibility="gone"
+        android:text="用户名"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/black"
         />
-
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/au_image"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/g34"
+        android:layout_below="@id/user_name"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/user_name"
+        />
+    <TextView
+        android:id="@+id/student_des"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/user_image">
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户名"
-            android:textSize="@dimen/text_size_medium"
-            android:textColor="@color/black"
-            android:layout_marginTop="10dp"/>
-        <ImageView
-            android:id="@+id/au_image"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/g34"
-            android:layout_below="@id/user_name"
-            android:layout_marginTop="10dp"
-            android:layout_alignLeft="@id/user_name"
-            />
-        <TextView
-            android:id="@+id/student_des"
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:layout_toRightOf="@id/au_image"
-            android:layout_below="@id/user_name"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:text="xx大学在校生"
-            android:textSize="@dimen/text_size_micro"/>
+        android:layout_height="15dp"
+        android:layout_toRightOf="@id/au_image"
+        android:layout_below="@id/user_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:text="xx大学在校生"
+        android:textSize="@dimen/text_size_micro"/>
 
-    </RelativeLayout>
+</RelativeLayout>
 
 
 </RelativeLayout>
