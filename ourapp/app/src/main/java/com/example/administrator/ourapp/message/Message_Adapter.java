@@ -90,24 +90,29 @@ public class Message_Adapter extends ArrayAdapter<Message> {
                 break;
             case 3:
                 MessageType = "通过任务申请";
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.pass_mission);
                 break;
             case 4:
                 MessageType = "任务申请";       //有人报名任务  看到此消息的是发布者
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_apply);
                 break;
             case 5:
                 MessageType = "任务已开始";
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.mission_start);
                 break;
             case 7:
                 MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
-                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
                 break;
             case 8:
                 MessageType = "新的回答";       //发布者对用户的问题进行了回答 看到此消息的是提问者
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_answer);
+                break;
+            case 9:
+                MessageType = "意见反馈";       //发布者对用户的问题进行了回答 看到此消息的是提问者
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
                 break;
+
 
 
         }//switch 判断message来给属性赋值

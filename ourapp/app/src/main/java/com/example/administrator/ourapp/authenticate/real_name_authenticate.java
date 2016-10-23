@@ -27,6 +27,8 @@ import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -54,6 +56,8 @@ public class real_name_authenticate extends AppCompatActivity {
     private EditText ID_number = null;
     private EditText school_name = null;
     private EditText contact_number = null;
+    private TextView return_bt = null;
+    private TextView info_title = null;
     private String pic_path[] = new String[4];
     private int num = 0; //num代表图片位置 0为身份证正面 1 为身份证反面 2为持身份证半身照 3为学生证照
     private boolean is_upload_pic[] = {false, false, false, false};
@@ -75,6 +79,18 @@ public class real_name_authenticate extends AppCompatActivity {
         ID_number = (EditText) findViewById(R.id.ID_number);
         school_name= (EditText) findViewById(R.id.school_name);
         contact_number= (EditText) findViewById(R.id.contact_number);
+        return_bt = (TextView) findViewById(R.id.lbt);
+        info_title = (TextView) findViewById(R.id.mission_title);
+
+        return_bt.setText("返回");
+        info_title.setText("实名认证");
+        return_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                real_name_authenticate.this.finish();
+            }
+        });
+
         cardFront.setOnClickListener(listener);
         cardBack.setOnClickListener(listener);
         halfPic.setOnClickListener(listener);
