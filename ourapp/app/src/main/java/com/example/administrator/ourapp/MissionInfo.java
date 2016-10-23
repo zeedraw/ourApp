@@ -45,6 +45,7 @@ public class MissionInfo extends AppCompatActivity {
     private TextView orgDescription;
     private Mission mMission;
     private TextView mName,mLocation,mTime,mLocDtails,mDetails,mState;
+    private TextView mContact;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,6 +232,12 @@ public class MissionInfo extends AppCompatActivity {
 
         mLocDtails=(TextView)findViewById(R.id.detail_location);
         mLocDtails.setText(mMission.getLocation());
+
+        mContact=(TextView)findViewById(R.id.contact);
+        String userContact=mMission.getPub_user().getAgency_contact_num();
+        if (userContact!=null) {
+            mContact.setText(userContact);
+        }
 
         mDetails=(TextView)findViewById(R.id.detail_mission);
         mDetails.setText(mMission.getDetail());

@@ -24,7 +24,7 @@ import cn.bmob.v3.BmobQuery;
 public class Frag_edu extends MyMissionFrag {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
-    private String cityLimit="全部";
+    private String cityLimit="全部市";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,13 +80,15 @@ public class Frag_edu extends MyMissionFrag {
 
     @Override
     protected void addCondition(BmobQuery query) {
+
         query.addWhereEqualTo("tag","教育");
         query.addWhereEqualTo("state",new Integer(2));
         query.order("-createdAt");
         query.setLimit(7);
         query.include("pub_user[name|orgDescription].userimage");
-        if (!cityLimit.equals("全部"))
+        if (!cityLimit.equals("全部市"))
         {
+            Log.i("z","显示特定城市"+cityLimit);
             query.addWhereContainsAll("location_abs", Arrays.asList(new String[]{cityLimit}));
         }
     }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -47,6 +48,8 @@ public class EditIntro extends AppCompatActivity {
         });
 
         et=(EditText)findViewById(R.id.edit_intro);
+        int n=intent.getIntExtra("length",180);
+        et.setFilters(new InputFilter[] { new InputFilter.LengthFilter(n) });
 
         String mes=intent.getStringExtra("mes");
         if(mes!=null)
@@ -130,5 +133,6 @@ public class EditIntro extends AppCompatActivity {
             setResult(GET_OTHER,intent);
         }
     }
+
 
 }

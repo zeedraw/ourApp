@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eaeaea">
+    android:background="@color/colorBJ">
 
     <LinearLayout
         android:id="@+id/progress_container"
@@ -10,7 +10,8 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/divider">
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
@@ -32,7 +33,7 @@
         android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        >
 
         <TextView
             android:id="@android:id/empty"
@@ -41,10 +42,10 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="8dp"
-            android:textColor="#494fe9"
+            android:textColor="@color/selected"
             android:textSize="18sp"
-            android:text="点击重新加载"
-            android:textStyle="bold|italic"/>
+            android:text="点击左上角，换个城市试试\n或点我重新加载"
+            />
     </FrameLayout>
 
 </RelativeLayout>

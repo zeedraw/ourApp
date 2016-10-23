@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ourapp</string>
+    <string name="app_name">知愿者</string>
     <string name="loading">Loading&#8230;</string>
     <string name="occupation">职业未知</string>
     <string name="education">学历未知</string>
