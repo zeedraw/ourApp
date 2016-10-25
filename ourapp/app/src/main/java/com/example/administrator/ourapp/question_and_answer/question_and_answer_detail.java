@@ -8,11 +8,13 @@ import android.widget.TextView;
 
 import com.example.administrator.ourapp.R;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by Longze on 2016/9/20.
  * 单个问答的详细界面
  */
-public class question_and_answer_detail extends Activity {
+public class question_and_answer_detail extends SwipeBackActivity {
 
     TextView return_bt;//标题上的返回按钮
     TextView info_title;//标题

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.mymissionadapter.CheckPeopleMissionAdapter;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
@@ -144,6 +145,8 @@ public class CheckMissionFrag extends ProgressFragment {
                                     else
                                     {
                                         Log.i("z","查找对应comment失败");
+                                        Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                                     }
                                     flag--;
                                     if (flag==0)
@@ -170,6 +173,7 @@ public class CheckMissionFrag extends ProgressFragment {
                     setContentShown(true);
                     setContentEmpty(true);
                     Log.i("z","查询数据失败"+e.getMessage()+","+e.getErrorCode());
+                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -256,6 +260,7 @@ public class CheckMissionFrag extends ProgressFragment {
                                     }
                                     else
                                     {
+                                        Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         Log.i("z","查找对应comment失败");
                                     }
                                     flag--;

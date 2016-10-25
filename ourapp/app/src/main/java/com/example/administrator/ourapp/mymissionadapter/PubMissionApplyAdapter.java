@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.CheckPeople;
 import com.example.administrator.ourapp.ChoosePeople;
@@ -185,6 +186,7 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                                                         6, false, mission.getObjectId(), getContext());
                                             }//for
                                         }else{
+                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             Log.i("bmob","失败："+e.getMessage());
                                         }
                                     }

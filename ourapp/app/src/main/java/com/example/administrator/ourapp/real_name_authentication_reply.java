@@ -12,11 +12,12 @@ import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 
 import cn.bmob.v3.BmobUser;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/10/23.
  */
-public class real_name_authentication_reply extends Activity {
+public class real_name_authentication_reply extends SwipeBackActivity {
 
     private Button pass;
     private Button reject;

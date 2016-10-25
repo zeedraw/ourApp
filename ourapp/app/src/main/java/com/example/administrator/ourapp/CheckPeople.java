@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.mymissionadapter.UserItemAdapter;
 import com.example.administrator.ourapp.user_information.MyAccount;
@@ -94,6 +95,7 @@ public class CheckPeople extends AppCompatActivity {
                 else
                 {
                     Log.i("z","查询筛选人员失败");
+                    Toast.makeText(CheckPeople.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -10,11 +10,12 @@ import android.widget.EditText;
 import com.example.administrator.ourapp.message.Message_tools;
 
 import cn.bmob.v3.BmobUser;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/10/23.
  */
-public class agency_authentication_reply extends Activity {
+public class agency_authentication_reply extends SwipeBackActivity {
 
     private Button pass;
     private Button reject;

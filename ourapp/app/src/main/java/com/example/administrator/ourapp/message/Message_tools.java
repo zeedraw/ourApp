@@ -3,6 +3,7 @@ package com.example.administrator.ourapp.message;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.MyUser;
@@ -62,6 +63,7 @@ public class Message_tools {
                                                 Log.i("bmob","未读消息数更新成功");
                                                 loading_dialog.dismiss();
                                             }else{
+                                                Toast.makeText(context, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
                                                 loading_dialog.dismiss();
                                             }
@@ -70,6 +72,7 @@ public class Message_tools {
                                 }
                             }else{
                                 Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                Toast.makeText(context, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 loading_dialog.dismiss();
                             }
                         }

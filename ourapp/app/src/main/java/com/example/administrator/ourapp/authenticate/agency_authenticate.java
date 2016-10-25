@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,12 +40,13 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/9/21.
  * 机构认证的java
  */
-public class agency_authenticate extends Activity {
+public class agency_authenticate extends SwipeBackActivity {
 
     private final String IMAGE_TYPE = "image/*";
     private final int IMAGE_CODE = 0;   //这里的IMAGE_CODE是自己任意定义的
@@ -96,6 +98,12 @@ public class agency_authenticate extends Activity {
         agency_pic3.setOnClickListener(listener);
         agency_pic4.setOnClickListener(listener);
         up_load.setOnClickListener(upLoad_listener);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("认证说明");
+        builder.setMessage("进行机构认证时，请填写机构全名、机构的官方联系方式、机构的网站，" +
+                "在下方的上传图片中，请上传1-4张能够证明机构身份的图片").create().show();
+        builder.setNegativeButton("确认", null);
     }//init
 
     private View.OnClickListener upLoad_listener = new View.OnClickListener(){
@@ -382,6 +390,7 @@ public class agency_authenticate extends Activity {
                                                                         loading_dialog.dismiss();
                                                                     }else{
                                                                         Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                                        Toast.makeText(agency_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                                         loading_dialog.dismiss();
                                                                     }
                                                                 }
@@ -389,12 +398,14 @@ public class agency_authenticate extends Activity {
                                                         }
                                                     }else{
                                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                                        Toast.makeText(agency_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         loading_dialog.dismiss();
                                                     }
                                                 }
                                             });
                                         }else{
                                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            Toast.makeText(agency_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             loading_dialog.dismiss();
                                         }//else
                                     }//done
@@ -405,6 +416,7 @@ public class agency_authenticate extends Activity {
                             {
                                 loading_dialog.dismiss();
                                 Log.i("s","更新失败"+e.getMessage() + e.getErrorCode());
+                                Toast.makeText(agency_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

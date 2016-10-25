@@ -45,12 +45,13 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by dell-pc on 2016/9/10.
  * 实名认证的java文件
  */
-public class real_name_authenticate extends AppCompatActivity {
+public class real_name_authenticate extends SwipeBackActivity {
     private final String IMAGE_TYPE = "image/*";
     private final int IMAGE_CODE = 0;   //这里的IMAGE_CODE是自己任意定义的
     private ImageView cardFront=null;
@@ -383,6 +384,7 @@ public class real_name_authenticate extends AppCompatActivity {
                                                                         loading_dialog.dismiss();
                                                                     }else{
                                                                         Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                                        Toast.makeText(real_name_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                                         loading_dialog.dismiss();
                                                                     }
                                                                 }
@@ -390,12 +392,14 @@ public class real_name_authenticate extends AppCompatActivity {
                                                         }
                                                     }else{
                                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                                        Toast.makeText(real_name_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         loading_dialog.dismiss();
                                                     }
                                                 }
                                             });
                                         }else{
                                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            Toast.makeText(real_name_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             loading_dialog.dismiss();
                                         }//else
                                     }//done
@@ -409,6 +413,7 @@ public class real_name_authenticate extends AppCompatActivity {
                             else
                             {
                                 loading_dialog.dismiss();
+                                Toast.makeText(real_name_authenticate.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.i("s","更新失败"+e.getMessage());
                             }
                         }

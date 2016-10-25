@@ -25,11 +25,12 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/9/19.
  */
-public class edit_answer extends Activity {
+public class edit_answer extends SwipeBackActivity {
 
     private EditText EditAnswer = null;   //问题编辑文本框
     private TextView question_content = null;
@@ -82,6 +83,7 @@ public class edit_answer extends Activity {
                     question = object;
                 }else{
                     Log.i("bmob","获取对应问题失败："+e.getMessage()+","+e.getErrorCode());
+                    Toast.makeText(edit_answer.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -102,6 +104,10 @@ public class edit_answer extends Activity {
                     Toast.makeText(edit_answer.this, "回答的内容不得少于4个字符", Toast.LENGTH_SHORT).show();
                     return;
                 }//回答的内容不少于4字符
+                else if(EditAnswer.length() > 200){
+                    Toast.makeText(edit_answer.this, "回答的内容超过字数限制", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if((EditAnswer.getText().toString().equals(question.getanswer().getContent()))){
                     Toast.makeText(edit_answer.this, "您必须更改回答的内容才能提交", Toast.LENGTH_SHORT).show();
                     return;
@@ -135,7 +141,8 @@ public class edit_answer extends Activity {
                         }else{
                             loading_dialog.dismiss();
                             Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
-                            builder.setMessage("答案编辑失败").create().show();
+//                            builder.setMessage("答案编辑失败").create().show();
+                            Toast.makeText(edit_answer.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                     });

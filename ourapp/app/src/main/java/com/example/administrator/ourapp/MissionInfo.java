@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
@@ -33,12 +34,13 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 
 /**
  * Created by Administrator on 2016/8/20.
  */
-public class MissionInfo extends AppCompatActivity {
+public class MissionInfo extends SwipeBackActivity {
 
     private TextView return_bt,commit_bt;//标题上的左右按钮
     private TextView info_title;//标题
@@ -165,6 +167,8 @@ public class MissionInfo extends AppCompatActivity {
                                                         } else {
                                                             loading.dismiss();
                                                             mes.setMessage("报名失败" + e.getMessage());
+                                                            Toast.makeText(MissionInfo.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                                                         }
                                                         mes.create().show();
                                                     }
@@ -265,6 +269,7 @@ public class MissionInfo extends AppCompatActivity {
                             MissionInfo.this.startActivity(intent);
                         }else{
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            Toast.makeText(MissionInfo.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

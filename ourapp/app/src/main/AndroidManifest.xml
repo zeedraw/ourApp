@@ -72,6 +72,7 @@
         <activity android:name=".advice_feedback"></activity>
         <activity android:name=".real_name_authentication_reply"></activity>
         <activity android:name="reject_authentication_reason"></activity>
+        <activity android:name=".modify_password"></activity>
         <activity android:name=".RatingUser"
             android:windowSoftInputMode="adjustPan">
         </activity>

@@ -95,7 +95,7 @@
             android:textSize="@dimen/text_size_medium"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:background="@drawable/submit_background"
+            android:background="@drawable/mybutton_press2"
             android:text="提交"/>
 
     </LinearLayout>

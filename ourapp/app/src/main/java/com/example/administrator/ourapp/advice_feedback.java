@@ -22,11 +22,12 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/10/20.
  */
-public class advice_feedback extends Activity {
+public class advice_feedback extends SwipeBackActivity {
 
     private EditText EditFeedback = null;   //反馈编辑文本框
     private EditText contact_number = null;   //联系电话文本框

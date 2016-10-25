@@ -159,6 +159,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                                         if(e==null){
                                                             Log.i("bmob","未读消息数更新成功");
                                                         }else{
+                                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                             Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
                                                         }
                                                     }
@@ -166,12 +167,14 @@ public class MesFrag extends ProgressFragment implements IListener {
                                             }
                                         }else{
                                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
 
                             }else{
                                 Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                                Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -209,6 +212,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -236,6 +240,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -253,6 +258,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -273,6 +279,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent7);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -293,6 +300,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent8);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -316,6 +324,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent10);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -349,6 +358,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                             startActivity(intent12);
                                         }else{
                                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
@@ -500,6 +510,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                                     if(e==null){
                                                         Log.i("bmob","未读消息数更新成功");
                                                     }else{
+                                                        Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
                                                     }
                                                 }
@@ -507,6 +518,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                         }
                                     }else{
                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                        Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -517,6 +529,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                             Toast.makeText(getContext(), "消息已删除", Toast.LENGTH_SHORT).show();
                         }else{
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

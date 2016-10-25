@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by Administrator on 2016/8/21.
  */
-public class apply extends AppCompatActivity {
+public class apply extends SwipeBackActivity {
     TextView rt_button, sub_button;
     TextView title;
     @Override
