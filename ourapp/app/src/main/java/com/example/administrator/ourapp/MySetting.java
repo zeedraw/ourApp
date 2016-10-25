@@ -1,16 +1,20 @@
 package com.example.administrator.ourapp;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
+
+import java.io.File;
 
 import cn.bmob.v3.BmobUser;
 
@@ -22,6 +26,7 @@ public class MySetting extends AppCompatActivity {
     private TextView title;
     private TextView advice_feedback;
     private TextView loginout_bt;
+    private TextView cacheShow;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,8 @@ public class MySetting extends AppCompatActivity {
         title=(TextView)findViewById(R.id.mission_title);
         advice_feedback=(TextView)findViewById(R.id.advice_feedback);
         loginout_bt=(TextView)findViewById(R.id.loginout_bt);
+        cacheShow=(TextView)findViewById(R.id.show_cache);
+        cacheShow.setText(getCache());
 
         rt_button.setText("返回");
         rt_button.setVisibility(View.VISIBLE);
@@ -75,5 +82,30 @@ public class MySetting extends AppCompatActivity {
         {
             loginout_bt.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void cacheClick(View view)
+    {
+        Log.i("z","点击了删除缓存");
+        Dialog dialog=MainActivity.createLoadingDialog(this);
+        dialog.show();
+        DataCleanManager.deleteFilesByDirectory(new File(MainActivity.getDiskCacheDir(getApplicationContext())));
+        while (!getCache().equals("0.0Byte"))
+        {
+            Log.i("z","还未删除成功");
+        }
+        cacheShow.setText(getCache());
+        dialog.dismiss();
+    }
+
+    private String getCache()
+    {
+        String cache=null;
+        try {
+            cache=DataCleanManager.getCacheSize(new File(MainActivity.getDiskCacheDir(getApplicationContext())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cache;
     }
 }

@@ -114,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:onClick="locationClick"
+            android:background="@drawable/myitem_press1"
             >
 
             <TextView
@@ -153,6 +154,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="detailLocationClick"
+            android:background="@drawable/myitem_press1"
             >
 
             <TextView
@@ -212,6 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:onClick="startTimeClick"
+                android:background="@drawable/myitem_press1"
                 >
 
                 <TextView
@@ -255,6 +258,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="43dp"
                 android:onClick="endTimeClick"
+                android:background="@drawable/myitem_press1"
                 >
 
                 <TextView
@@ -294,6 +298,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="detailClick"
+                android:background="@drawable/myitem_press1"
                 >
 
                 <TextView

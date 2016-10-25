@@ -51,7 +51,7 @@ public class MyUser extends BmobUser {
     private BmobDate message_refresh_time; //最后一次在本地加载新消息的时间
     private String contact_numer; //联系方式
     private String tag;
-    private String otherContact="";
+    private String otherContact;
 
     public String getOtherContact() {
         return otherContact;

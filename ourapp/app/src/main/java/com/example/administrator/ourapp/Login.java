@@ -25,13 +25,23 @@ import cn.bmob.v3.listener.SaveListener;
 public class Login extends AppCompatActivity {
     private EditText username,password;
     private Button login,signup;
-    private TextView rt,title;
+    private TextView forget;
+   // private TextView rt,title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
         username=(EditText)findViewById(R.id.login_username);
         password=(EditText)findViewById(R.id.login_password);
+        forget=(TextView)findViewById(R.id.forget);
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Login.this,ForgetPassword.class);
+                startActivity(intent);
+            }
+        });
+
         login=(Button)findViewById(R.id.login);
         signup=(Button)findViewById(R.id.signup);
         signup.setOnClickListener(new View.OnClickListener() {
@@ -42,17 +52,17 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
-        title=(TextView)findViewById(R.id.mission_title);
-        title.setText("登录");
-        rt=(TextView) findViewById(R.id.lbt);
-        rt.setText("返回");
-        rt.setVisibility(View.VISIBLE);
-        rt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+//        title=(TextView)findViewById(R.id.mission_title);
+//        title.setText("登录");
+//        rt=(TextView) findViewById(R.id.lbt);
+//        rt.setText("返回");
+//        rt.setVisibility(View.VISIBLE);
+//        rt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
 
 
         login.setOnClickListener(new View.OnClickListener() {

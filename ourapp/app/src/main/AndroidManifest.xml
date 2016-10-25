@@ -75,6 +75,8 @@
         </activity>
         <activity android:name=".CheckMission"></activity>
         <activity android:name=".citylist.CityListActivity"></activity>
+        <activity android:name=".ForgetPassword"></activity>
+        <activity android:name=".ResetPassword"></activity>
 
     </application>
 
