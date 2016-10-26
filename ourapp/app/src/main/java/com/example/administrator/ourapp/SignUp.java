@@ -161,6 +161,8 @@ public class SignUp extends AppCompatActivity implements  View.OnClickListener {
                             newuser.setPassword(pw_ed.getText().toString());
                             newuser.setName(name_ed.getText().toString());
                             newuser.setSex(sex_rg.getCheckedRadioButtonId()==R.id.male?true:false);
+                            newuser.setIdent_state_pub(new Integer(0));
+                            newuser.setIdent_state_pub(new Integer(0));
                             newuser.setMobilePhoneNumber(phonenum_ed.getText().toString());
                             newuser.setMobilePhoneNumberVerified(true);
                             newuser.setIdentifiedStudent(false);

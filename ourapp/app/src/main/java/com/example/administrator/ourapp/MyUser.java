@@ -24,6 +24,8 @@ public class MyUser extends BmobUser {
     private Boolean isIdentifiedPublish;
     private Integer ident_state_stu; //学生认证的状态 0为未认证 1为审核中 2为已通过
     private Integer ident_state_pub; //机构的认证状态 0为未认证 1为审核中 2为已通过
+    private Integer ident_state_stu ; //学生认证的状态 0为未认证 1为审核中 2为已通过
+    private Integer ident_state_pub ; //机构的认证状态 0为未认证 1为审核中 2为已通过
     private String name;
     private BmobFile userimage;
     private BmobFile background;

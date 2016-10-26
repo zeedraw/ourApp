@@ -51,7 +51,7 @@ import cn.bmob.v3.listener.QueryListener;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener,IListener{
-    private RelativeLayout tv_main,tv_mes,tv_mine,tv_fre;//下方的3个tab
+    private RelativeLayout tv_main,tv_mes,tv_mine;//下方的3个tab
     private TextView title;//上方标题
     private ImageView mesSignal;
 //    private FragmentManager mfragManager;
@@ -120,8 +120,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tv_mes.setOnClickListener(this);
         tv_mine=(RelativeLayout) findViewById(R.id.mine);
         tv_mine.setOnClickListener(this);
-        tv_fre=(RelativeLayout) findViewById(R.id.fre);
-        tv_fre.setOnClickListener(this);
+//        tv_fre=(RelativeLayout) findViewById(R.id.fre);
+//        tv_fre.setOnClickListener(this);
 
         //设置activity的标题
         title=(TextView)findViewById(R.id.mission_title);
@@ -166,7 +166,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(true);
             tv_mes.setSelected(false);
             tv_mine.setSelected(false);
-            tv_fre.setSelected(false);
+    //        tv_fre.setSelected(false);
             title.setText("首页");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.VISIBLE);
@@ -184,7 +184,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(false);
             tv_mes.setSelected(true);
             tv_mine.setSelected(false);
-            tv_fre.setSelected(false);
+    //        tv_fre.setSelected(false);
             title.setText("消息");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.INVISIBLE);
@@ -201,7 +201,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(false);
             tv_mes.setSelected(false);
             tv_mine.setSelected(true);
-            tv_fre.setSelected(false);
+   //         tv_fre.setSelected(false);
             title.setText("我的");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.INVISIBLE);
@@ -214,34 +214,34 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
 
-        else if(view==tv_fre)
-        {
-            tv_fre.setSelected(true);
-            tv_main.setSelected(false);
-            tv_mine.setSelected(false);
-            tv_mes.setSelected(false);
-            title.setText("好友");
-            r_button.setText("添加");
-            r_button.setVisibility(View.VISIBLE);
-            l_button.setVisibility(View.INVISIBLE);
-            myCheckedChaged(view);
-            r_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ComponentName comp=new ComponentName(MainActivity.this,search_user.class);
-                    Intent intent=new Intent();
-                    intent.setComponent(comp);
-                    startActivity(intent);
-                }
-            });
-
-//            mTransaction=mfragManager.beginTransaction();
-//            mTransaction.hide(mfragManager.findFragmentByTag("main"))
-//                    .hide(mfragManager.findFragmentByTag("mes"))
-//                    .hide(mfragManager.findFragmentByTag("mine"))
-//                    .show(mfragManager.findFragmentByTag("fre")).commit();
-
-        }
+//        else if(view==tv_fre)
+//        {
+//            tv_fre.setSelected(true);
+//            tv_main.setSelected(false);
+//            tv_mine.setSelected(false);
+//            tv_mes.setSelected(false);
+//            title.setText("好友");
+//            r_button.setText("添加");
+//            r_button.setVisibility(View.VISIBLE);
+//            l_button.setVisibility(View.INVISIBLE);
+//            myCheckedChaged(view);
+//            r_button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ComponentName comp=new ComponentName(MainActivity.this,search_user.class);
+//                    Intent intent=new Intent();
+//                    intent.setComponent(comp);
+//                    startActivity(intent);
+//                }
+//            });
+//
+////            mTransaction=mfragManager.beginTransaction();
+////            mTransaction.hide(mfragManager.findFragmentByTag("main"))
+////                    .hide(mfragManager.findFragmentByTag("mes"))
+////                    .hide(mfragManager.findFragmentByTag("mine"))
+////                    .show(mfragManager.findFragmentByTag("fre")).commit();
+//
+//        }
 
 
     }
@@ -253,7 +253,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Fragment mine=fm.findFragmentByTag("mine");
         Fragment main=fm.findFragmentByTag("main");
         Fragment mes=fm.findFragmentByTag("mes");
-        Fragment fre=fm.findFragmentByTag("fre");
+   //     Fragment fre=fm.findFragmentByTag("fre");
         Fragment mesOnNotLogin=fm.findFragmentByTag("mesNot");
 
         if (mine!=null)
@@ -268,10 +268,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         {
             ft.hide(mes);
         }
-        if (fre!=null)
-        {
-            ft.hide(fre);
-        }
+//        if (fre!=null)
+//        {
+//            ft.hide(fre);
+//        }
         if (mesOnNotLogin!=null)
         {
             ft.hide(mesOnNotLogin);
@@ -333,18 +333,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
         }
 
-        else if(view==tv_fre)
-        {
-            if (fre==null)
-            {
-                fre=new FreFrag();
-                ft.add(R.id.frag_container,fre,"fre");
-            }
-            else
-            {
-                ft.show(fre);
-            }
-        }
+//        else if(view==tv_fre)
+//        {
+//            if (fre==null)
+//            {
+//                fre=new FreFrag();
+//                ft.add(R.id.frag_container,fre,"fre");
+//            }
+//            else
+//            {
+//                ft.show(fre);
+//            }
+//        }
 
         ft.commit();
 
@@ -674,7 +674,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(true);
             tv_mes.setSelected(false);
             tv_mine.setSelected(false);
-            tv_fre.setSelected(false);
+            //tv_fre.setSelected(false);
             title.setText("首页");
             myCheckedChaged(tv_main);
             l_button.setVisibility(View.VISIBLE);
