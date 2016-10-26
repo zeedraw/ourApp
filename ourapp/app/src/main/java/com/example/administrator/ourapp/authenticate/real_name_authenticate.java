@@ -309,7 +309,7 @@ public class real_name_authenticate extends SwipeBackActivity {
         Toast.makeText(getApplicationContext(), "开始上传,请不要关闭此页面或进行其他操作",
                 Toast.LENGTH_SHORT).show();
 
-        final Dialog loading_dialog = MainActivity.createLoadingDialog(real_name_authenticate.this);
+        final Dialog loading_dialog = MainActivity.createLoadingDialog(real_name_authenticate.this,"上传中");
         loading_dialog.show();
         BmobFile.uploadBatch(pic_path, new UploadBatchListener() {
 

@@ -115,7 +115,6 @@
                 android:background="@color/colorBJ">
                 <LinearLayout
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorbj"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -129,6 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     android:onClick="nameClick"
+                    android:background="@drawable/myitem_press1"
                     >
 
                     <TextView
@@ -168,6 +168,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         android:onClick="sexClick"
+                        android:background="@drawable/myitem_press1"
                         >
 
                         <TextView
@@ -208,6 +209,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         android:onClick="ageClick"
+                        android:background="@drawable/myitem_press1"
                         >
 
                         <TextView
@@ -247,6 +249,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         android:onClick="locationClick"
+                        android:background="@drawable/myitem_press1"
                         >
 
                         <TextView
@@ -283,7 +286,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/colorbj"
                     android:layout_marginTop="25dp">
                     <View
                         android:layout_width="match_parent"
@@ -298,6 +300,7 @@
                         android:gravity="center"
                         android:textSize="@dimen/text_size_large"
                         android:textColor="@color/gray"
+                        android:background="@drawable/myitem_press1"
                         />
 
                     <View
@@ -309,7 +312,6 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:background="@color/colorbj"
                     android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -321,6 +323,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
+                        android:background="@color/colorbj"
                         >
 
                         <TextView
@@ -357,6 +360,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="introClick"
+                        android:background="@drawable/myitem_press1"
                         >
 
                         <TextView
@@ -408,6 +412,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorbj"
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -440,6 +445,7 @@
                         android:layout_height="wrap_content"
                         android:onClick="otherClick"
                         android:id="@+id/rl_other"
+                        android:background="@drawable/myitem_press1"
                         >
 
                         <TextView

@@ -67,7 +67,6 @@
         android:id="@+id/R2"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:background="@color/colorbj"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp"
@@ -95,7 +94,8 @@
             android:id="@+id/r2"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:onClick="Mymssion_click">
+            android:onClick="Mymssion_click"
+            android:background="@drawable/myitem_press1">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +127,8 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:layout_below="@+id/r2"
-            android:onClick="Myauthenticate_click">
+            android:onClick="Myauthenticate_click"
+            android:background="@drawable/myitem_press1">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,7 +161,6 @@
         android:id="@+id/R3"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@color/colorbj"
         android:layout_below="@+id/R2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -173,11 +173,9 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:background="#e5e5e5"
+            android:background="#dddddd"
             android:layout_below="@+id/r4"
             android:layout_alignParentLeft="false"
-            android:layout_marginLeft="22dp"
-            android:layout_marginRight="22dp"
             />
 
 
@@ -185,7 +183,8 @@
             android:id="@+id/r4"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:onClick="Mysetting_click">
+            android:onClick="Mysetting_click"
+            android:background="@drawable/myitem_press1">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

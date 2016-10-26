@@ -308,7 +308,7 @@ public class agency_authenticate extends SwipeBackActivity {
     public void UpLoad(){
         Toast.makeText(getApplicationContext(), "开始上传",
                 Toast.LENGTH_SHORT).show();
-        final Dialog loading_dialog = MainActivity.createLoadingDialog(agency_authenticate.this);
+        final Dialog loading_dialog = MainActivity.createLoadingDialog(agency_authenticate.this, "上传中");
         loading_dialog.show();
         String path = "";
         for(int i = 0; i < pic_path.length; ++i){
@@ -357,7 +357,7 @@ public class agency_authenticate extends SwipeBackActivity {
                                 message.setSender(BmobUser.getCurrentUser(MyUser.class));
                                 message.setBe_viewed(false);
                                 message.setRemark("no mark");
-                                final Dialog loading_dialog = MainActivity.createLoadingDialog(agency_authenticate.this);
+                                final Dialog loading_dialog = MainActivity.createLoadingDialog(agency_authenticate.this,"上传中");
                                 loading_dialog.show();
                                 message.save(new SaveListener<String>() {
 

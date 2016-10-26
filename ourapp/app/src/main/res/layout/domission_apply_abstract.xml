@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/myitem_press"
     android:foreground="?selectableItemBackground">
 
     <View
@@ -121,7 +121,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingStart="10dp"

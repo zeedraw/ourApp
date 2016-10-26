@@ -19,11 +19,10 @@
             android:src="@drawable/g17"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="17dp"
             />
     </RelativeLayout>
     <View
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray"

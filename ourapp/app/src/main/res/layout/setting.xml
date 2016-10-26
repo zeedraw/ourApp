@@ -12,24 +12,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/white"
         android:divider="@drawable/divider"
         android:showDividers="middle|end|beginning">
 
         <LinearLayout
+            android:id="@+id/modify_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_height_custom"
             android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/widget_margin_large"
-            android:layout_marginRight="@dimen/widget_margin_large"
-            android:background="@color/white">
+            android:background="@drawable/myitem_press">
             <TextView
-                android:id="@+id/modify_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/widget_margin_large"
+                android:layout_marginRight="@dimen/widget_margin_large"
                 android:textSize="@dimen/text_size_medium"
                 android:gravity="center_vertical"
                 android:textColor="#000000"
-                android:onClick="account_setting"
                 android:text="修改密码"/>
 
         </LinearLayout>
@@ -45,21 +45,31 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_height_custom"
             android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/widget_margin_large"
-            android:layout_marginRight="@dimen/widget_margin_large"
-            android:background="@color/white">
+            android:paddingLeft="16dp"
+            android:background="@drawable/myitem_press"
+            android:onClick="cacheClick">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/text_size_medium"
                 android:gravity="center_vertical"
                 android:textColor="#000000"
                 android:text="清除缓存"/>
-        </LinearLayout>
+            <TextView
+                android:id="@+id/show_cache"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:paddingRight="16dp"
+                />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,17 +102,18 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_height_custom"
             android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/widget_margin_large"
-            android:layout_marginRight="@dimen/widget_margin_large"
-            android:background="@color/white">
+
+            android:background="@drawable/myitem_press"
+            android:id="@+id/advice_feedback">
 
             <TextView
-                android:id="@+id/advice_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/text_size_medium"
                 android:gravity="center_vertical"
                 android:textColor="#000000"
+                android:layout_marginLeft="@dimen/widget_margin_large"
+                android:layout_marginRight="@dimen/widget_margin_large"
                 android:text="意见反馈"/>
 
         </LinearLayout>

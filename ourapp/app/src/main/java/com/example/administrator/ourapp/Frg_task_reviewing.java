@@ -1,10 +1,12 @@
 package com.example.administrator.ourapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.administrator.ourapp.mymissionadapter.PubMissionReviewAdapter;
@@ -30,6 +32,17 @@ public class Frg_task_reviewing extends MyMissionFrag {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setEmptyText("暂无任务，点我重新加载");
+
+        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getContext(),MissionInfo.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("mission",mlist.get(i));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
@@ -59,7 +72,7 @@ public class Frg_task_reviewing extends MyMissionFrag {
         user.setObjectId((String) BmobUser.getObjectByKey("objectId"));
         query.addWhereEqualTo("pub_user",user);
         query.addWhereEqualTo("state",new Integer(1));
-        query.include("pub_user[name|orgDescription]");
+        query.include("pub_user[name|orgDescription].userimage");
         query.order("-createdAt");
         query.setLimit(7);
     }

@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/myitem_press"
+    >
 
         <View
             android:layout_width="match_parent"
@@ -120,7 +121,6 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingStart="10dp"
@@ -186,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
-            android:background="@drawable/mybutton_press1"/>
+            android:background="@drawable/mybutton_press5"/>
         <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
