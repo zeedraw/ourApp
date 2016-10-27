@@ -668,6 +668,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 ((MesFrag) mes).hasNesMesRefresh();
             }
         }
+        else
+        {
+            mesSignal.setVisibility(View.INVISIBLE);
+        }
         //判断是否需要返回首页
         if (toMain)
         {

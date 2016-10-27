@@ -176,6 +176,10 @@ public class MyMissionFrag extends ProgressFragment {
                     }
                     else {
                         Log.i("up","list.size<0");
+                        if(mIsStart)
+                        {
+                            mlist.clear();
+                        }
 
                     }
                     callBack.notifyData();
