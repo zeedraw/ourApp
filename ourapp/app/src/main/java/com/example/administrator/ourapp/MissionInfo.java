@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 import com.example.administrator.ourapp.user_information.MyAccount;
@@ -58,22 +57,7 @@ public class MissionInfo extends SwipeBackActivity {
         setContentView(R.layout.task);
         Intent intent=getIntent();
         mMission=(Mission)intent.getSerializableExtra("mission");
-        //初始化mission
-        final Dialog dialog=MainActivity.createLoadingDialog(this,"加载中...");
-        dialog.show();
-        BmobQuery<Mission> query=new BmobQuery<Mission>();
-        query.include("pub_user[name|orgDescription].userimage");
-        query.getObject(mMission.getObjectId(), new QueryListener<Mission>() {
-            @Override
-            public void done(Mission mission, BmobException e) {
-                    if (e==null)
-                    {
-                        mMission=mission;
-                    }
-                initWidget();
-                dialog.dismiss();
-            }
-        });
+        initWidget();
 
     }
 
@@ -122,62 +106,6 @@ public class MissionInfo extends SwipeBackActivity {
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog loading=MainActivity.createLoadingDialog(MissionInfo.this,"请稍等");
-                loading.show();
-                //判断是否有报名资格
-                BmobQuery<MyUser> query=new BmobQuery<MyUser>();
-                query.getObject(BmobUser.getCurrentUser().getObjectId(), new QueryListener<MyUser>() {
-                    @Override
-                    public void done(MyUser myUser, BmobException e) {
-                        if (e==null)
-                        {
-                            if (myUser.getIdentifiedStudent())
-                            {
-                                //判断是否重复报名
-                                final List<MyUser> users=new ArrayList<MyUser>();
-                                BmobQuery<MyUser> query=new BmobQuery<MyUser>();
-                                final Mission mission=new Mission();
-                                mission.setObjectId(mMission.getObjectId());
-                                query.addWhereRelatedTo("cur_people",new BmobPointer(mission));
-                                query.findObjects(new FindListener<MyUser>() {
-                                    @Override
-                                    public void done(List<MyUser> list, BmobException e) {
-                                        users.addAll(list);
-                                        BmobQuery<MyUser> query1=new BmobQuery<MyUser>();
-                                        query1.addWhereRelatedTo("get_user",new BmobPointer(mission));
-                                        query1.findObjects(new FindListener<MyUser>() {
-                                            @Override
-                                            public void done(List<MyUser> list1, BmobException e) {
-                                                users.addAll(list1);
-                                                boolean flag=true;
-                                                for (int i=0;i<users.size();i++)
-                                                {
-                                                    if (users.get(i).getObjectId().equals(BmobUser.getCurrentUser().getObjectId()))
-                                                    {
-                                                        flag=false;
-                                                    }
-                                                }
-                                                if (flag)//true则说明不重复
-                                                {
-                                                    final MyUser user = new MyUser();
-                                                    user.setObjectId((String) BmobUser.getObjectByKey("objectId"));
-                                                    final Mission mission = new Mission();
-                                                    mission.setObjectId(mMission.getObjectId());
-                                                    BmobRelation relation = new BmobRelation();
-                                                    relation.add(user);
-                                                    mission.setCur_people(relation);
-                                                    mission.update(new UpdateListener() {
-                                                        @Override
-                                                        public void done(BmobException e) {
-                                                            AlertDialog.Builder mes=new AlertDialog.Builder(MissionInfo.this);
-                                                            if (e == null) {
-                                                                loading.dismiss();
-                                                                mes.setMessage("报名成功");
-                                                                Message_tools sm = new Message_tools();
-                                                                sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
-                                                                        "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
-                                                                                + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId(), MissionInfo.this);
-                                                                //4代表报名任务成功的消息
 
                 if(BmobUser.getCurrentUser(MyUser.class) == null){
                     Intent intent=new Intent(MissionInfo.this,Login.class);
@@ -254,131 +182,7 @@ public class MissionInfo extends SwipeBackActivity {
                                                 builder.setMessage("您已经报过该任务，无法重复报名");
                                                 builder.create().show();
                                             }
-                                                            } else {
-                                                                loading.dismiss();
-                                                                mes.setMessage("报名失败" + e.getMessage());
-                                                            }
-                                                            mes.create().show();
-                                                        }
-                                                    });
-                                                }//if
-                                                else
-                                                {
-                                                    loading.dismiss();
-                                                    AlertDialog.Builder builder=new AlertDialog.Builder(MissionInfo.this);
-                                                    builder.setMessage("您已经报过该任务，无法重复报名");
-                                                    builder.create().show();
-                                                }
 
-                                            }
-                                        });
-                                    }
-                                });//判断是否重复报名
-                            }
-
-                            else
-                            {
-                                loading.dismiss();
-                                AlertDialog.Builder builder=new AlertDialog.Builder(MissionInfo.this);
-                                builder.setMessage("您还未认证志愿者，是否现在去认证？");
-                                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        Intent intent=new Intent(MissionInfo.this,real_name_authenticate.class);
-                                        startActivity(intent);
-                                    }
-                                });
-                                builder.setNegativeButton("取消",null);
-                                builder.create().show();
-                            }
-                        }
-                        else
-                        {
-                            loading.dismiss();
-                            Toast.makeText(getApplicationContext(),"服务器忙，请稍后再试",Toast.LENGTH_SHORT);
-                        }
-                    }
-                });
-//                AlertDialog.Builder mybuilder=new AlertDialog.Builder(MissionInfo.this);
-//                                mybuilder.setMessage("确定以当前用户报名");
-//                                mybuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialogInterface, int i) {
-//                                        //判断是否重复报名
-//                                        final List<MyUser> users=new ArrayList<MyUser>();
-//                                        BmobQuery<MyUser> query=new BmobQuery<MyUser>();
-//                                        final Mission mission=new Mission();
-//                                        mission.setObjectId(mMission.getObjectId());
-//                                        query.addWhereRelatedTo("cur_people",new BmobPointer(mission));
-//                                        query.findObjects(new FindListener<MyUser>() {
-//                                            @Override
-//                                            public void done(List<MyUser> list, BmobException e) {
-//                                                users.addAll(list);
-//                                                BmobQuery<MyUser> query1=new BmobQuery<MyUser>();
-//                                                query1.addWhereRelatedTo("get_user",new BmobPointer(mission));
-//                                                query1.findObjects(new FindListener<MyUser>() {
-//                                                    @Override
-//                                                    public void done(List<MyUser> list1, BmobException e) {
-//                                                        users.addAll(list1);
-//                                                        boolean flag=true;
-//                                                        for (int i=0;i<users.size();i++)
-//                                                        {
-//                                                            if (users.get(i).getObjectId().equals(BmobUser.getCurrentUser().getObjectId()))
-//                                                            {
-//                                                                flag=false;
-//                                                            }
-//                                                        }
-//                                                        if (flag)//true则说明不重复
-//                                                        {
-//                                                            final MyUser user = new MyUser();
-//                                                            user.setObjectId((String) BmobUser.getObjectByKey("objectId"));
-//                                                            final Mission mission = new Mission();
-//                                                            mission.setObjectId(mMission.getObjectId());
-//                                                            BmobRelation relation = new BmobRelation();
-//                                                            relation.add(user);
-//                                                            mission.setCur_people(relation);
-//                                                            mission.update(new UpdateListener() {
-//                                                                @Override
-//                                                                public void done(BmobException e) {
-//                                                                    AlertDialog.Builder mes=new AlertDialog.Builder(MissionInfo.this);
-//                                                                    if (e == null) {
-//                                                                        loading.dismiss();
-//                                                                        mes.setMessage("报名成功");
-//                                                                        Message_tools sm = new Message_tools();
-//                                                                        sm.send(BmobUser.getCurrentUser(MyUser.class), mMission.getPub_user(),
-//                                                                                "用户" + BmobUser.getCurrentUser(MyUser.class).getName()
-//                                                                                        + "刚刚报名了您发布的任务", 4, false, mMission.getObjectId(), MissionInfo.this);
-//                                                                        //4代表报名任务成功的消息
-//
-//                                                                    } else {
-//                                                                        loading.dismiss();
-//                                                                        mes.setMessage("报名失败" + e.getMessage());
-//                                                                    }
-//                                                                    mes.create().show();
-//                                                                }
-//                                                            });
-//                                                        }//if
-//                                                        else
-//                                                        {
-//                                                            loading.dismiss();
-//                                                            AlertDialog.Builder builder=new AlertDialog.Builder(MissionInfo.this);
-//                                                            builder.setMessage("您已经报过该任务，无法重复报名");
-//                                                            builder.create().show();
-//                                                        }
-//
-//                                                    }
-//                                                });
-//                                            }
-//                                        });//判断是否重复报名
-//
-//
-//
-//                                    }
-//                                    });
-//                            mybuilder.setNegativeButton("取消",null);
-//
-//                mybuilder.create().show();
-            }
                                         }
                                     });
                                 }
