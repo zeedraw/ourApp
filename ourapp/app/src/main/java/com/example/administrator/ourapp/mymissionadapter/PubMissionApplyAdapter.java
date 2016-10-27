@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.example.administrator.ourapp.CheckPeople;
 import com.example.administrator.ourapp.ChoosePeople;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
+import com.example.administrator.ourapp.MissionInfo;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.imageloader.AsyncImageLoader;
@@ -116,9 +118,15 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
         viewHolder.choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Intent intent=new Intent(getContext(), ChoosePeople.class);
+//                intent.putExtra("missionId",mission.getObjectId());
+//                Log.i("z",mission.getName()+".................");
+//                getContext().startActivity(intent);
+
                 Intent intent=new Intent(getContext(), ChoosePeople.class);
-                intent.putExtra("missionId",mission.getObjectId());
-                Log.i("z",mission.getName()+".................");
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("mission",mission);
+                intent.putExtras(bundle);
                 getContext().startActivity(intent);
             }
         });
@@ -146,7 +154,6 @@ public class PubMissionApplyAdapter extends ArrayAdapter<Mission>{
                             @Override
                             public void done(BmobException e) {
                                 Log.i("z","开始任务成功");
-                                //TODO  给相关人员推送消息[已推送被选中人员 还未同意未被选中人员]
 
                                 BmobQuery<MyUser> query = new BmobQuery<MyUser>();
 

@@ -12,24 +12,28 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.message.Message_tools;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/10/11.
  */
 
-public class RatingUser extends AppCompatActivity {
+public class RatingUser extends SwipeBackActivity {
     private ListView listView;
     private RatingAdapter ratingAdapter;
     private String missionId;
@@ -211,6 +215,13 @@ public class RatingUser extends AppCompatActivity {
 //                                {
 //                                    Log.i("z","等待更新操作完成"+"size="+flagOfComment+"-"+flagOfComment);
 //                                }
+
+                                for(int j = 0; j < userList.size(); ++ j){
+                                    Message_tools mt = new Message_tools();
+                                    mt.send(BmobUser.getCurrentUser(MyUser.class),
+                                            userList.get(j),"您参与的活动已经结束，快去任务履历看看吧！",
+                                            16, false, " ", RatingUser.this );
+                                }//for
 
                             }
                         });

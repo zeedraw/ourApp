@@ -58,7 +58,6 @@ public class MineFrag extends Fragment implements IListener{
             Log.i("z","获取更新iv--"+MainActivity.getDiskFileDir(getContext())+"/user_image.png");
         } catch (Exception e)
         {
-            // TODO: handleResult exception
         }
 
             name_tv.setText((String)BmobUser.getObjectByKey("name"));

@@ -21,11 +21,12 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/25.
  */
-public class CheckPeople extends AppCompatActivity {
+public class CheckPeople extends SwipeBackActivity {
     private ListView listView;
     private String missionId;
     private UserItemAdapter userItemAdapter;

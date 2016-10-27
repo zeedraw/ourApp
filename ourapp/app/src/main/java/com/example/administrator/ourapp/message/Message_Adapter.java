@@ -140,6 +140,22 @@ public class Message_Adapter extends ArrayAdapter<Message> {
                 MessageType = "机构认证";       //机构认证失败后的消息
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
                 break;
+            case 16:
+                MessageType = "任务结束";       //机构认证失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 17:
+                MessageType = "新的任务审核";       //新的任务审核的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 18:
+                MessageType = "任务审核通过";       //任务审核通过后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 19:
+                MessageType = "任务审核失败";       //任务审核失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
 
 
 

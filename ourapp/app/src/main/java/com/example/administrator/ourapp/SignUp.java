@@ -14,13 +14,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -162,7 +166,7 @@ public class SignUp extends AppCompatActivity implements  View.OnClickListener {
                             newuser.setName(name_ed.getText().toString());
                             newuser.setSex(sex_rg.getCheckedRadioButtonId()==R.id.male?true:false);
                             newuser.setIdent_state_pub(new Integer(0));
-                            newuser.setIdent_state_pub(new Integer(0));
+                            newuser.setIdent_state_stu(new Integer(0));
                             newuser.setMobilePhoneNumber(phonenum_ed.getText().toString());
                             newuser.setMobilePhoneNumberVerified(true);
                             newuser.setIdentifiedStudent(false);
@@ -187,6 +191,89 @@ public class SignUp extends AppCompatActivity implements  View.OnClickListener {
                                                         @Override
                                                         public void onClick(DialogInterface dialogInterface, int i) {
                                                             ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag","Main"});
+
+                                                            //登录
+
+                                                            MyUser user = new MyUser();
+                                                            user.setUsername(phonenum_ed.getText().toString());
+                                                            user.setPassword(pw_ed.getText().toString());
+
+                                                            user.login(new SaveListener<MyUser>() {
+                                                                @Override
+                                                                public void done(MyUser myUser, BmobException e) {
+                                                                    if(e==null)
+                                                                    {
+
+                                                                        Log.i("z","缓存用户成功");
+                                                                        BmobFile bf= BmobUser.getCurrentUser(MyUser.class).getUserimage();
+                                                                        File saveFile=new File(MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
+                                                                        Log.i("z",MainActivity.getDiskFileDir(getApplicationContext()) + "/user_image.png");
+                                                                        bf.download(saveFile, new DownloadFileListener() {
+                                                                            @Override
+                                                                            public void done(String s, BmobException e) {
+                                                                                if (e==null){
+                                                                                    Log.i("z","下载用户头像成功");
+                                                                                    ListenerManager.getInstance().sendBroadCast(new String[]{"MineFrag","Main"});
+                                                                                    finish();
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    Log.i("z","下载用户头像失败"+e.getMessage());
+                                                                                    Toast.makeText(SignUp.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                                                }
+
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onProgress(Integer integer, long l) {
+
+                                                                            }
+
+                                                                            @Override
+                                                                            public void doneError(int code, String msg) {
+                                                                                super.doneError(code, msg);
+                                                                            }
+                                                                        });
+
+                                                                        BmobFile backGround=BmobUser.getCurrentUser(MyUser.class).getBackground();
+                                                                        if (backGround!=null) {
+                                                                            File saveBack = new File(MainActivity.getDiskFileDir(getApplicationContext()) + "/background.png");
+                                                                            backGround.download(saveBack, new DownloadFileListener() {
+                                                                                @Override
+                                                                                public void done(String s, BmobException e) {
+                                                                                    if (e == null) {
+                                                                                        Log.i("z", "缓存用户背景成功");
+                                                                                    } else {
+                                                                                        Log.i("z", "缓存用户背景失败");
+                                                                                        Toast.makeText(SignUp.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                                    }
+                                                                                }
+
+                                                                                @Override
+                                                                                public void onProgress(Integer integer, long l) {
+
+                                                                                }
+
+                                                                                @Override
+                                                                                public void doneError(int code, String msg) {
+                                                                                    super.doneError(code, msg);
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        AlertDialog.Builder builder=new AlertDialog.Builder(SignUp.this)
+                                                                                .setTitle("登录失败")
+                                                                                .setMessage(e.getMessage())
+                                                                                .setPositiveButton("确定",null);
+                                                                        builder.create().show();
+
+                                                                    }
+                                                                }
+                                                            });
+                                                            //登录
                                                             finish();
                                                         }
                                                     });

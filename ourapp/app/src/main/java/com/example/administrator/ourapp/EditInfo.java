@@ -144,7 +144,6 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
             personal_icon_iv.setImageBitmap(bitmap);
         } catch (Exception e)
         {
-            // TODO: handleResult exception
         }
         name_et.setText(current.getName());
         int sexId=current.getSex()?R.id.edit_male:R.id.female;

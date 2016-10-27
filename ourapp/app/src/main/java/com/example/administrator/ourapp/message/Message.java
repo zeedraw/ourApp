@@ -36,6 +36,10 @@ public class Message extends BmobObject {
                 13代表机构认证失败
                 14代表新的个人认证 ---官方账号的消息
                 15代表新的机构认证 ---官方账号的消息
+                16代表任务结束消息
+                17代表有新的任务要求审核 ---官方账号的消息
+                18代表任务审核通过
+                19代表任务审核被拒绝
      */
 
     public String getContent() {

@@ -112,6 +112,7 @@ public class MissionInfo extends SwipeBackActivity {
                     startActivity(intent);
                 }//if 未登录
                 else{
+                    //TODO　判断非认证bu报名
                     AlertDialog.Builder mybuilder=new AlertDialog.Builder(MissionInfo.this);
                     mybuilder.setMessage("确定以当前用户报名");
                     mybuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

@@ -80,6 +80,7 @@
         <activity android:name=".citylist.CityListActivity"></activity>
         <activity android:name=".ForgetPassword"></activity>
         <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".mission_audit_reply"></activity>
 
     </application>
 

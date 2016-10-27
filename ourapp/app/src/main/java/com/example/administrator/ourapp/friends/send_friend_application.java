@@ -59,7 +59,6 @@ public class send_friend_application extends Activity {
             @Override
             public void done(final MyUser object, BmobException e) {
                 if(e==null){
-                    //TODO 通过ID显示相关的用户信息
                     commit_bt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

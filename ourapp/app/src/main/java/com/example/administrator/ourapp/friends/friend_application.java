@@ -80,7 +80,6 @@ public class friend_application extends Activity {
             public void done(final Message object, BmobException e) {
                 if(e==null){
 
-                    //TODO 未加载头像
                     fre_username.setText(object.getSender().getUsername());
                     fre_introduction.setText(object.getSender().getIntroduction());
                     apply_information_widget.setText(object.getContent());

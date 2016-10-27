@@ -15,17 +15,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.administrator.ourapp.CheckMission;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MissionInfo;
+import com.example.administrator.ourapp.MissionPub;
 import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.RefreshLayout;
 import com.example.administrator.ourapp.UserInfo;
+import com.example.administrator.ourapp.agency_authentication_reply;
+import com.example.administrator.ourapp.mission_audit_reply;
 import com.example.administrator.ourapp.real_name_authentication_reply;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
@@ -199,7 +203,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                         break;
                     case 3: //跳转到任务详情界面（通过任务申请）
                         BmobQuery<Mission> query3 = new BmobQuery<Mission>();
-                        query3.include("pub_user[userimage]");
+                        query3.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
                         query3.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
 
                             @Override
@@ -227,7 +231,7 @@ public class MesFrag extends ProgressFragment implements IListener {
 
                     case 5: //跳转到任务详情界面（任务开始）
                         BmobQuery<Mission> query5 = new BmobQuery<Mission>();
-                        query5.include("pub_user[userimage]");
+                        query5.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
                         query5.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
 
                             @Override
@@ -245,10 +249,29 @@ public class MesFrag extends ProgressFragment implements IListener {
                             }
                         });
                         break;
-
+//                    case 16:
+//                        BmobQuery<Mission> query16 = new BmobQuery<Mission>();
+//                        query16.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
+//                        query16.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
+//
+//                            @Override
+//                            public void done(Mission object, BmobException e) {
+//                                if(e==null){
+//                                    Intent intent=new Intent(getContext(), MissionInfo.class);
+//                                    Bundle bundle=new Bundle();
+//                                    bundle.putSerializable("mission",object);
+//                                    intent.putExtras(bundle);
+//                                    startActivity(intent);
+//                                }else{
+//                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//                        break;
                     case 6: //报名未被选上 跳转到首页
                         BmobQuery<Mission> query6 = new BmobQuery<Mission>();
-                        query6.include("pub_user[userimage]");
+                        query6.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
                         query6.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
 
                             @Override
@@ -263,7 +286,6 @@ public class MesFrag extends ProgressFragment implements IListener {
                             }
                         });
                         break;
-
                     case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
                         BmobQuery<Mission_question> query7 = new BmobQuery<Mission_question>();
                         query7.include("answer[content]");
@@ -383,11 +405,40 @@ public class MesFrag extends ProgressFragment implements IListener {
                         break;
 
                     case 15: //机构认证申请 ---官方账号用
-                        Intent intent15 = new Intent(getContext(), real_name_authentication_reply.class);
+                        Intent intent15 = new Intent(getContext(), agency_authentication_reply.class);
                         Bundle bundle15=new Bundle();
                         bundle15.putSerializable("user",message_list.get(i).getSender());
                         intent15.putExtras(bundle15);
                         startActivity(intent15);
+                        break;
+
+                    case 16: //机构认证申请 ---官方账号用
+                        Intent intent16 = new Intent(getContext(), CheckMission.class);
+//                        Bundle bundle16=new Bundle();
+//                        bundle16.putSerializable("user",message_list.get(i).getSender());
+//                        intent16.putExtras(bundle16);
+                        startActivity(intent16);
+                        break;
+                    case 17: //任务审核申请 ---官方账号用
+                        Intent intent17 = new Intent(getContext(), mission_audit_reply.class);
+                        Bundle bundle17=new Bundle();
+                        bundle17.putSerializable("user",message_list.get(i).getSender());
+                        intent17.putExtras(bundle17);
+                        startActivity(intent17);
+                        break;
+                    case 18: //任务审核通过
+                        Intent intent18 = new Intent(getContext(), MyTask.class);
+//                        Bundle bundle16=new Bundle();
+//                        bundle16.putSerializable("user",message_list.get(i).getSender());
+//                        intent16.putExtras(bundle16);
+                        startActivity(intent18);
+                        break;
+                    case 19: //任务被拒绝
+                        Intent intent19 = new Intent(getContext(), MissionPub.class);
+//                        Bundle bundle16=new Bundle();
+//                        bundle16.putSerializable("user",message_list.get(i).getSender());
+//                        intent16.putExtras(bundle16);
+                        startActivity(intent19);
                         break;
 
                 }//switch 通过switch判断 type分别进入不同的消息页面
