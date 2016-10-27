@@ -13,6 +13,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.administrator.ourapp.message.Message_tools;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +80,12 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MyUser zeedraw = new MyUser();
+                zeedraw.setObjectId("TJRU555B");
+                Message_tools mt = new Message_tools();
+                mt.send(BmobUser.getCurrentUser(MyUser.class), zeedraw,
+                        BmobUser.getCurrentUser(MyUser.class).getObjectId() + "的审核要求",
+                        17, false, "任务审核", MissionPub.this);
                 publish();
             }
         });
@@ -133,7 +141,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
                     if (e==null)
                     {
                         dialog.dismiss();
-                        builder.setMessage("发布成功").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        builder.setMessage("提交成功，请等待我们的审核结果").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();

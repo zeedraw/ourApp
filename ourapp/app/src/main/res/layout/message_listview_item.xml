@@ -80,6 +80,7 @@
                     android:id="@+id/message_content"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:lines="1"
                     android:textSize="@dimen/text_size_small"
                     android:layout_marginRight="@dimen/widget_margin_medium"/>
             </LinearLayout>

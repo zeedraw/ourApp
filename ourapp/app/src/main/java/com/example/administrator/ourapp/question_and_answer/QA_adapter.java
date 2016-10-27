@@ -101,7 +101,6 @@ public class QA_adapter extends ArrayAdapter<Mission_question> {
         viewHolder.user_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO 跳转到个人信息界面
                 Intent intent=new Intent(getContext(),MyAccount.class);
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("user",question.getUser());

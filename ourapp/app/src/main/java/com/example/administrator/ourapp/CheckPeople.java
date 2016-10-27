@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.mymissionadapter.UserItemAdapter;
 import com.example.administrator.ourapp.user_information.MyAccount;
@@ -20,11 +21,12 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/25.
  */
-public class CheckPeople extends AppCompatActivity {
+public class CheckPeople extends SwipeBackActivity {
     private ListView listView;
     private String missionId;
     private UserItemAdapter userItemAdapter;
@@ -94,6 +96,7 @@ public class CheckPeople extends AppCompatActivity {
                 else
                 {
                     Log.i("z","查询筛选人员失败");
+                    Toast.makeText(CheckPeople.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

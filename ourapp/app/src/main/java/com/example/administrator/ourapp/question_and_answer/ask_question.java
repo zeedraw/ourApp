@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MainActivity;
@@ -20,12 +21,13 @@ import com.example.administrator.ourapp.message.Message_tools;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/9/19.
  * 填写任务提问界面
  */
-public class ask_question extends Activity {
+public class ask_question extends SwipeBackActivity {
     private EditText EditQuestion = null;   //问题编辑文本框
     private TextView submit = null; //提交按钮
     private TextView return_bt,commit_bt;//标题上的左右按钮
@@ -65,6 +67,13 @@ public class ask_question extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(EditQuestion.length() < 4){
+                    Toast.makeText(ask_question.this, "问题的内容不得少于4个字符", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(EditQuestion.length() > 40){
+                    Toast.makeText(ask_question.this, "超过字数限制", Toast.LENGTH_SHORT).show();
+                    return;
+                }//else
                 final Dialog loading_dialog = MainActivity.createLoadingDialog(ask_question.this);
                 loading_dialog.show();
                 answer.setContent("暂无回答");
@@ -103,20 +112,23 @@ public class ask_question extends Activity {
                                     }else{
                                         loading_dialog.dismiss();
                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                                        builder.setMessage("问题发布失败").create().show();
+                                        Toast.makeText(ask_question.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                        builder.setMessage("问题发布失败").create().show();
                                     }
                                 }
                             });
 
                         }else{
+                            loading_dialog.dismiss();
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            Toast.makeText(ask_question.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
 
-            }
-        });
+            }//onClick
+        });//submit onClick
 
     }//initWidget
 }

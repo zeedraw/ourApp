@@ -24,11 +24,12 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
-                android:layout_height="25dp"
+                android:layout_weight="0.3"
+                android:layout_height="20dp"
+                android:gravity="top"
                 android:layout_marginTop="@dimen/widget_margin_large"
                 android:src="@drawable/ask"
-                android:layout_marginRight="@dimen/widget_margin_medium"/>
+                android:layout_marginRight="@dimen/widget_margin_large"/>
 
             <TextView
                 android:id="@+id/detail_question_content"
@@ -52,10 +53,12 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
-                android:layout_height="25dp"
+                android:layout_weight="0.3"
+                android:layout_height="20dp"
+                android:gravity="top"
+                android:layout_marginTop="@dimen/widget_margin_medium"
                 android:src="@drawable/answer"
-                android:layout_marginRight="@dimen/widget_margin_medium"/>
+                android:layout_marginRight="@dimen/widget_margin_large"/>
 
 
             <TextView
@@ -63,7 +66,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="5.5"
                 android:layout_height="150dp"
+                android:layout_marginTop="@dimen/widget_margin_medium"
                 android:gravity="top"
+                android:textSize="@dimen/text_size_medium"
                 android:textColor="@color/black"
                 android:text="活动持续三天时间，在这期间，住宿、饮食、出行都由我们同一安排，保证质量，请不要担心。"
                 />

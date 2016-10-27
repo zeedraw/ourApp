@@ -35,7 +35,7 @@ import cn.bmob.v3.listener.UpdateListener;
 public class ChoosePeople extends AppCompatActivity {
     private ListView listView;
     private UserItemAdapter userItemAdapter;
-    private String missionId;
+//    private String missionId;
     private List<MyUser> userList;
     private List<MyUser> addList;
     private TextView title,rt_bt,edit_bt;
@@ -52,8 +52,8 @@ public class ChoosePeople extends AppCompatActivity {
         addList=new ArrayList<MyUser>();
         initWidget();
         setListener();
-        Intent intent=getIntent();
-        missionId=intent.getStringExtra("missionId");
+//        Intent intent=getIntent();
+//        missionId=intent.getStringExtra("missionId");
         query();
 
     }
@@ -79,8 +79,8 @@ public class ChoosePeople extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 BmobRelation getRelation=new BmobRelation();
-                final Mission mission=new Mission();
-                mission.setObjectId(missionId);
+                final Mission mission= (Mission) getIntent().getSerializableExtra("mission");
+//                mission.setObjectId(missionId);
                 for(MyUser user:addList)
                 {
                     MyUser userPointer=new MyUser();
@@ -115,14 +115,13 @@ public class ChoosePeople extends AppCompatActivity {
                                         userItemAdapter.setCheckBoxShown(false);
                                         userItemAdapter.notifyDataSetChanged();
 
-                                        //TODO 给各个用户(addlist中）发送申请成功消息[已完成]
 
                                         if(e==null) {
                                             Message_tools sm = new Message_tools();
                                             for (int i = 0; i < addList.size(); ++i) {
                                                 sm.send(BmobUser.getCurrentUser(MyUser.class), addList.get(i),
-                                                        "恭喜您，您已被" + mission.getName() + "活动选为志愿者！",
-                                                        4, false, mission.getObjectId(), ChoosePeople.this);
+                                                        "恭喜您，您已被“" + mission.getName() + "”活动选为志愿者！",
+                                                        3, false, mission.getObjectId(), ChoosePeople.this);
                                             }//for
                                         }
 //                                        List<BmobObject> messages = new ArrayList<BmobObject>();
@@ -219,8 +218,9 @@ public class ChoosePeople extends AppCompatActivity {
     private void  query()
     {
         BmobQuery<MyUser> query=new BmobQuery<MyUser>();
+        final Mission mission1= (Mission) getIntent().getSerializableExtra("mission");
         Mission mission=new Mission();
-        mission.setObjectId(missionId);
+        mission.setObjectId(mission1.getObjectId());
         query.addWhereRelatedTo("cur_people",new BmobPointer(mission));
         query.include("userimage");
         query.findObjects(new FindListener<MyUser>() {

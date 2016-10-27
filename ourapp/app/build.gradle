@@ -36,4 +36,6 @@ dependencies {
     compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
     //    compile 'com.android.support:support-v4:23.2.1'
     compile 'cn.bmob.android:http-legacy:1.0'
+    compile 'com.android.support:design:24.0.0'
+    compile project(':swipebacklayout')
 }

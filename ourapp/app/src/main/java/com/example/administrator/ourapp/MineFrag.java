@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -57,7 +58,6 @@ public class MineFrag extends Fragment implements IListener{
             Log.i("z","获取更新iv--"+MainActivity.getDiskFileDir(getContext())+"/user_image.png");
         } catch (Exception e)
         {
-            // TODO: handleResult exception
         }
 
             name_tv.setText((String)BmobUser.getObjectByKey("name"));
@@ -105,6 +105,8 @@ public class MineFrag extends Fragment implements IListener{
                 else
                 {
                     Log.i("z","查询评分失败");
+                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

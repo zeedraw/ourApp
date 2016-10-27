@@ -70,6 +70,9 @@
         <activity android:name=".friends.friend_application"></activity>
         <activity android:name=".EditIntro"></activity>
         <activity android:name=".advice_feedback"></activity>
+        <activity android:name=".real_name_authentication_reply"></activity>
+        <activity android:name="reject_authentication_reason"></activity>
+        <activity android:name=".modify_password"></activity>
         <activity android:name=".RatingUser"
             android:windowSoftInputMode="adjustPan">
         </activity>
@@ -77,6 +80,7 @@
         <activity android:name=".citylist.CityListActivity"></activity>
         <activity android:name=".ForgetPassword"></activity>
         <activity android:name=".ResetPassword"></activity>
+        <activity android:name=".mission_audit_reply"></activity>
 
     </application>
 

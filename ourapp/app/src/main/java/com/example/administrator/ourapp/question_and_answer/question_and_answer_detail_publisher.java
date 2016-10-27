@@ -16,11 +16,12 @@ import com.example.administrator.ourapp.R;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Longze on 2016/9/21.
  */
-public class question_and_answer_detail_publisher extends Activity implements IListener {
+public class question_and_answer_detail_publisher extends SwipeBackActivity implements IListener {
     private TextView return_bt, edit;//标题上的返回按钮
     private TextView info_title;//标题
     private TextView question_content;

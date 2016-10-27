@@ -28,7 +28,6 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             Log.d("bmob", "客户端收到推送内容："+intent.getStringExtra("msg"));
             Toast.makeText(context, "BmobPushDemo收到消息："
                     +intent.getStringExtra(PushConstants.EXTRA_PUSH_MESSAGE_STRING), Toast.LENGTH_SHORT).show();
-            //TODO 根据推送内容 自己给自己创建一条消息
         }//if
 
         nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);

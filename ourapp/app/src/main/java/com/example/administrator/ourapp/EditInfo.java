@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -143,7 +144,6 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
             personal_icon_iv.setImageBitmap(bitmap);
         } catch (Exception e)
         {
-            // TODO: handleResult exception
         }
         name_et.setText(current.getName());
         int sexId=current.getSex()?R.id.edit_male:R.id.female;
@@ -411,6 +411,8 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
                                 }
                                 else {
                                     Log.i("z","原头像删除失败");
+                                    Toast.makeText(EditInfo.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         });
@@ -432,6 +434,7 @@ public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDa
                                 EditInfo.this.finish();
                             }else{
                                 Log.i("z","更新用户信息失败:" + e.getMessage());
+                                Toast.makeText(EditInfo.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

@@ -1,12 +1,8 @@
 package com.example.administrator.ourapp.message;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
@@ -16,30 +12,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.administrator.ourapp.CheckMission;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MissionInfo;
+import com.example.administrator.ourapp.MissionPub;
 import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.RefreshLayout;
 import com.example.administrator.ourapp.UserInfo;
+import com.example.administrator.ourapp.agency_authentication_reply;
+import com.example.administrator.ourapp.mission_audit_reply;
+import com.example.administrator.ourapp.real_name_authentication_reply;
 import com.example.administrator.ourapp.friends.confirm_friend;
 import com.example.administrator.ourapp.friends.friend_application;
 
-import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
-import com.example.administrator.ourapp.question_and_answer.QA_adapter;
-import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail_publisher;
+import com.example.administrator.ourapp.reject_authentication_reason;
+import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -87,7 +86,6 @@ public class MesFrag extends ProgressFragment implements IListener {
 //        }
 //    };
 
-    //TODO 添加了自动刷新[为不断地从服务器请求数据 若时间允许 改成通过Bmob的通知系统获取然后刷新]
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,7 +105,18 @@ public class MesFrag extends ProgressFragment implements IListener {
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
 //                contextMenu.setHeaderTitle("选择操作");
+
+
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) contextMenuInfo;
+                //info.id得到listview中选择的条目绑定的id
+                String id = String.valueOf(info.id);
+                final int item_postion = info.position;
+
                 contextMenu.add(0, 0, 0, "                      删除此消息");
+
+                if(!message_list.get(item_postion).getBe_viewed()){
+                    contextMenu.add(0, 1, 0, "                      标记为已读");
+                }
             }
         });
 
@@ -117,7 +126,7 @@ public class MesFrag extends ProgressFragment implements IListener {
 
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setContentShown(false);
@@ -154,6 +163,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                                         if(e==null){
                                                             Log.i("bmob","未读消息数更新成功");
                                                         }else{
+                                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                             Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
                                                         }
                                                     }
@@ -161,12 +171,14 @@ public class MesFrag extends ProgressFragment implements IListener {
                                             }
                                         }else{
                                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
 
                             }else{
                                 Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                                Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -191,7 +203,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                         break;
                     case 3: //跳转到任务详情界面（通过任务申请）
                         BmobQuery<Mission> query3 = new BmobQuery<Mission>();
-                        query3.include("pub_user[userimage]");
+                        query3.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
                         query3.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
 
                             @Override
@@ -204,6 +216,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -218,7 +231,7 @@ public class MesFrag extends ProgressFragment implements IListener {
 
                     case 5: //跳转到任务详情界面（任务开始）
                         BmobQuery<Mission> query5 = new BmobQuery<Mission>();
-                        query5.include("pub_user[userimage]");
+                        query5.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
                         query5.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
 
                             @Override
@@ -231,11 +244,48 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                         break;
+//                    case 16:
+//                        BmobQuery<Mission> query16 = new BmobQuery<Mission>();
+//                        query16.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
+//                        query16.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
+//
+//                            @Override
+//                            public void done(Mission object, BmobException e) {
+//                                if(e==null){
+//                                    Intent intent=new Intent(getContext(), MissionInfo.class);
+//                                    Bundle bundle=new Bundle();
+//                                    bundle.putSerializable("mission",object);
+//                                    intent.putExtras(bundle);
+//                                    startActivity(intent);
+//                                }else{
+//                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//                        break;
+                    case 6: //报名未被选上 跳转到首页
+                        BmobQuery<Mission> query6 = new BmobQuery<Mission>();
+                        query6.include("pub_user[userimage|name|orgDescription|agency_contact_num]");
+                        query6.getObject(message_list.get(i).getRemark(), new QueryListener<Mission>() {
 
+                            @Override
+                            public void done(Mission object, BmobException e) {
+                                if(e==null){
+                                    Intent intent=new Intent(getContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        break;
                     case 7: //跳转到问答详情界面(任务发布者的）（有新的提问）
                         BmobQuery<Mission_question> query7 = new BmobQuery<Mission_question>();
                         query7.include("answer[content]");
@@ -251,6 +301,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent7);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -271,10 +322,123 @@ public class MesFrag extends ProgressFragment implements IListener {
                                     startActivity(intent8);
                                 }else{
                                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                         });
+                        break;
+
+                    case 10: //个人认证申请成功 跳转到我的信息界面
+
+                        BmobQuery<MyUser> query10 = new BmobQuery<MyUser>();
+                        query10.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(),
+                                new QueryListener<MyUser>() {
+
+                            @Override
+                            public void done(MyUser object, BmobException e) {
+                                if(e==null){
+                                    Intent intent10 = new Intent(getContext(),
+                                            MyAccount.class);
+                                    Bundle bundle10=new Bundle();
+                                    bundle10.putSerializable("user",object);
+                                    intent10.putExtras(bundle10);
+                                    startActivity(intent10);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
+
+                        break;
+
+                    case 11: //个人认证申请失败
+
+
+                        Intent intent11 = new Intent(getContext(), reject_authentication_reason.class);
+                        Bundle bundle11=new Bundle();
+                        bundle11.putSerializable("reason", message_list.get(i).getRemark());
+                        intent11.putExtras(bundle11);
+                        startActivity(intent11);
+                        break;
+
+                    case 12: //机构认证申请成功 跳转到我的信息界面
+                        BmobQuery<MyUser> query12 = new BmobQuery<MyUser>();
+                        query12.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(),
+                                new QueryListener<MyUser>() {
+
+                                    @Override
+                                    public void done(MyUser object, BmobException e) {
+                                        if(e==null){
+                                            Intent intent12 = new Intent(getContext(),
+                                                    MyAccount.class);
+                                            Bundle bundle12=new Bundle();
+                                            bundle12.putSerializable("user",object);
+                                            intent12.putExtras(bundle12);
+                                            startActivity(intent12);
+                                        }else{
+                                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                });
+
+                        break;
+
+                    case 13: //机构认证申请失败
+                        Intent intent13 = new Intent(getContext(), reject_authentication_reason.class);
+                        Bundle bundle13=new Bundle();
+                        bundle13.putSerializable("reason",message_list.get(i).getRemark());
+                        intent13.putExtras(bundle13);
+                        startActivity(intent13);
+                        break;
+
+                    case 14: //个人认证申请 ---官方账号用
+                        Intent intent14 = new Intent(getContext(), real_name_authentication_reply.class);
+                        Bundle bundle14=new Bundle();
+                        bundle14.putSerializable("user",message_list.get(i).getSender());
+                        intent14.putExtras(bundle14);
+                        startActivity(intent14);
+                        break;
+
+                    case 15: //机构认证申请 ---官方账号用
+                        Intent intent15 = new Intent(getContext(), agency_authentication_reply.class);
+                        Bundle bundle15=new Bundle();
+                        bundle15.putSerializable("user",message_list.get(i).getSender());
+                        intent15.putExtras(bundle15);
+                        startActivity(intent15);
+                        break;
+
+                    case 16: //机构认证申请 ---官方账号用
+                        Intent intent16 = new Intent(getContext(), CheckMission.class);
+//                        Bundle bundle16=new Bundle();
+//                        bundle16.putSerializable("user",message_list.get(i).getSender());
+//                        intent16.putExtras(bundle16);
+                        startActivity(intent16);
+                        break;
+                    case 17: //任务审核申请 ---官方账号用
+                        Intent intent17 = new Intent(getContext(), mission_audit_reply.class);
+                        Bundle bundle17=new Bundle();
+                        bundle17.putSerializable("user",message_list.get(i).getSender());
+                        intent17.putExtras(bundle17);
+                        startActivity(intent17);
+                        break;
+                    case 18: //任务审核通过
+                        Intent intent18 = new Intent(getContext(), MyTask.class);
+//                        Bundle bundle16=new Bundle();
+//                        bundle16.putSerializable("user",message_list.get(i).getSender());
+//                        intent16.putExtras(bundle16);
+                        startActivity(intent18);
+                        break;
+                    case 19: //任务被拒绝
+                        Intent intent19 = new Intent(getContext(), MissionPub.class);
+//                        Bundle bundle16=new Bundle();
+//                        bundle16.putSerializable("user",message_list.get(i).getSender());
+//                        intent16.putExtras(bundle16);
+                        startActivity(intent19);
                         break;
 
                 }//switch 通过switch判断 type分别进入不同的消息页面
@@ -397,6 +561,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                                     if(e==null){
                                                         Log.i("bmob","未读消息数更新成功");
                                                     }else{
+                                                        Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
                                                     }
                                                 }
@@ -404,6 +569,7 @@ public class MesFrag extends ProgressFragment implements IListener {
                                         }
                                     }else{
                                         Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                        Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -414,10 +580,64 @@ public class MesFrag extends ProgressFragment implements IListener {
                             Toast.makeText(getContext(), "消息已删除", Toast.LENGTH_SHORT).show();
                         }else{
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
+
+                return true;
+
+            case 1:
+
+                if(!message_list.get(item_postion).getBe_viewed()){
+                    message_list.get(item_postion).setBe_viewed(true);
+                    message_list.get(item_postion).update(message_list.get(item_postion).getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(e==null){
+                                Log.i("bmob","更新成功");
+
+                                BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+                                query.addWhereEqualTo("user" ,BmobUser.getCurrentUser(MyUser.class));
+                                query.setLimit(50);
+                                query.findObjects(new FindListener<UserInfo>() {
+                                    @Override
+                                    public void done(List<UserInfo> object, BmobException e) {
+                                        if(e==null){
+
+                                            for (UserInfo user : object) {
+                                                user.subtractUnread_message_num();
+
+                                                if(user.getUnread_message_num() ==0) {
+                                                    ((MainActivity) getContext()).change_signal();
+                                                }//if ==0
+                                                user.update(user.getObjectId(), new UpdateListener() {
+
+                                                    @Override
+                                                    public void done(BmobException e) {
+                                                        if(e==null){
+                                                            Log.i("bmob","未读消息数更新成功");
+                                                            message_list.get(item_postion).setBe_viewed(true);
+                                                            message_adapter.notifyDataSetChanged();
+                                                        }else{
+                                                            Log.i("bmob","未读消息数更新失败："+e.getMessage()+","+e.getErrorCode());
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                        }
+                                    }
+                                });
+
+                            }else{
+                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                        }
+                    });
+                }
 
                 return true;
             default:
@@ -430,7 +650,7 @@ public class MesFrag extends ProgressFragment implements IListener {
         final BmobQuery<Message> query=new BmobQuery<Message>();
         query.addWhereEqualTo("receiver", BmobUser.getCurrentUser(MyUser.class).getObjectId());
         query.order("-createdAt");
-        query.setLimit(7);
+        query.setLimit(9);
         Log.i("z","初始化添加条件成功");
 //        for (Map.Entry<String,String> entry : condition.entrySet())
 //        {
@@ -521,7 +741,7 @@ public class MesFrag extends ProgressFragment implements IListener {
 //        query.include(include);
         query.addWhereEqualTo("receiver", BmobUser.getCurrentUser(MyUser.class).getObjectId());
         query.order("-createdAt");
-        query.setLimit(7);
+        query.setLimit(9);
         Log.i("z","初始化添加条件成功");
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         if (mIsStart)//true 下拉刷新

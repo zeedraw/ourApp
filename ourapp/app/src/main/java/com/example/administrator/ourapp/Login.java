@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -18,11 +19,12 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.SaveListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/3.
  */
-public class Login extends AppCompatActivity {
+public class Login extends SwipeBackActivity {
     private EditText username,password;
     private Button login,signup;
     private TextView forget;
@@ -94,12 +96,12 @@ public class Login extends AppCompatActivity {
 //                                                @Override
 //                                                public void done(BmobException e) {
 //                                                    if(e == null){
-//                                                        // TODO Auto-generated method stub
+//
 //                                                        Log.i("bmob", "设备信息更新成功");
 //                                                    }
 //
 //                                                    else{
-//                                                        // TODO Auto-generated method stub
+//
 //                                                        Log.i("bmob", "设备信息更新失败:"+e.getMessage()+","+e.getErrorCode());
 //                                                    }
 //                                                }
@@ -129,6 +131,8 @@ public class Login extends AppCompatActivity {
                                     else
                                     {
                                         Log.i("z","下载用户头像失败"+e.getMessage());
+                                        Toast.makeText(Login.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                                     }
 
                                 }
@@ -154,6 +158,7 @@ public class Login extends AppCompatActivity {
                                             Log.i("z", "缓存用户背景成功");
                                         } else {
                                             Log.i("z", "缓存用户背景失败");
+                                            Toast.makeText(Login.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
 

@@ -64,13 +64,14 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 import  com.example.administrator.ourapp.BitmapTools;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
-public class MyAccount extends AppCompatActivity implements PullScrollView.OnTurnListener, DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
+public class MyAccount extends SwipeBackActivity implements PullScrollView.OnTurnListener, DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
     private PullScrollView mScrollView;
     private ImageView mHeadImg;
     private TextView rt_button;

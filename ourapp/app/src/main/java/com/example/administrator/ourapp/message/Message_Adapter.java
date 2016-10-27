@@ -100,6 +100,10 @@ public class Message_Adapter extends ArrayAdapter<Message> {
                 MessageType = "任务已开始";
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.mission_start);
                 break;
+            case 6:
+                MessageType = "申请失败";
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
             case 7:
                 MessageType = "新的提问";       //有人对任务进行提问 看到此消息的是发布者
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
@@ -112,6 +116,48 @@ public class Message_Adapter extends ArrayAdapter<Message> {
                 MessageType = "意见反馈";       //发布者对用户的问题进行了回答 看到此消息的是提问者
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.friend_request);
                 break;
+            case 10:
+                MessageType = "认证成功";       //个人认证成功后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 11:
+                MessageType = "认证失败";       //个人认证失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 12:
+                MessageType = "认证成功";       //机构认证成功后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 13:
+                MessageType = "认证失败";       //机构认证失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 14:
+                MessageType = "个人认证";       //机构认证失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 15:
+                MessageType = "机构认证";       //机构认证失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 16:
+                MessageType = "任务结束";       //机构认证失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 17:
+                MessageType = "新的任务审核";       //新的任务审核的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 18:
+                MessageType = "任务审核通过";       //任务审核通过后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+            case 19:
+                MessageType = "任务审核失败";       //任务审核失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
+
+
 
 
 
