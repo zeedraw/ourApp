@@ -25,7 +25,16 @@ public class Mission extends BmobObject {
     private String tag;//任务类型 教育,活动,社区,景点
     private List<String> location_abs;//大致地点
     private String intro;//简介
+    private String contact_number;//联系方式
 
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
+    }
+
+    public String getContact_number() {
+
+        return contact_number;
+    }
     //getter&setter
 
 

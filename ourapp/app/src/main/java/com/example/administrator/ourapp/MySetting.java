@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 
@@ -28,6 +29,8 @@ public class MySetting extends SwipeBackActivity {
     private TextView title;
     private LinearLayout advice_feedback;
     private TextView loginout_bt;
+    private LinearLayout about_us;
+    private LinearLayout update;
 //    private TextView modify_password;
     private TextView cacheShow;
     private LinearLayout modify_password;
@@ -47,6 +50,8 @@ public class MySetting extends SwipeBackActivity {
         loginout_bt=(TextView)findViewById(R.id.loginout_bt);
 //        modify_password=(TextView)findViewById(R.id.modify_password);
         modify_password=(LinearLayout) findViewById(R.id.modify_password);
+        update=(LinearLayout) findViewById(R.id.update);
+        about_us=(LinearLayout) findViewById(R.id.about_us);
         cacheShow=(TextView)findViewById(R.id.show_cache);
         cacheShow.setText(getCache());
 
@@ -88,6 +93,23 @@ public class MySetting extends SwipeBackActivity {
                 intent.setComponent(comp);
                 startActivity(intent);
             }//onClick
+        });
+
+        about_us.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ComponentName comp=new ComponentName(MySetting.this,about_us.class);
+                Intent intent=new Intent();
+                intent.setComponent(comp);
+                startActivity(intent);
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MySetting.this, "测试版本，暂无更新", Toast.LENGTH_SHORT).show();
+            }
         });
 
         if(BmobUser.getCurrentUser(MyUser.class)!=null)

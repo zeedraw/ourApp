@@ -31,7 +31,7 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class MissionPub extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
     private TextView tag,start_time,end_time,rt,save,title,location,detail_location,detail_mission;
-    private EditText name,intro;
+    private EditText name,intro, contact_number;
     private DatePickerDialog start_dpl,end_dpl;
     private LocationPickerDialog locationPickerDialog;//选择地点
     private Calendar calendar=Calendar.getInstance();
@@ -55,6 +55,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
 
         name=(EditText)findViewById(R.id.mission_pub_name_et);
         intro=(EditText)findViewById(R.id.mission_pub_intro_et);
+        contact_number=(EditText)findViewById(R.id.contact_number);
         location=(TextView)findViewById(R.id.location_tv);
         detail_location=(TextView)findViewById(R.id.detail_location_tv);
 
@@ -80,12 +81,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyUser zeedraw = new MyUser();
-                zeedraw.setObjectId("TJRU555B");
-                Message_tools mt = new Message_tools();
-                mt.send(BmobUser.getCurrentUser(MyUser.class), zeedraw,
-                        BmobUser.getCurrentUser(MyUser.class).getObjectId() + "的审核要求",
-                        17, false, "任务审核", MissionPub.this);
+
                 publish();
             }
         });
@@ -118,6 +114,7 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
             Mission mission=new Mission();
             mission.setName(name.getText().toString().trim());
             mission.setIntro(intro.getText().toString().trim());
+            mission.setContact_number(contact_number.getText().toString().trim());
             String[] sourceStrArray = location.getText().toString().trim().split("-");
             List<String> list= new ArrayList<String>();
             list.add(sourceStrArray[0]);
@@ -141,6 +138,12 @@ public class MissionPub extends AppCompatActivity implements DatePickerDialog.On
                     if (e==null)
                     {
                         dialog.dismiss();
+                        MyUser zeedraw = new MyUser();
+                        zeedraw.setObjectId("TJRU555B");
+                        Message_tools mt = new Message_tools();
+                        mt.send(BmobUser.getCurrentUser(MyUser.class), zeedraw,
+                                BmobUser.getCurrentUser(MyUser.class).getObjectId() + "的审核要求",
+                                17, false, s, MissionPub.this);
                         builder.setMessage("提交成功，请等待我们的审核结果").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

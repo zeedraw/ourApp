@@ -78,17 +78,17 @@ public class MissionInfo extends SwipeBackActivity {
                 break;
             case 3:
                 mState.setText("进行中");
-                commit_bt.setVisibility(View.GONE);
+                commit_bt.setVisibility(View.INVISIBLE);
                 break;
             case 4:
                 mState.setText("已结束");
-                commit_bt.setVisibility(View.GONE);
+                commit_bt.setVisibility(View.INVISIBLE);
                 break;
         }
 //        commit_bt.setTextSize(21);
         if (mMission.getPub_user().getObjectId().equals(BmobUser.getObjectByKey("objectId")))
         {
-           commit_bt.setVisibility(View.GONE);
+           commit_bt.setVisibility(View.INVISIBLE);
         }
         commit_bt.setText("报名");
 
@@ -217,7 +217,7 @@ public class MissionInfo extends SwipeBackActivity {
         orgDescription=(TextView)findViewById(R.id.organization);
         orgDescription.setText(mMission.getPub_user().getOrgDescription());
 
-        mName=(TextView)findViewById(R.id.mission_title);
+        mName=(TextView)findViewById(R.id.missiontitle);
         mName.setText(mMission.getName());
         mLocation=(TextView)findViewById(R.id.mission_location);
         List<String> list=mMission.getLocation_abs();
@@ -245,7 +245,7 @@ public class MissionInfo extends SwipeBackActivity {
         mLocDtails.setText(mMission.getLocation());
 
         mContact=(TextView)findViewById(R.id.contact);
-        String userContact=mMission.getPub_user().getAgency_contact_num();
+        String userContact=mMission.getContact_number();
         if (userContact!=null) {
             mContact.setText(userContact);
         }

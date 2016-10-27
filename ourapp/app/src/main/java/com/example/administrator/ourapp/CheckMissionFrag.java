@@ -63,6 +63,7 @@ public class CheckMissionFrag extends ProgressFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        setEmptyText("暂无任务，点我重新加载");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

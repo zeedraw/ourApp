@@ -296,6 +296,8 @@ public class SignUp extends AppCompatActivity implements  View.OnClickListener {
                                     }
                                     else
                                     {
+                                        dialog.dismiss();
+                                        Toast.makeText(getApplicationContext(),"注册失败，可能此手机号已被注册",Toast.LENGTH_SHORT).show();
                                         Log.i("z","创建用户失败");
                                     }
 
@@ -457,11 +459,11 @@ public class SignUp extends AppCompatActivity implements  View.OnClickListener {
     }
 
         private boolean isPhonenum() {
-        String str = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
-        Pattern p = Pattern.compile(str);
-        Matcher m = p.matcher(phonenum_ed.getText().toString());
+//        String str = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+//        Pattern p = Pattern.compile(str);
+//        Matcher m = p.matcher(phonenum_ed.getText().toString());
 
-         if(!m.matches())
+         if(phonenum_ed.length()!=11)
         {
 
             return false;

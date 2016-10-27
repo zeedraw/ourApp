@@ -423,14 +423,15 @@ public class MesFrag extends ProgressFragment implements IListener {
                         Intent intent17 = new Intent(getContext(), mission_audit_reply.class);
                         Bundle bundle17=new Bundle();
                         bundle17.putSerializable("user",message_list.get(i).getSender());
+                        bundle17.putSerializable("mission_ID",message_list.get(i).getRemark());
                         intent17.putExtras(bundle17);
                         startActivity(intent17);
                         break;
                     case 18: //任务审核通过
                         Intent intent18 = new Intent(getContext(), MyTask.class);
-//                        Bundle bundle16=new Bundle();
-//                        bundle16.putSerializable("user",message_list.get(i).getSender());
-//                        intent16.putExtras(bundle16);
+//                        Bundle bundle18=new Bundle();
+//                        bundle18.putSerializable("mission_ID",message_list.get(i).getRemark());
+//                        intent18.putExtras(bundle18);
                         startActivity(intent18);
                         break;
                     case 19: //任务被拒绝

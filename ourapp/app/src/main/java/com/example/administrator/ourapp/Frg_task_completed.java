@@ -75,6 +75,6 @@ public class Frg_task_completed extends MyMissionFrag {
         query.addWhereEqualTo("state",new Integer(4));
         query.order("-createdAt");
         query.setLimit(7);
-        query.include("pub_user[orgDescription].userimage");
+        query.include("pub_user[orgDescription|name].userimage");
     }
 }
