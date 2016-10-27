@@ -13,11 +13,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by Administrator on 2016/10/4.
  */
 
-public class EditIntro extends AppCompatActivity {
+public class EditIntro extends SwipeBackActivity {
     private TextView rt,title,complete;
     private EditText et;
     private final static int GET_INTRO=1001;

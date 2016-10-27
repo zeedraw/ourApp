@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by Longze on 2016/10/23.
  */
-public class reject_authentication_reason extends Activity {
+public class reject_authentication_reason extends SwipeBackActivity {
 
     private TextView reject_reason;
     private TextView reapprove;

@@ -21,12 +21,13 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/10/25.
  */
 
-public class ForgetPassword extends AppCompatActivity {
+public class ForgetPassword extends SwipeBackActivity {
     private TextView title,rt_bt,complete;
     private EditText pw,pw_confirm;
     private EditText phoneNum,code;

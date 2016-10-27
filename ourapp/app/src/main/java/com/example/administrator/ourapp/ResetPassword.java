@@ -19,12 +19,13 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/10/25.
  */
 
-public class ResetPassword extends AppCompatActivity {
+public class ResetPassword extends SwipeBackActivity {
     private TextView title,rt_bt,complete;
     private EditText pw,pw_confirm;
     private String userId;

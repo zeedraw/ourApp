@@ -38,11 +38,12 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/9.
  */
-public class EditInfo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,DialogInterface.OnClickListener{
+public class EditInfo extends SwipeBackActivity implements DatePickerDialog.OnDateSetListener,DialogInterface.OnClickListener{
     private RelativeLayout userimage;
     private TextView rt_bt,title,save_bt,bd_tv,location_tv;
     private EditText name_et,intro_et;

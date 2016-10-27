@@ -28,11 +28,12 @@ import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/7.
  */
-public class SignUp extends AppCompatActivity implements  View.OnClickListener {
+public class SignUp extends SwipeBackActivity implements  View.OnClickListener {
     private EditText name_ed,pw_ed,pwconfirm_ed,phonenum_ed,code_ed;
 //    private TextView name_tv,pw_tv,pwconfirm_tv,phonenum_tv,code_tv,rt,title;
     private TextView rt,title;

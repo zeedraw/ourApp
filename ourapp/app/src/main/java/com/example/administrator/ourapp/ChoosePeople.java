@@ -28,11 +28,12 @@ import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/22.
  */
-public class ChoosePeople extends AppCompatActivity {
+public class ChoosePeople extends SwipeBackActivity {
     private ListView listView;
     private UserItemAdapter userItemAdapter;
 //    private String missionId;

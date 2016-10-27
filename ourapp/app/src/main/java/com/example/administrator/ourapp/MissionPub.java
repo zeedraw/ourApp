@@ -25,11 +25,12 @@ import java.util.List;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/9/17.
  */
-public class MissionPub extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
+public class MissionPub extends SwipeBackActivity implements DatePickerDialog.OnDateSetListener, DialogInterface.OnClickListener {
     private TextView tag,start_time,end_time,rt,save,title,location,detail_location,detail_mission;
     private EditText name,intro, contact_number;
     private DatePickerDialog start_dpl,end_dpl;
