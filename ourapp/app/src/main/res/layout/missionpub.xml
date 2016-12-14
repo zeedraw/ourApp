@@ -96,7 +96,7 @@
                 android:layout_height="match_parent"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_medium"
-                android:maxLength="30"
+                android:maxLength="45"
                 android:layout_marginTop="12dp"
                 android:hint="填写任务简介"
                 android:background="@null"

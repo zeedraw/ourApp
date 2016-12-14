@@ -1,10 +1,12 @@
 package com.example.administrator.ourapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
@@ -30,10 +32,20 @@ public class Frag_trans extends MyMissionFrag {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getContext(),MissionInfo.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("mission",mlist.get(i));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         callBack=new MissionAdapterCallBack() {
             @Override
             public void setAdapter(ListView listView, List<Mission> list) {
-                mAdapter = new MissionAdapter(getContext(),R.layout.missionitem, list);
+                mAdapter = new MissionAdapter(getContext(),R.layout.mission_item, list);
                 listView.setAdapter(mAdapter);
 
             }

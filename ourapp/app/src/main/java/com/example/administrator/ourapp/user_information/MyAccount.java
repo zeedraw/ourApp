@@ -321,24 +321,24 @@ public class MyAccount extends SwipeBackActivity implements PullScrollView.OnTur
         my=Integer.parseInt(sourceStrArray[0]);
         mm=Integer.parseInt(sourceStrArray[1]);
         md=Integer.parseInt(sourceStrArray[2]);
-        if (m<mm)
+        if (m>mm)
         {
             age=y-my;
         }
         else if (m==mm)
         {
-            if (d<md)
+            if (d>md)
             {
                 age=y-my;
             }
             else
             {
-                age=y-my+1;
+                age=y-my-1;
             }
         }
         else
         {
-            age=y-my+1;
+            age=y-my-1;
         }
             return age;
     }

@@ -14,6 +14,7 @@ import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyMissionFrag;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.mymissionadapter.CheckPeopleMissionAdapter;
 import com.example.administrator.ourapp.mymissionadapter.MissionAdapter;
 
 import java.util.ArrayList;
@@ -91,7 +92,7 @@ public class DoApplyingFrag extends MyMissionFrag{
             query.addWhereEqualTo("state",new Integer(2));
             query.order("-createdAt");
             query.setLimit(7);
-            query.include("pub_user[orgDescription].userimage");
+            query.include("pub_user[name|orgDescription].userimage");
         }
     }
 

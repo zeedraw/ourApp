@@ -1,5 +1,6 @@
 package com.example.administrator.ourapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,9 +52,13 @@ public class QAFrag extends ProgressFragment {
     private boolean mIsStart = true;
     private RefreshLayout refreshLayout;
 
+    @SuppressLint("ValidFragment")
     public QAFrag(Mission mission) {
         this.mission = mission;
     }
+
+    public QAFrag(){}
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
