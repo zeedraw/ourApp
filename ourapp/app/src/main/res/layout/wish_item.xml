@@ -26,7 +26,7 @@
                 android:layout_marginRight="@dimen/widget_margin_large"/>
 
             <TextView
-                android:id="@+id/question"
+                android:id="@+id/wish_title"
                 android:layout_width="0dp"
                 android:layout_weight="4.5"
                 android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
-                android:text="提问的标题"/>
+                android:text="愿望标题"/>
 
             <ImageView
                 android:id="@+id/user_image"
@@ -61,14 +61,14 @@
                 android:layout_marginRight="@dimen/widget_margin_large"/>
 
             <TextView
-                android:id="@+id/answer"
+                android:id="@+id/wish_content"
                 android:layout_width="0dp"
                 android:layout_weight="5.5"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/widget_margin_medium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_small"
-                android:text="暂无回答"/>
+                android:text="愿望详细内容"/>
         </LinearLayout>
 
         <LinearLayout

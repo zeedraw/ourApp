@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/header">
+        <!--左侧按钮为返回 中间文本为 编辑回答  右侧按钮为 提交-->
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/widget_margin_medium"
+        android:layout_marginRight="@dimen/widget_margin_medium"
+        android:divider="@drawable/divider"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="20dp"
+                android:gravity="top"
+                android:layout_marginTop="@dimen/widget_margin_large"
+                android:src="@drawable/ask"
+                android:layout_marginRight="@dimen/widget_margin_large"/>
+
+            <TextView
+                android:id="@+id/wish_title"
+                android:layout_width="0dp"
+                android:layout_weight="5.5"
+                android:layout_height="70dp"
+                android:layout_marginTop="@dimen/widget_margin_large"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                android:text="这个活动持续几天？管住宿么？"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/widget_margin_medium"
+            >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="20dp"
+                android:gravity="top"
+                android:layout_marginTop="@dimen/widget_margin_medium"
+                android:src="@drawable/answer"
+                android:layout_marginRight="@dimen/widget_margin_large"/>
+
+
+            <TextView
+                android:id="@+id/wish_content"
+                android:layout_width="0dp"
+                android:layout_weight="5.5"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/widget_margin_medium"
+                android:gravity="top"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/black"
+                android:text="活动持续三天时间，在这期间，住宿、饮食、出行都由我们同一安排，保证质量，请不要担心。"
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/wish_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/widget_margin_large"
+            android:textSize="@dimen/text_size_micro"
+            android:text="2016-10-08 19:10:11"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_height_custom"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="@dimen/widget_margin_large"
+            android:layout_marginRight="@dimen/widget_margin_large"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/completed"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_size_medium"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/mybutton_press2"
+                android:visibility="invisible"
+                android:text="已完成"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
