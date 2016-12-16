@@ -25,6 +25,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="结束定位"/>
+        <Button
+            android:id="@+id/add_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加wish"/>
     </LinearLayout>
 
 

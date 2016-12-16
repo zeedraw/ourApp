@@ -3,9 +3,11 @@ package com.example.administrator.ourapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -15,13 +17,18 @@ import com.baidu.location.Poi;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 /**
  * Created by Administrator on 2016/12/7.
  */
 
 public class LocationTest extends AppCompatActivity implements BDLocationListener {
     private TextView locationDisplay;
-    private Button start,stop;
+    private Button start,stop,add;
     public LocationClient mLocationClient = null;
 //    public BDLocationListener myListener = new MyLocationListener();
 
@@ -32,6 +39,7 @@ public class LocationTest extends AppCompatActivity implements BDLocationListene
         locationDisplay=(TextView)findViewById(R.id.location_dis);
         start=(Button)findViewById(R.id.start_location);
         stop=(Button)findViewById(R.id.stop_location);
+        add=(Button)findViewById(R.id.add_location);
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
         mLocationClient.registerLocationListener( LocationTest.this );    //注册监听函数
         initLocation();
@@ -45,6 +53,53 @@ public class LocationTest extends AppCompatActivity implements BDLocationListene
             @Override
             public void onClick(View view) {
                 mLocationClient.stop();
+            }
+        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LocationTest.this, "开始添加心愿", Toast.LENGTH_SHORT);
+                Wish wish=new Wish();
+                wish.setWish_user(BmobUser.getCurrentUser(MyUser.class));
+                wish.setContent("我的小小心愿1");
+                wish.setTime("12-16 11:39");
+                BmobGeoPoint point=new BmobGeoPoint(116.357507,40.004887);
+                wish.setLocation(point);
+                wish.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e==null) {
+                            Toast.makeText(LocationTest.this, "添加心愿1成功", Toast.LENGTH_SHORT);
+                            Log.i("naosumi","1ok");
+                        }
+                        else
+                        {
+                            Toast.makeText(LocationTest.this,"添加心愿1失败",Toast.LENGTH_SHORT);
+                            Log.i("naosumi","1no   "+e.getMessage());
+                        }
+                    }
+                });
+
+                Wish wish1=new Wish();
+                wish1.setWish_user(BmobUser.getCurrentUser(MyUser.class));
+                wish1.setContent("我的小小心愿2");
+                wish1.setTime("12-16 11:42");
+                BmobGeoPoint point1=new BmobGeoPoint(116.357512,40.004879);
+                wish.setLocation(point1);
+                wish.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e==null) {
+                            Toast.makeText(LocationTest.this, "添加心愿2成功", Toast.LENGTH_SHORT);
+                            Log.i("naosumi","2ok");
+                        }
+                        else
+                        {
+                            Toast.makeText(LocationTest.this,"添加心愿2失败",Toast.LENGTH_SHORT);
+                            Log.i("naosumi","2no  "+e.getMessage());
+                        }
+                        }
+                });
             }
         });
 
@@ -73,7 +128,7 @@ public class LocationTest extends AppCompatActivity implements BDLocationListene
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            //Receive Location
+            //Receive MyLocation
             StringBuffer sb = new StringBuffer(256);
             sb.append("当前定位时间: ");
             sb.append(location.getTime());

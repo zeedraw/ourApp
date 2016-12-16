@@ -45,5 +45,5 @@ dependencies {
     compile 'cn.bmob.android:http-legacy:1.0'
     compile 'com.android.support:design:24.0.0'
     compile project(':swipebacklayout')
-
+    compile files('libs/universal-image-loader-1.9.2-SNAPSHOT-with-sources.jar')
 }

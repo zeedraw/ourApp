@@ -56,6 +56,8 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!--百度地图权限-->
 
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
 
 
     <application
