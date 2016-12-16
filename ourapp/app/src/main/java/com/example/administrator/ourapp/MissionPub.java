@@ -22,8 +22,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -52,7 +54,21 @@ public class MissionPub extends SwipeBackActivity implements DatePickerDialog.On
     {
 
         tag=(TextView)findViewById(R.id.mission_pub_tag_tv);
-        tag.setText((String)BmobUser.getObjectByKey("tag"));
+        BmobQuery<MyUser> query=new BmobQuery<MyUser>();
+        query.getObject(BmobUser.getCurrentUser().getObjectId(), new QueryListener<MyUser>() {
+            @Override
+            public void done(MyUser myUser, BmobException e) {
+                if (e==null)
+                {
+                    tag.setText(myUser.getTag());
+                }
+                else
+                {
+                    tag.setText((String)BmobUser.getObjectByKey("tag"));
+                }
+            }
+        });
+
 
         name=(EditText)findViewById(R.id.mission_pub_name_et);
         intro=(EditText)findViewById(R.id.mission_pub_intro_et);

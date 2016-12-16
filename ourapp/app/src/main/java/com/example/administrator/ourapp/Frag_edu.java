@@ -84,7 +84,7 @@ public class Frag_edu extends MyMissionFrag {
         query.addWhereEqualTo("tag","教育");
         query.addWhereEqualTo("state",new Integer(2));
         query.order("-createdAt");
-        query.setLimit(7);
+        query.setLimit(5);
         query.include("pub_user[name|orgDescription].userimage");
         if (!cityLimit.equals("全部市"))
         {

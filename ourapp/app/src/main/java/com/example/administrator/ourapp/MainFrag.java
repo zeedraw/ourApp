@@ -6,11 +6,23 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.administrator.ourapp.ViewPaperCycle.ADInfo;
+import com.example.administrator.ourapp.ViewPaperCycle.CycleViewPager;
+import com.example.administrator.ourapp.ViewPaperCycle.ViewFactory;
 import com.example.administrator.ourapp.message.MesFrag;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
  * Created by Administrator on 2016/8/18.
@@ -25,6 +37,16 @@ public class MainFrag extends Fragment {
 //    private TextView t1, t2, t3,t4;// 页卡头标
     private View rootView;
     private SlidingTabLayout tab;
+
+    private List<ImageView> views = new ArrayList<ImageView>();
+    private List<ADInfo> infos = new ArrayList<ADInfo>();
+    private CycleViewPager cycleViewPager;
+
+    private String[] imageUrls = {"http://dynamic-image.yesky.com/740x-/uploadImages/2016/110/40/6P7I33J74724.jpg",
+            "http://img.tuku.cn/file_big/201505/ef01fc430ac646d6bd142adb08a439c7.jpg",
+            "http://image5.tuku.cn/pic/wallpaper/fengjing/langmandushiweimeisheyingkuanpingbizhi/006.jpg",
+            "http://www.qqpk.cn/Article/UploadFiles/201205/20120520122144808.jpg",
+            };
 
 
     @Override
@@ -53,15 +75,74 @@ public class MainFrag extends Fragment {
         tab.setSelectedIndicatorColors(R.color.blue);//滑动条颜色
         //设定适配器
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
         tab.setCustomTabView(R.layout.tab, 0);
         tab.setViewPager(viewPager);
 //        viewPager.setOnPageChangeListener(new MyPageChangeListener());
 //        viewPager.setCurrentItem(0);
+
+        configImageLoader();
+        initialize();
+
+
         return  rootView;
     }
 
-//    public void initCursorPos() {
+    private void initialize() {
+
+        cycleViewPager = (CycleViewPager)getActivity().getFragmentManager()
+                .findFragmentById(R.id.fragment_cycle_viewpager_content);
+
+        for(int i = 0; i < imageUrls.length; i ++){
+            ADInfo info = new ADInfo();
+            info.setUrl(imageUrls[i]);
+            info.setContent("图片-->" + i );
+            infos.add(info);
+        }
+
+        // 将最后一个ImageView添加进来
+        views.add(ViewFactory.getImageView(getContext(), infos.get(infos.size() - 1).getUrl()));
+        for (int i = 0; i < infos.size(); i++) {
+            views.add(ViewFactory.getImageView(getContext(), infos.get(i).getUrl()));
+        }
+        // 将第一个ImageView添加进来
+        views.add(ViewFactory.getImageView(getContext(), infos.get(0).getUrl()));
+
+        // 设置循环，在调用setData方法前调用
+        cycleViewPager.setCycle(true);
+
+        // 在加载数据前设置是否循环
+        cycleViewPager.setData(views, infos, mAdCycleViewListener);
+        //设置轮播
+        cycleViewPager.setWheel(true);
+
+        // 设置轮播时间，默认5000ms
+        cycleViewPager.setTime(7000);
+        //设置圆点指示图标组居中显示，默认靠右
+        cycleViewPager.setIndicatorCenter();
+    }
+
+    /**
+     * 配置ImageLoder
+     */
+    private void configImageLoader() {
+        // 初始化ImageLoader
+        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // 设置图片下载期间显示的图片
+                .showImageForEmptyUri(R.drawable.icon_empty) // 设置图片Uri为空或是错误的时候显示的图片
+                .showImageOnFail(R.drawable.icon_error) // 设置图片加载或解码过程中发生错误显示的图片
+                .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+                .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
+                // .displayer(new RoundedBitmapDisplayer(20)) // 设置成圆角图片
+                .build(); // 创建配置过得DisplayImageOption对象
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(options)
+                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
+        ImageLoader.getInstance().init(config);
+    }
+
+
+    //    public void initCursorPos() {
 //        // 初始化动画
 //        cursor = (ImageView)rootView.findViewById(R.id.cursor);
 //        bmpw = BitmapFactory.decodeResource(getResources(), R.drawable.youbiao)
@@ -174,6 +255,20 @@ public class MainFrag extends Fragment {
 //        public void onPageScrollStateChanged(int arg0) {
 //        }
 //    }
+    private CycleViewPager.ImageCycleViewListener mAdCycleViewListener = new CycleViewPager.ImageCycleViewListener() {
+
+        @Override
+        public void onImageClick(ADInfo info, int position, View imageView) {
+            if (cycleViewPager.isCycle()) {
+                position = position - 1;
+                Toast.makeText(getContext(),
+                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+        }
+
+    };
     public void refreshWithCityLimit(String str)
     {
         if (fragments.size()!=0) {

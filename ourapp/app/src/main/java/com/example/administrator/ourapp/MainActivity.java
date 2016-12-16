@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.citylist.CityListActivity;
@@ -529,6 +530,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             Intent intent=new Intent(MainActivity.this,Login.class);
             startActivity(intent);
         }
+    }
+
+    public void Location(View view)
+    {
+        Intent intent=new Intent(MainActivity.this,LocationTest.class);
+        startActivity(intent);
+    }
+
+    public void Nearby(View view)
+    {
+        Intent intent=new Intent(MainActivity.this,NearbyWish.class);
+        startActivity(intent);
     }
 
     //获取缓存路径

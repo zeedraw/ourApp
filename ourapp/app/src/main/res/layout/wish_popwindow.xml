@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/front"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_alignParentTop="true"></View>
+
+    <View
+        android:layout_below="@id/front"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/materialGrey300"
+        android:id="@+id/view" />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorbj"
+        android:layout_below="@+id/view"
+        android:layout_alignParentLeft="true">
+        <ImageView
+            android:id="@+id/person_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/defaulticon"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_alignTop="@id/person_image"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_toRightOf="@id/person_image"
+            android:textSize="@dimen/text_size_medium"
+            android:text="用户名"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:id="@+id/time_distance"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/wish_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_small"
+                android:text="MM-DD hh:mm"
+                />
+            <TextView
+                android:id="@+id/wish_distance"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_small"
+                android:text="200m"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/wish_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_above="@id/time_distance"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:text="我的小小心愿"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/time_distance"
+            android:background="@color/materialGrey200"/>
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/contact"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:background="@drawable/mybutton_press6"
+        android:text="联系Ta"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="34dp"
+        android:layout_marginTop="1dp"
+        />
+
+</RelativeLayout>

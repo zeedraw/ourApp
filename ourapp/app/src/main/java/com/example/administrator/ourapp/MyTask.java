@@ -90,7 +90,7 @@ public class MyTask extends FragmentActivity implements View.OnClickListener {
             Dialog loading;
             @Override
             public void onClick(View view) {
-                loading=MainActivity.createLoadingDialog(MyTask.this);
+                loading=MainActivity.createLoadingDialog(MyTask.this,"请稍后");
                 loading.show();
                 BmobQuery<MyUser> query=new BmobQuery<MyUser>();
                 query.getObject(BmobUser.getCurrentUser(MyUser.class).getObjectId(), new QueryListener<MyUser>() {
