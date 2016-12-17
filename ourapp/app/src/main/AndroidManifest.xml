@@ -134,6 +134,7 @@
         <activity android:name=".agency_authentication_reply"></activity>
         <activity android:name=".LocationTest"></activity>
         <activity android:name=".wish.NearbyWish"></activity>
+        <activity android:name=".wish.wish_detail_for_audit"></activity>
 
     </application>
 

@@ -229,7 +229,7 @@ public class WishFrag extends ProgressFragment implements IListener {
     {
         BmobQuery<Wish> query=new BmobQuery<Wish>();
         query.addWhereEqualTo("type", 1);
-        query.addWhereEqualTo("audit_pass", true);
+        query.addWhereEqualTo("audit_status", 3);
         query.addWhereEqualTo("is_finished", false);
         query.include("wish_user, organization, mission");
 //        query.addWhereEqualTo("receiver", BmobUser.getCurrentUser(MyUser.class).getObjectId());

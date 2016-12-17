@@ -87,15 +87,26 @@
             android:layout_marginRight="@dimen/widget_margin_large"
             android:gravity="center">
             <TextView
-                android:id="@+id/completed"
-                android:layout_width="250dp"
+                android:id="@+id/pass"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:textSize="@dimen/text_size_medium"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
+                android:layout_marginRight="@dimen/widget_margin_large"
                 android:background="@drawable/mybutton_press2"
-                android:visibility="invisible"
-                android:text="已完成"/>
+                android:text="同意"/>
+
+            <TextView
+                android:id="@+id/reject"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/widget_margin_large"
+                android:textSize="@dimen/text_size_medium"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/mybutton_press2"
+                android:text="拒绝"/>
 
         </LinearLayout>
     </LinearLayout>

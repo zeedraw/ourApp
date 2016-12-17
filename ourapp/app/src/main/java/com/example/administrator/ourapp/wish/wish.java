@@ -21,16 +21,17 @@ public class Wish extends BmobObject {
     private BmobGeoPoint location;    //所在地
     private String content;     //心愿详情
     private boolean is_finished;    //是否完成
+    private Integer audit_status; //1正在审核 2拒绝 3通过
 
-    public boolean isAudit_pass() {
-        return audit_pass;
+    public Integer getAudit_status() {
+        return audit_status;
     }
 
-    public void setAudit_pass(boolean audit_pass) {
-        this.audit_pass = audit_pass;
+    public void setAudit_status(Integer audit_status) {
+        this.audit_status = audit_status;
     }
 
-    private boolean audit_pass;    //是否审核通过
+
     private String time;
 
     public String getTime() {

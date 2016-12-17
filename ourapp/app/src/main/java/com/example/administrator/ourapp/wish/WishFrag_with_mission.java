@@ -149,7 +149,7 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
         final BmobQuery<Wish> query=new BmobQuery<Wish>();
         query.addWhereEqualTo("type", 2);
         query.addWhereEqualTo("is_finished", false);
-        query.addWhereEqualTo("audit_pass", true);
+        query.addWhereEqualTo("audit_status", 3);
         query.addWhereEqualTo("mission", mission);
         query.include("wish_user, organization, mission");
         query.order("-createdAt");
@@ -217,7 +217,7 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
 //        query.addWhereEqualTo("receiver", BmobUser.getCurrentUser(MyUser.class).getObjectId());
         query.addWhereEqualTo("type", 2);
         query.addWhereEqualTo("is_finished", false);
-        query.addWhereEqualTo("audit_pass", true);
+        query.addWhereEqualTo("audit_status", 3);
         query.addWhereEqualTo("mission", mission);
         query.include("wish_user, organization, mission");
         query.order("-createdAt");

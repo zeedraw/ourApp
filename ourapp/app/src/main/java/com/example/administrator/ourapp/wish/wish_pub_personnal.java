@@ -127,7 +127,7 @@ public class wish_pub_personnal extends SwipeBackActivity implements DialogInter
             wish.setLocation(bgp);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             wish.setType(new Integer(1)); //个人提出算1
-            wish.setAudit_pass(false);
+            wish.setAudit_status(1);
             wish.setContent(wish_detail.getText().toString().trim());
 
             wish.save(new SaveListener<String>() {

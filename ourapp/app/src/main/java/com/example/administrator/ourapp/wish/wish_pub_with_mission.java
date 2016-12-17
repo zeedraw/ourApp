@@ -133,7 +133,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
             wish.setLocation(bgp);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             wish.setType(new Integer(2)); //在任务里提出算2
-            wish.setAudit_pass(false);
+            wish.setAudit_status(1);
             wish.setContent(wish_detail.getText().toString().trim());
 
             wish.save(new SaveListener<String>() {
@@ -146,11 +146,11 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
                         //TODO 给任务发布者发送消息
 //                        MyUser zeedraw = new MyUser();
 //                        zeedraw.setObjectId("TJRU555B");
-//                        Message_tools mt = new Message_tools();
-//                        mt.send(BmobUser.getCurrentUser(MyUser.class), zeedraw,
-//                                BmobUser.getCurrentUser(MyUser.class).getObjectId() + "的审核要求",
-//                                17, false, s, wish_pub_with_mission.this);
-                        builder.setMessage("提交成功，请等待我们的审核结果").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        Message_tools mt = new Message_tools();
+                        mt.send(BmobUser.getCurrentUser(MyUser.class), mission.getPub_user(),
+                                BmobUser.getCurrentUser(MyUser.class).getUsername() + "的许愿",
+                                20, false, s, wish_pub_with_mission.this);
+                        builder.setMessage("提交成功，请等待任务发布者的审核结果").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();

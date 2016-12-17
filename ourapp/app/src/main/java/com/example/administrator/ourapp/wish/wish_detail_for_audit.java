@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
-import com.example.administrator.ourapp.question_and_answer.Mission_question;
 import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.io.InputStream;
@@ -26,21 +25,22 @@ import cn.bmob.v3.listener.UpdateListener;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
- * Created by Longze on 2016/12/13.
+ * Created by Longze on 2016/12/17.
  */
-public class wish_detail extends SwipeBackActivity {
+public class wish_detail_for_audit extends SwipeBackActivity {
     TextView return_bt;//标题上的返回按钮
     TextView info_title;//标题
     TextView wish_content;
     TextView wish_title;
     TextView wish_date;
-    TextView completed;
+    TextView pass;
+    TextView reject;
     ImageView person_image;
     private Wish wish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wish_detail);
+        setContentView(R.layout.wish_detail_for_audit);
         initWidget();
     }//onCreate
 
@@ -50,7 +50,8 @@ public class wish_detail extends SwipeBackActivity {
         wish_title = (TextView) findViewById(R.id.wish_title);
         wish_content = (TextView) findViewById((R.id.wish_content));
         wish_date = (TextView) findViewById(R.id.wish_date);
-        completed = (TextView) findViewById(R.id.completed);
+        pass = (TextView) findViewById(R.id.pass);
+        reject = (TextView) findViewById(R.id.reject);
         person_image = (ImageView) findViewById(R.id.person_image);
         Intent intent = getIntent();
         return_bt.setText("返回");
@@ -58,14 +59,14 @@ public class wish_detail extends SwipeBackActivity {
         wish = (Wish)intent.getSerializableExtra("wish");
 
 
-//TODO 解决 include问题后 取消注释
-       if(wish.getWish_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
-            completed.setVisibility(View.VISIBLE);
+
+        if(wish.getAudit_status() != 1){
+            pass.setVisibility(View.INVISIBLE);
+            reject.setVisibility(View.INVISIBLE);
         }//if
 
-        if(wish.is_finished()){
-            completed.setBackgroundColor(getResources().getColor(R.color.colorGrey2));
-        }
+
+
         wish_title.setText(wish.getTitle());
         wish_content.setText(wish.getContent());
         wish_date.setText(wish.getCreatedAt());
@@ -74,23 +75,44 @@ public class wish_detail extends SwipeBackActivity {
             @Override
             public void onClick(View view) {
 
-                wish_detail.this.finish();
+                wish_detail_for_audit.this.finish();
             }
         });
 
-        completed.setOnClickListener(new View.OnClickListener() {
+        pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO 将状态改为已完成
                 Wish wish2 = new Wish();
-                wish2.setIs_finished(true);
+                wish2.setAudit_status(3);
                 wish2.update(wish.getObjectId(), new UpdateListener() {
 
                     @Override
                     public void done(BmobException e) {
                         if(e==null){
                             Log.i("bmob","更新成功");
-                            wish_detail.this.finish();
+                            wish_detail_for_audit.this.finish();
+                        }else{
+                            Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                        }
+                    }
+                });
+            }
+        });
+
+        reject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO 将状态改为已完成
+                Wish wish2 = new Wish();
+                wish2.setAudit_status(2);
+                wish2.update(wish.getObjectId(), new UpdateListener() {
+
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Log.i("bmob","更新成功");
+                            wish_detail_for_audit.this.finish();
                         }else{
                             Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                         }
@@ -111,14 +133,14 @@ public class wish_detail extends SwipeBackActivity {
                     @Override
                     public void done(MyUser object, BmobException e) {
                         if(e==null){
-                            Intent intent=new Intent(wish_detail.this,MyAccount.class);
+                            Intent intent=new Intent(wish_detail_for_audit.this,MyAccount.class);
                             Bundle bundle=new Bundle();
                             bundle.putSerializable("user", object);
                             intent.putExtras(bundle);
-                            wish_detail.this.startActivity(intent);
+                            wish_detail_for_audit.this.startActivity(intent);
                         }else{
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                            Toast.makeText(wish_detail.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(wish_detail_for_audit.this, "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 

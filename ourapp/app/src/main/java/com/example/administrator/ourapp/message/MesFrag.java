@@ -39,6 +39,8 @@ import com.example.administrator.ourapp.question_and_answer.question_and_answer_
 import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail_publisher;
 import com.example.administrator.ourapp.reject_authentication_reason;
 import com.example.administrator.ourapp.user_information.MyAccount;
+import com.example.administrator.ourapp.wish.Wish;
+import com.example.administrator.ourapp.wish.wish_detail_for_audit;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -440,6 +442,26 @@ public class MesFrag extends ProgressFragment implements IListener {
 //                        bundle16.putSerializable("user",message_list.get(i).getSender());
 //                        intent16.putExtras(bundle16);
                         startActivity(intent19);
+                        break;
+                    case 20: //有新的心愿请求
+                        BmobQuery<Wish> query20 = new BmobQuery<Wish>();
+                        query20.include("wish_user, organization, mission");
+                        query20.getObject(message_list.get(i).getRemark(), new QueryListener<Wish>() {
+                            @Override
+                            public void done(Wish object, BmobException e) {
+                                if(e==null){
+                                    Intent intent20 = new Intent(getContext(), wish_detail_for_audit.class);
+                                    Bundle bundle=new Bundle();
+                                    bundle.putSerializable("wish",object);
+                                    intent20.putExtras(bundle);
+                                    startActivity(intent20);
+                                }else{
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    Toast.makeText(getContext(), "失败:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
                         break;
 
                 }//switch 通过switch判断 type分别进入不同的消息页面

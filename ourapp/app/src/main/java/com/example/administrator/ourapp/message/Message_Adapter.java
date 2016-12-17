@@ -156,6 +156,10 @@ public class Message_Adapter extends ArrayAdapter<Message> {
                 MessageType = "任务审核失败";       //任务审核失败后的消息
                 MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
                 break;
+            case 20:
+                MessageType = "有新的心愿请求";       //任务审核失败后的消息
+                MessageImage = ContextCompat.getDrawable(getContext(), R.drawable.new_question);
+                break;
 
 
 

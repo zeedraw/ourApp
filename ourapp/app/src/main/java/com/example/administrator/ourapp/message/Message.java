@@ -40,6 +40,7 @@ public class Message extends BmobObject {
                 17代表有新的任务要求审核 ---官方账号的消息
                 18代表任务审核通过
                 19代表任务审核被拒绝
+                20代表有在任务里发布心愿的请求
      */
 
     public String getContent() {
