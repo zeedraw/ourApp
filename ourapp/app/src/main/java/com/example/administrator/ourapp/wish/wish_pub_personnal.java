@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.ourapp.EditIntro;
 import com.example.administrator.ourapp.LocationPickerDialog;
@@ -19,13 +20,9 @@ import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyLocationUtils.MyLocation;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
-import com.example.administrator.ourapp.message.Message_tools;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
@@ -34,9 +31,9 @@ import cn.bmob.v3.listener.SaveListener;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
- * Created by Longze on 2016/12/15.
+ * Created by Longze on 2016/12/14.
  */
-public class wish_pub_with_mission extends SwipeBackActivity implements DialogInterface.OnClickListener{
+public class wish_pub_personnal extends SwipeBackActivity implements DialogInterface.OnClickListener{
     private TextView rt,save,title,location,detail_location, wish_detail;
     private EditText wish_title, contact_number;
     private DatePickerDialog start_dpl,end_dpl;
@@ -51,7 +48,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wish_pub_with_mission);
+        setContentView(R.layout.wish_pub_personnal);
         initWidget();
     }
 
@@ -59,16 +56,13 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
     {
 
 
-        Bundle bundle = new Bundle();
-        bundle = this.getIntent().getExtras();
-        mission = (Mission) bundle.getSerializable("mission");
         wish_title =(EditText)findViewById(R.id.wish_title);
         contact_number=(EditText)findViewById(R.id.contact_number);
         location=(TextView)findViewById(R.id.location);
         detail_location=(TextView)findViewById(R.id.detail_location);
         wish_detail =(TextView)findViewById(R.id.wish_detail);
         MyLocation myLocation=new MyLocation();
-        myLocation.startLocation(wish_pub_with_mission.this);
+        myLocation.startLocation(wish_pub_personnal.this);
         location.setText(myLocation.getLocationInfo());
         bgp = myLocation.getMyPoint();
         rt=(TextView)findViewById(R.id.lbt);
@@ -115,7 +109,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
     {
         if (isEmpty(wish_title)&&isEmpty(wish_detail))
         {
-            final Dialog dialog= MainActivity.createLoadingDialog(wish_pub_with_mission.this);
+            final Dialog dialog= MainActivity.createLoadingDialog(wish_pub_personnal.this);
             dialog.show();
             Wish wish = new Wish();
             //TODO 上传联系方式 组织 任务
@@ -132,14 +126,14 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
 //            wish.setLocation(detail_location.getText().toString().trim());
             wish.setLocation(bgp);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            wish.setType(new Integer(2)); //在任务里提出算2
+            wish.setType(new Integer(1)); //个人提出算1
             wish.setAudit_pass(false);
             wish.setContent(wish_detail.getText().toString().trim());
 
             wish.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
-                    AlertDialog.Builder builder=new AlertDialog.Builder(wish_pub_with_mission.this);
+                    AlertDialog.Builder builder=new AlertDialog.Builder(wish_pub_personnal.this);
                     if (e==null)
                     {
                         dialog.dismiss();
@@ -149,7 +143,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
 //                        Message_tools mt = new Message_tools();
 //                        mt.send(BmobUser.getCurrentUser(MyUser.class), zeedraw,
 //                                BmobUser.getCurrentUser(MyUser.class).getObjectId() + "的审核要求",
-//                                17, false, s, wish_pub_with_mission.this);
+//                                17, false, s, wish_pub_personnal.this);
                         builder.setMessage("提交成功，请等待我们的审核结果").setCancelable(false).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

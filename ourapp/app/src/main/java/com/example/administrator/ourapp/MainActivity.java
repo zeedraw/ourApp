@@ -7,11 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -29,17 +26,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.example.administrator.ourapp.authenticate.agency_authenticate;
 import com.example.administrator.ourapp.authenticate.real_name_authenticate;
 import com.example.administrator.ourapp.citylist.CityListActivity;
-import com.example.administrator.ourapp.friends.FreFrag;
-import com.example.administrator.ourapp.friends.search_user;
 import com.example.administrator.ourapp.message.MesFrag;
 import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.user_information.MyAccount;
+import com.example.administrator.ourapp.wish.NearbyWish;
 import com.example.administrator.ourapp.wish.WishFrag;
-import com.example.administrator.ourapp.wish.make_wish_personnal;
+import com.example.administrator.ourapp.wish.wish_pub_personnal;
 
 import java.util.List;
 import java.util.Timer;
@@ -224,14 +219,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mine.setSelected(false);
             tv_mes.setSelected(false);
             title.setText("心愿");
-            r_button.setText("附近");
+            r_button.setText("添加");
             r_button.setVisibility(View.VISIBLE);
             l_button.setVisibility(View.INVISIBLE);
             myCheckedChaged(view);
             r_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ComponentName comp=new ComponentName(MainActivity.this,make_wish_personnal.class);
+                    ComponentName comp=new ComponentName(MainActivity.this,wish_pub_personnal.class);
                     Intent intent=new Intent();
                     intent.setComponent(comp);
                     startActivity(intent);

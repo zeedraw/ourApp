@@ -56,6 +56,7 @@ public class MyLocation implements BDLocationListener{
 
     @Override
     public void onReceiveLocation(BDLocation location) {
+        mLocationClient.stop();
         //Receive MyLocation
         StringBuffer sb = new StringBuffer(256);
 //        sb.append("\n维度: ");
@@ -110,6 +111,8 @@ public class MyLocation implements BDLocationListener{
     public String getLocationInfo() {
         return locationInfo;
     }
+
+
 
 
 

@@ -125,9 +125,14 @@ public class wish_list extends FragmentActivity implements IListener {
         info_title.setText("个人心愿");
 
         Bundle bundle = new Bundle();
-        bundle = this.getIntent().getExtras();
+            bundle = this.getIntent().getExtras();
         mission = (Mission) bundle.getSerializable("mission");
 
+
+//        WishFrag_with_mission myFragment = new WishFrag_with_mission();
+//        Bundle bundle1 = new Bundle();
+//        bundle.putString("mission_id",mission.getObjectId());//这里的values就是我们要传的值
+//        myFragment.setArguments(bundle1);
 
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +154,7 @@ public class wish_list extends FragmentActivity implements IListener {
 
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-        wishFrag =new WishFrag_with_mission();
+        wishFrag =new WishFrag_with_mission(mission);
         ft.replace(R.id.container, wishFrag);
         ft.commit();
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

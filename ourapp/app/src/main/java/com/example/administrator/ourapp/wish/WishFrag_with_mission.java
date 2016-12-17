@@ -16,6 +16,7 @@ import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Login;
 import com.example.administrator.ourapp.MainActivity;
+import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
@@ -47,15 +48,17 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
     private Vector<String> wisher_ID = new Vector<String>();//许愿者的objectId
     private Vector<String> wish_date = new Vector<String>();//心愿发送的时间
     private Vector<String> wish_ID = new Vector<String>();
-
+    private Mission mission;
+    private String  mission_id;
     private View mContentView;
     private String lastTime;
     private boolean mIsStart = true;
     private RefreshLayout refreshLayout;
 
-//    public WishFragh(Wish wish) {
-//        this.wish = wish;
-//    }
+    public WishFrag_with_mission(Mission mission) {
+        this.mission = mission;
+    }
+
 
 
 
@@ -75,7 +78,9 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
 
-
+//        Bundle bundle = new Bundle();
+//        bundle = this.getArguments();
+//         mission_id = (String) bundle.getString("mission_id");
 
         return inflater.inflate(R.layout.fragment_progress,container,false);
     }//onCreateView
@@ -88,6 +93,7 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
         setContentView(mContentView);
         setContentShown(false);
         setEmptyText("暂无心愿，去看看别的吧");
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -139,9 +145,12 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
 
     protected void initMission()
     {
+
         final BmobQuery<Wish> query=new BmobQuery<Wish>();
         query.addWhereEqualTo("type", 2);
         query.addWhereEqualTo("is_finished", false);
+        query.addWhereEqualTo("audit_pass", true);
+        query.addWhereEqualTo("mission", mission);
         query.include("wish_user, organization, mission");
         query.order("-createdAt");
         query.setLimit(9);
@@ -206,6 +215,11 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
         BmobQuery<Wish> query=new BmobQuery<Wish>();
 
 //        query.addWhereEqualTo("receiver", BmobUser.getCurrentUser(MyUser.class).getObjectId());
+        query.addWhereEqualTo("type", 2);
+        query.addWhereEqualTo("is_finished", false);
+        query.addWhereEqualTo("audit_pass", true);
+        query.addWhereEqualTo("mission", mission);
+        query.include("wish_user, organization, mission");
         query.order("-createdAt");
         query.setLimit(9);
         Log.i("z","初始化添加条件成功");

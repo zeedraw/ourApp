@@ -1,10 +1,13 @@
 package com.example.administrator.ourapp.wish;
 
+
+
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.organization.Organization;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobGeoPoint;
 
 /**
  * Created by Longze on 2016/12/7.
@@ -15,9 +18,36 @@ public class Wish extends BmobObject {
     private Integer type;       //心愿类型 0代表属于任务之下 1代表个人心愿
     private Organization organization;  //所属机构
     private Mission mission;    //所属任务
-    private String location;    //所在地i
+    private BmobGeoPoint location;    //所在地
     private String content;     //心愿详情
     private boolean is_finished;    //是否完成
+
+    public boolean isAudit_pass() {
+        return audit_pass;
+    }
+
+    public void setAudit_pass(boolean audit_pass) {
+        this.audit_pass = audit_pass;
+    }
+
+    private boolean audit_pass;    //是否审核通过
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public BmobGeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(BmobGeoPoint location) {
+        this.location = location;
+    }
 
     public String getTitle() {
         return title;
@@ -59,13 +89,7 @@ public class Wish extends BmobObject {
         this.mission = mission;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public String getContent() {
         return content;

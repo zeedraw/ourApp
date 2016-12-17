@@ -1,4 +1,4 @@
-package com.example.administrator.ourapp;
+package com.example.administrator.ourapp.wish;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -32,6 +32,10 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.example.administrator.ourapp.MainActivity;
+import com.example.administrator.ourapp.MyUser;
+import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.WishPopupWindow;
 import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.io.InputStream;
@@ -259,7 +263,7 @@ public class NearbyWish extends AppCompatActivity{
         BmobQuery<Wish> query=new BmobQuery<Wish>();
         query.include("wish_user[name|mobilePhoneNumber].userimage");
         query.addWhereWithinKilometers("location",new BmobGeoPoint(location.getLongitude(),location.getLatitude()),2);
-        final Dialog dialog=MainActivity.createLoadingDialog(NearbyWish.this,"请稍后...");
+        final Dialog dialog= MainActivity.createLoadingDialog(NearbyWish.this,"请稍后...");
         dialog.show();
         query.findObjects(new FindListener<Wish>() {
             @Override
