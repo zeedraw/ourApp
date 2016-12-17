@@ -48,6 +48,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
     private final static int GET_DETAIL_LOCATION=1;
     private final static int FOR_DETAIL=2;
     private final static int GET_DETAIL=3;
+    private MyLocation myLocation;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,14 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
         location=(TextView)findViewById(R.id.location);
         detail_location=(TextView)findViewById(R.id.detail_location);
         wish_detail =(TextView)findViewById(R.id.wish_detail);
-        MyLocation myLocation=new MyLocation();
+        myLocation=new MyLocation();
+        myLocation.setMyReceiveListener(new MyLocation.MyReceiveListener() {
+            @Override
+            public void onRreceive() {
+                location.setText(myLocation.getLocationInfo());
+                bgp=myLocation.getMyPoint();
+            }
+        });
         myLocation.startLocation(wish_pub_with_mission.this);
         location.setText(myLocation.getLocationInfo());
         bgp = myLocation.getMyPoint();
