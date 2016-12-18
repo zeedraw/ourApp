@@ -6,41 +6,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.administrator.ourapp.CheckMission;
 import com.example.administrator.ourapp.IListener;
 import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Login;
 import com.example.administrator.ourapp.MainActivity;
 import com.example.administrator.ourapp.Mission;
-import com.example.administrator.ourapp.MissionInfo;
-import com.example.administrator.ourapp.MissionPub;
-import com.example.administrator.ourapp.MyTask;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.ProgressFragment;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.RefreshLayout;
-import com.example.administrator.ourapp.UserInfo;
-import com.example.administrator.ourapp.agency_authentication_reply;
-import com.example.administrator.ourapp.friends.confirm_friend;
-import com.example.administrator.ourapp.friends.friend_application;
-import com.example.administrator.ourapp.message.Message;
-import com.example.administrator.ourapp.message.Message_Adapter;
-import com.example.administrator.ourapp.mission_audit_reply;
-import com.example.administrator.ourapp.question_and_answer.Mission_question;
-import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail;
-import com.example.administrator.ourapp.question_and_answer.question_and_answer_detail_publisher;
-import com.example.administrator.ourapp.real_name_authentication_reply;
-import com.example.administrator.ourapp.reject_authentication_reason;
-import com.example.administrator.ourapp.user_information.MyAccount;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,13 +34,11 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Longze on 2016/12/8.
  */
-public class WishFrag extends ProgressFragment implements IListener {
+public class My_wish_frag extends ProgressFragment implements IListener {
     private ListView listView;
     private wish_adapter wish_adapter;
     private List<Wish> wishList;
@@ -70,15 +48,17 @@ public class WishFrag extends ProgressFragment implements IListener {
     private Vector<String> wisher_ID = new Vector<String>();//许愿者的objectId
     private Vector<String> wish_date = new Vector<String>();//心愿发送的时间
     private Vector<String> wish_ID = new Vector<String>();
-
+    private Mission mission;
+    private String  mission_id;
     private View mContentView;
     private String lastTime;
     private boolean mIsStart = true;
     private RefreshLayout refreshLayout;
 
-//    public WishFragh(Wish wish) {
-//        this.wish = wish;
+//    public My_wish_frag(Mission mission) {
+//        this.mission = mission;
 //    }
+
 
 
 
@@ -98,7 +78,9 @@ public class WishFrag extends ProgressFragment implements IListener {
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
 
-
+//        Bundle bundle = new Bundle();
+//        bundle = this.getArguments();
+//         mission_id = (String) bundle.getString("mission_id");
 
         return inflater.inflate(R.layout.fragment_progress,container,false);
     }//onCreateView
@@ -111,6 +93,7 @@ public class WishFrag extends ProgressFragment implements IListener {
         setContentView(mContentView);
         setContentShown(false);
         setEmptyText("暂无心愿，去看看别的吧");
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,13 +119,13 @@ public class WishFrag extends ProgressFragment implements IListener {
 //                }//if
                 //若不是任务发布者则跳转到提问界面
 //                else{
-                    Intent intent = new Intent(getContext(), wish_detail.class);
-                    // 在Intent中传递数据
-                    Bundle bundle=new Bundle();
-                    bundle.putSerializable("wish",wishList.get(i));
-                    intent.putExtras(bundle);
-                    // 启动Intent
-                    startActivity(intent);
+                Intent intent = new Intent(getContext(), wish_detail.class);
+                // 在Intent中传递数据
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("wish",wishList.get(i));
+                intent.putExtras(bundle);
+                // 启动Intent
+                startActivity(intent);
 //                }//else
             }//onItemClick
         });
@@ -162,10 +145,9 @@ public class WishFrag extends ProgressFragment implements IListener {
 
     protected void initMission()
     {
+
         final BmobQuery<Wish> query=new BmobQuery<Wish>();
-        query.addWhereEqualTo("type", 1);
-        query.addWhereEqualTo("audit_status", 3);
-        query.addWhereEqualTo("is_finished", false);
+        query.addWhereEqualTo("wish_user", BmobUser.getCurrentUser(MyUser.class).getObjectId());
         query.include("wish_user, organization, mission");
         query.order("-createdAt");
         query.setLimit(9);
@@ -228,11 +210,10 @@ public class WishFrag extends ProgressFragment implements IListener {
     private void queryData()
     {
         BmobQuery<Wish> query=new BmobQuery<Wish>();
-        query.addWhereEqualTo("type", 1);
-        query.addWhereEqualTo("audit_status", 3);
-        query.addWhereEqualTo("is_finished", false);
-        query.include("wish_user, organization, mission");
+
 //        query.addWhereEqualTo("receiver", BmobUser.getCurrentUser(MyUser.class).getObjectId());
+        query.addWhereEqualTo("wish_user", BmobUser.getCurrentUser(MyUser.class));
+        query.include("wish_user, organization, mission");
         query.order("-createdAt");
         query.setLimit(9);
         Log.i("z","初始化添加条件成功");

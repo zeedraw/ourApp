@@ -135,6 +135,7 @@
         <activity android:name=".LocationTest"></activity>
         <activity android:name=".wish.NearbyWish"></activity>
         <activity android:name=".wish.wish_detail_for_audit"></activity>
+        <activity android:name=".wish.my_wish_list"></activity>
 
     </application>
 
