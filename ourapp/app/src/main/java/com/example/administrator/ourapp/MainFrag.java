@@ -35,7 +35,7 @@ public class MainFrag extends Fragment {
 //    private int currIndex = 0;// 当前页卡编号
     private List<Fragment> fragments;//frag集
 //    private TextView t1, t2, t3,t4;// 页卡头标
-    private View rootView,headerView;
+    private View rootView;
     private SlidingTabLayout tab;
     private List<ImageView> views = new ArrayList<ImageView>();
     private List<ADInfo> infos = new ArrayList<ADInfo>();
@@ -54,6 +54,10 @@ public class MainFrag extends Fragment {
 
         //构造适配器
         fragments=new ArrayList<Fragment>();
+        fragments.add(new Frag_edu());
+        fragments.add(new Frag_activity());
+        fragments.add(new Frag_trans());
+        fragments.add(new Frag_community());
 
 
 
@@ -63,18 +67,12 @@ public class MainFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
 
         rootView=inflater.inflate(R.layout.main_frag,container,false);
-        headerView = inflater.inflate(R.layout.main_header_view, null);
         viewPager = (ViewPager)rootView.findViewById(R.id.vPager);
         tab = (SlidingTabLayout)rootView.findViewById(R.id.main_tabs);
 
 //        initCursorPos();
 //        InitTextView();
-        configImageLoader();
-        initialize();
-        fragments.add(Frag_edu.newInstance(headerView));
-        fragments.add(Frag_activity.newInstance(headerView));
-        fragments.add(Frag_trans.newInstance(headerView));
-        fragments.add(Frag_community.newInstance(headerView));
+
         MainFragAdapter adapter = new MainFragAdapter(getActivity().getSupportFragmentManager(), fragments);
         tab.setSelectedIndicatorColors(R.color.blue);//滑动条颜色
         //设定适配器
@@ -85,7 +83,8 @@ public class MainFrag extends Fragment {
 //        viewPager.setOnPageChangeListener(new MyPageChangeListener());
 //        viewPager.setCurrentItem(0);
 
-
+        configImageLoader();
+        initialize();
 
 
 

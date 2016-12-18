@@ -67,7 +67,7 @@
                 android:layout_height="15dp"
                 android:src="@drawable/redcircle"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="47dp"
                 android:visibility="visible"/>
 
 

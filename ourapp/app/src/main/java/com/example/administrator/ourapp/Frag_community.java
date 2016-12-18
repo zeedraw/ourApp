@@ -42,7 +42,7 @@ public class Frag_community extends MyMissionFrag {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mlistview.addHeaderView(headView);
+      //  mlistview.addHeaderView(headView);
         mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

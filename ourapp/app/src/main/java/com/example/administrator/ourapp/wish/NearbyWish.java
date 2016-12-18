@@ -232,7 +232,7 @@ public class NearbyWish extends AppCompatActivity{
        LatLng latLng=new LatLng(location.getLatitude(),location.getLongitude());
         MapStatus mapStatus=new MapStatus.Builder()
                 .target(latLng)
-                .zoom(20)
+                .zoom(17)
                 .build();
         MapStatusUpdate mapStatusUpdate= MapStatusUpdateFactory.newMapStatus(mapStatus);
         mBaiduMap.animateMapStatus(mapStatusUpdate,500);
