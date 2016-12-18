@@ -41,7 +41,7 @@ public class MainFrag extends Fragment {
     private List<ADInfo> infos = new ArrayList<ADInfo>();
     private CycleViewPager cycleViewPager;
 
-    private String[] imageUrls = {"http://dynamic-image.yesky.com/740x-/uploadImages/2016/110/40/6P7I33J74724.jpg",
+    private String[] imageUrls = {"http://attach.foyuan.net/portal/201404/04/09/201404040915161651.jpg",
             "http://img.tuku.cn/file_big/201505/ef01fc430ac646d6bd142adb08a439c7.jpg",
             "http://image5.tuku.cn/pic/wallpaper/fengjing/langmandushiweimeisheyingkuanpingbizhi/006.jpg",
             "http://www.qqpk.cn/Article/UploadFiles/201205/20120520122144808.jpg",
