@@ -71,37 +71,76 @@
         android:layout_marginTop="30dp"/>
 
 
-        <RelativeLayout
-            android:id="@+id/r2"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:onClick="Mymssion_click"
-            android:background="@drawable/myitem_press1">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:src="@drawable/g17"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:padding="10dp"
-                />
-            <ImageView
-                android:id="@+id/i2"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/g03"
-                android:paddingLeft="25dp"/>
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/i2"
-                android:text="我的任务"
-                android:textSize="@dimen/text_size_medium"
-                android:textColor="#333333"
-                android:paddingLeft="15dp"
-                android:paddingTop="14dp" />
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/r2"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:onClick="Mymssion_click"
+        android:background="@drawable/myitem_press1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:src="@drawable/g17"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            />
+        <ImageView
+            android:id="@+id/i2"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/g03"
+            android:paddingLeft="25dp"/>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/i2"
+            android:text="我的任务"
+            android:textSize="@dimen/text_size_medium"
+            android:textColor="#333333"
+            android:paddingLeft="15dp"
+            android:paddingTop="14dp" />
+    </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e5e5e5"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+    <RelativeLayout
+    android:id="@+id/wish"
+    android:layout_width="match_parent"
+    android:layout_height="43dp"
+    android:onClick="Mywish_click"
+    android:background="@drawable/myitem_press1">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:src="@drawable/g17"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        />
+    <ImageView
+        android:id="@+id/my_wish"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/my_wish"
+        android:paddingLeft="25dp"/>
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/my_wish"
+        android:text="我的心愿"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="#333333"
+        android:paddingLeft="15dp"
+        android:paddingTop="14dp" />
+</RelativeLayout>
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
@@ -185,7 +224,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/g08"
                 android:paddingLeft="20dp"/>
-            <TextView
+            k<TextView
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/i4"

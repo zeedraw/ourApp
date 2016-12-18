@@ -28,7 +28,8 @@ public class my_wish_list extends FragmentActivity implements IListener {
 
     private Wish wish;
     private Mission mission;
-    private WishFrag_with_mission wishFrag;
+//    private WishFrag_with_mission wishFrag;
+    private My_wish_frag wishFrag;
 
 
 
@@ -154,7 +155,7 @@ public class my_wish_list extends FragmentActivity implements IListener {
 
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-        wishFrag =new WishFrag_with_mission(mission);
+        wishFrag =new My_wish_frag();
         ft.replace(R.id.container, wishFrag);
         ft.commit();
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

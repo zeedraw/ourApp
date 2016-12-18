@@ -34,6 +34,7 @@ import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.user_information.MyAccount;
 import com.example.administrator.ourapp.wish.NearbyWish;
 import com.example.administrator.ourapp.wish.WishFrag;
+import com.example.administrator.ourapp.wish.my_wish_list;
 import com.example.administrator.ourapp.wish.wish_pub_personnal;
 
 import java.util.List;
@@ -522,6 +523,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         MyUser user= BmobUser.getCurrentUser(MyUser.class);
         if (user!=null) {
             ComponentName comp = new ComponentName(MainActivity.this, MyTask.class);
+            Intent intent = new Intent();
+            intent.setComponent(comp);
+            startActivity(intent);
+        }
+
+        else {
+            Intent intent=new Intent(MainActivity.this,Login.class);
+            startActivity(intent);
+        }
+    }
+
+    public void Mywish_click(View view){
+        MyUser user= BmobUser.getCurrentUser(MyUser.class);
+        if (user!=null) {
+            ComponentName comp = new ComponentName(MainActivity.this, my_wish_list.class);
             Intent intent = new Intent();
             intent.setComponent(comp);
             startActivity(intent);
