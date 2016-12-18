@@ -23,6 +23,15 @@ public class Frag_community extends MyMissionFrag {
     private MissionAdapter mAdapter;
     private MissionAdapterCallBack callBack;
     private String cityLimit="全部市";
+    private View headView;
+
+    public static final Frag_community newInstance(View view)
+    {
+        Frag_community community=new Frag_community();
+        community.setHeaderView(view);
+
+        return community;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,6 +42,7 @@ public class Frag_community extends MyMissionFrag {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mlistview.addHeaderView(headView);
         mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,6 +101,11 @@ public class Frag_community extends MyMissionFrag {
     {
         setContentShown(false);
         initMission(callBack);
+    }
+
+    public void setHeaderView(View view)
+    {
+        headView=view;
     }
 }
 

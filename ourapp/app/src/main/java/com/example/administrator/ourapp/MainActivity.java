@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(true);
             tv_mes.setSelected(false);
             tv_mine.setSelected(false);
-    //        tv_fre.setSelected(false);
+            tv_fre.setSelected(false);
             title.setText("首页");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.VISIBLE);
@@ -182,7 +182,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(false);
             tv_mes.setSelected(true);
             tv_mine.setSelected(false);
-    //        tv_fre.setSelected(false);
+            tv_fre.setSelected(false);
             title.setText("消息");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.INVISIBLE);
@@ -199,7 +199,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(false);
             tv_mes.setSelected(false);
             tv_mine.setSelected(true);
-   //         tv_fre.setSelected(false);
+            tv_fre.setSelected(false);
             title.setText("我的");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.INVISIBLE);
