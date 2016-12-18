@@ -22,6 +22,7 @@ public class MyLocation implements BDLocationListener{
     private String locationInfo=null;//位置的语意信息
     private BmobGeoPoint myPoint=null;
     private Dialog dialog=null;//等待对话框
+    private MyReceiveListener listener;
     //开始定位
     public void startLocation(Context context)
     {
@@ -57,6 +58,7 @@ public class MyLocation implements BDLocationListener{
     @Override
     public void onReceiveLocation(BDLocation location) {
         //Receive MyLocation
+        mLocationClient.stop();
         StringBuffer sb = new StringBuffer(256);
 //        sb.append("\n维度: ");
 //        sb.append(location.getLatitude());
@@ -98,7 +100,7 @@ public class MyLocation implements BDLocationListener{
         sb.append("\n"+location.getLocationDescribe());// 位置语义化信息
         locationInfo=sb.toString();
         dialog.dismiss();
-
+        listener.onReceive();
 
     }
         //获取自己的位置
@@ -109,6 +111,16 @@ public class MyLocation implements BDLocationListener{
        //获取自己位置的语义信息
     public String getLocationInfo() {
         return locationInfo;
+    }
+
+    public interface MyReceiveListener
+    {
+        public void onReceive();
+    }
+
+    public void setReceiveListener(MyReceiveListener listener)
+    {
+        this.listener=listener;
     }
 
 
