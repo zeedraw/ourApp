@@ -59,6 +59,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Integer state_stu;
     private Integer state_pub;
     private boolean toMain=false;
+    private String location;
 
     private static Boolean isQuit = false;
     Timer timer = new Timer();
@@ -142,7 +143,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         r_button=(TextView)findViewById(R.id.rbt);
         l_button=(TextView)findViewById(R.id.lbt);
         l_button.setTextSize(15);
-        l_button.setText("全部");
+        location="全部";
+        l_button.setText(location);
         l_button.setPadding(5,0,0,0);
         l_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,11 +166,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(true);
             tv_mes.setSelected(false);
             tv_mine.setSelected(false);
-    //        tv_fre.setSelected(false);
+            tv_fre.setSelected(false);
             title.setText("首页");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.VISIBLE);
             myCheckedChaged(view);
+            l_button.setTextSize(15);
+            l_button.setText(location);
+            l_button.setPadding(5,0,0,0);
+            l_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(MainActivity.this, CityListActivity.class);
+                    startActivityForResult(intent,1000);
+                }
+            });
 //            mTransaction=mfragManager.beginTransaction();
 //            mTransaction.show(mfragManager.findFragmentByTag("main"))
 //                    .hide(mfragManager.findFragmentByTag("mes"))
@@ -182,7 +194,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(false);
             tv_mes.setSelected(true);
             tv_mine.setSelected(false);
-    //        tv_fre.setSelected(false);
+            tv_fre.setSelected(false);
             title.setText("消息");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.INVISIBLE);
@@ -199,7 +211,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_main.setSelected(false);
             tv_mes.setSelected(false);
             tv_mine.setSelected(true);
-   //         tv_fre.setSelected(false);
+            tv_fre.setSelected(false);
             title.setText("我的");
             r_button.setVisibility(View.INVISIBLE);
             l_button.setVisibility(View.INVISIBLE);
@@ -220,8 +232,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             tv_mes.setSelected(false);
             title.setText("心愿");
             r_button.setText("添加");
+            l_button.setText("附近");
             r_button.setVisibility(View.VISIBLE);
-            l_button.setVisibility(View.INVISIBLE);
+            l_button.setVisibility(View.VISIBLE);
             myCheckedChaged(view);
             r_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -229,6 +242,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     ComponentName comp=new ComponentName(MainActivity.this,wish_pub_personnal.class);
                     Intent intent=new Intent();
                     intent.setComponent(comp);
+                    startActivity(intent);
+                }
+            });
+            l_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(MainActivity.this,NearbyWish.class);
                     startActivity(intent);
                 }
             });
@@ -662,6 +682,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     city="全部";
                 }
                 l_button.setText(city);
+                location=city;
                 ((MainFrag)main).refreshWithCityLimit(city+"市");
             }
         }

@@ -37,7 +37,6 @@ public class MainFrag extends Fragment {
 //    private TextView t1, t2, t3,t4;// 页卡头标
     private View rootView;
     private SlidingTabLayout tab;
-
     private List<ImageView> views = new ArrayList<ImageView>();
     private List<ADInfo> infos = new ArrayList<ADInfo>();
     private CycleViewPager cycleViewPager;
@@ -60,6 +59,8 @@ public class MainFrag extends Fragment {
         fragments.add(new Frag_trans());
         fragments.add(new Frag_community());
 
+
+
     }
 
     @Override
@@ -71,6 +72,7 @@ public class MainFrag extends Fragment {
 
 //        initCursorPos();
 //        InitTextView();
+
         MainFragAdapter adapter = new MainFragAdapter(getActivity().getSupportFragmentManager(), fragments);
         tab.setSelectedIndicatorColors(R.color.blue);//滑动条颜色
         //设定适配器
@@ -83,6 +85,7 @@ public class MainFrag extends Fragment {
 
         configImageLoader();
         initialize();
+
 
 
         return  rootView;

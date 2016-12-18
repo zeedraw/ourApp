@@ -21,6 +21,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.a.This;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -203,4 +204,6 @@ public class MyMissionFrag extends ProgressFragment {
         public void setAdapter(ListView listView,List<Mission> list);
         public void notifyData();
     }
+
+
 }

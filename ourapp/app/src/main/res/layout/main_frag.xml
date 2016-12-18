@@ -50,17 +50,20 @@
             <!--&lt;!&ndash;android:textSize="20dip" />&ndash;&gt;-->
 
     <!--</LinearLayout>-->
+
     <fragment
         android:name="com.example.administrator.ourapp.ViewPaperCycle.CycleViewPager"
         android:id="@+id/fragment_cycle_viewpager_content"
         android:layout_width="match_parent"
         android:layout_height="180dp" />
+
     <com.example.administrator.ourapp.SlidingTabLayout
         android:id="@+id/main_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_below="@id/fragment_cycle_viewpager_content"/>
+        android:layout_below="@id/fragment_cycle_viewpager_content"
+         />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vPager"

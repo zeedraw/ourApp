@@ -206,16 +206,16 @@
         android:background="#dddddd"
         />
 
-    <Button
-        android:text="定位测试"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="Location"/>
-    <Button
-        android:text="附近心愿"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="Nearby"/>
+    <!--<Button-->
+        <!--android:text="定位测试"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="Location"/>-->
+    <!--<Button-->
+        <!--android:text="附近心愿"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="Nearby"/>-->
 
 </LinearLayout>
 

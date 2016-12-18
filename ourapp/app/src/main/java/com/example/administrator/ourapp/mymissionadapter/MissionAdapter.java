@@ -36,7 +36,6 @@ import cn.bmob.v3.listener.FindListener;
  * Created by Administrator on 2016/9/18.
  */
 public class MissionAdapter extends ArrayAdapter<Mission> {
-
     HashMap<String, Drawable> imgCache;     // 图片缓存
     AsyncImageLoader loader;                // 异步加载图片类
    // HashMap<Integer, TagInfo> tag_map;      // TagInfo缓存
@@ -48,7 +47,11 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         loader=new AsyncImageLoader(getContext());
         res=resource;
         mlist=objects;
+
     }
+
+
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
