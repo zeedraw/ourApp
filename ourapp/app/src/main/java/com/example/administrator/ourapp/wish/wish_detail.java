@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.ourapp.MissionInfo;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
@@ -56,6 +57,7 @@ public class wish_detail extends SwipeBackActivity {
         return_bt.setText("返回");
         info_title.setText("心愿详情");
         wish = (Wish)intent.getSerializableExtra("wish");
+        new LoadImage().execute(wish.getWish_user().getUserimage().getUrl());
 
 
 //TODO 解决 include问题后 取消注释
