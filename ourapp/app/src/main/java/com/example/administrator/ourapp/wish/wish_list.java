@@ -1,4 +1,4 @@
-package com.example.administrator.ourapp.question_and_answer;
+package com.example.administrator.ourapp.wish;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,29 +13,23 @@ import com.example.administrator.ourapp.ListenerManager;
 import com.example.administrator.ourapp.Login;
 import com.example.administrator.ourapp.Mission;
 import com.example.administrator.ourapp.MyUser;
+import com.example.administrator.ourapp.question_and_answer.QAFrag;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.question_and_answer.ask_question;
 
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by Longze on 2016/9/18.
- * 问答界面
+ * Created by Longze on 2016/12/7.
  */
-public class question_and_answer extends FragmentActivity implements IListener{
-    TextView return_bt,commit_bt;//标题上的左右按钮
+public class wish_list extends FragmentActivity implements IListener {
+    TextView commit_bt;//标题上的左右按钮
     TextView info_title;//标题
-//    private ListView listView;
-//    private List<Mission_question> qa_list;
-    private Mission mission;
-    private QAFrag qaFrag;
-//    private Vector<String> question_date = new Vector<String>();       //问题的发布日期
-//    private Vector<String> question_content = new Vector<String>();    //问题的内容
-//    private Vector<String> answer_content = new Vector<String>(); //问题的回答
-//    private Vector<String> question_ID = new Vector<String>();//问题的ID
-//    private Vector<String> user_ID = new Vector<String>();//问题的提问者的ID
-//    private QA_adapter qa_adapter;
 
-    //TODO 给头像添加点击事件 跳转到个人信息页面
+    private Wish wish;
+    private Mission mission;
+    private WishFrag_with_mission wishFrag;
+
 
 
     @Override
@@ -120,52 +114,48 @@ public class question_and_answer extends FragmentActivity implements IListener{
 
 
     private void initWidget() {
-        return_bt=(TextView)findViewById(R.id.lbt);
         commit_bt=(TextView)findViewById(R.id.rbt);
         //在textview左侧添加drawable
 //        return_bt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_keyboard_arrow_left_black_24dp, 0, 0, 0);
-        return_bt.setText("返回");
 //        return_bt.setTextSize(21);
-        commit_bt.setText("提问");
+        commit_bt.setText("许愿");
 //        commit_bt.setTextSize(21);
 
         info_title=(TextView)findViewById(R.id.mission_title);
-        info_title.setText("问答");
+        info_title.setText("个人心愿");
 
         Bundle bundle = new Bundle();
-        bundle = this.getIntent().getExtras();
+            bundle = this.getIntent().getExtras();
         mission = (Mission) bundle.getSerializable("mission");
-        return_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                question_and_answer.this.finish();
-            }
-        });
+
+//        WishFrag_with_mission myFragment = new WishFrag_with_mission();
+//        Bundle bundle1 = new Bundle();
+//        bundle.putString("mission_id",mission.getObjectId());//这里的values就是我们要传的值
+//        myFragment.setArguments(bundle1);
 
         commit_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //TODO 点击事件
                 if(BmobUser.getCurrentUser(MyUser.class) == null){
-                    Intent intent=new Intent(question_and_answer.this,Login.class);
+                    Intent intent=new Intent(wish_list.this,Login.class);
                     startActivity(intent);
                 }//if 未登录
                 else{
-                    Intent intent=new Intent(question_and_answer.this,ask_question.class);
+                    Intent intent=new Intent(wish_list.this,wish_pub_with_mission.class);
                     Bundle bundle=new Bundle();
                     bundle.putSerializable("mission",mission);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }//else
-
             }//onClick
         });
 
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction ft=fm.beginTransaction();
-        qaFrag=new QAFrag(mission);
-        ft.replace(R.id.container,qaFrag);
+        wishFrag =new WishFrag_with_mission(mission);
+        ft.replace(R.id.container, wishFrag);
         ft.commit();
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -207,13 +197,13 @@ public class question_and_answer extends FragmentActivity implements IListener{
 
     @Override
     public void upData() {
-        qaFrag.upDate();
+        wishFrag.upData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        qaFrag.upDate();
+//        wishFrag.upData();
 
     }
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBJ">
+
+    <include layout="@layout/header">
+        <!--左侧按钮为返回 中间为 提问 -->
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_margin_large"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/widget_margin_large"
+            android:layout_marginLeft="@dimen/widget_margin_large"
+            >
+
+
+
+
+
+            <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:background="@drawable/editext_with_rim"
+                android:lines="3"
+                android:textColor="@color/black"
+                android:hint="请输入心愿，4-20字之间" />
+
+            <EditText
+                android:id="@+id/edit_content"
+                android:layout_marginTop="@dimen/widget_margin_large"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:background="@drawable/editext_with_rim"
+                android:lines="3"
+                android:textColor="@color/black"
+                android:hint="请输入你的问题，10-200字之间" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/submit"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/mybutton_press2"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:textColor="@color/white"
+                    android:text="提交"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_small"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

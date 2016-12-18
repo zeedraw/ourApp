@@ -14,6 +14,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
+import com.example.administrator.ourapp.wish.Wish;
 
 import java.util.List;
 

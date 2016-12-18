@@ -127,9 +127,14 @@
         <activity android:name=".ResetPassword"></activity>
         <activity android:name=".mission_audit_reply"></activity>
         <activity android:name=".about_us"></activity>
+        <activity android:name=".wish.wish_detail"></activity>
+        <activity android:name=".wish.wish_pub_personnal"></activity>
+        <activity android:name=".wish.wish_pub_with_mission"></activity>
+        <activity android:name=".wish.wish_list"></activity>
         <activity android:name=".agency_authentication_reply"></activity>
         <activity android:name=".LocationTest"></activity>
-        <activity android:name=".NearbyWish"></activity>
+        <activity android:name=".wish.NearbyWish"></activity>
+        <activity android:name=".wish.wish_detail_for_audit"></activity>
 
     </application>
 

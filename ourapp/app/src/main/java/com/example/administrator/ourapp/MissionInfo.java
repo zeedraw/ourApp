@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.administrator.ourapp.message.Message_tools;
 import com.example.administrator.ourapp.question_and_answer.question_and_answer;
 import com.example.administrator.ourapp.user_information.MyAccount;
+import com.example.administrator.ourapp.wish.wish_list;
+import com.example.administrator.ourapp.wish.wish_pub_with_mission;
 
 import java.io.InputStream;
 import java.lang.annotation.ElementType;
@@ -45,6 +47,7 @@ public class MissionInfo extends SwipeBackActivity {
     private TextView return_bt,commit_bt;//标题上的左右按钮
     private TextView info_title;//标题
     private RelativeLayout QA;    //问答
+    private RelativeLayout wish;    //心愿
     private ImageView userimage;
     private TextView username;
     private TextView orgDescription;
@@ -66,6 +69,7 @@ public class MissionInfo extends SwipeBackActivity {
         return_bt=(TextView)findViewById(R.id.lbt);
         commit_bt=(TextView)findViewById(R.id.rbt);
         QA = (RelativeLayout) findViewById(R.id.question_and_answer);
+        wish = (RelativeLayout) findViewById(R.id.wish);
         //在textview左侧添加drawable
 //        return_bt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_keyboard_arrow_left_black_24dp, 0, 0, 0);
         return_bt.setText("返回");
@@ -205,6 +209,17 @@ public class MissionInfo extends SwipeBackActivity {
 //                    intent.setComponent(comp);
 //                    startActivity(intent);
                 startIntentWithMission(question_and_answer.class);
+            }
+        });
+
+        wish.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+//                    ComponentName comp=new ComponentName(MissionInfo.this,question_and_answer.class);
+//                    Intent intent=new Intent();
+//                    intent.setComponent(comp);
+//                    startActivity(intent);
+                startIntentWithMission(wish_list.class);
             }
         });
 

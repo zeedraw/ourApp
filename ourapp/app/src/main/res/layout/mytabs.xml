@@ -71,30 +71,30 @@
 
 
         </RelativeLayout>
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/fre"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:duplicateParentState="true">-->
-            <!--<ImageView-->
-                <!--android:id="@+id/i8"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:src="@drawable/fre_tab_im"-->
-                <!--android:padding="4dp"-->
-                <!--android:layout_centerHorizontal="true"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="好友"-->
-                <!--android:textSize="12dp"-->
-                <!--android:layout_alignParentTop="false"-->
-                <!--android:layout_marginTop="28dp"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:textColor="@drawable/tab_tv"-->
-                <!--/>-->
-        <!--</RelativeLayout>-->
+        <RelativeLayout
+            android:id="@+id/wish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:duplicateParentState="true">
+            <ImageView
+                android:id="@+id/i8"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/fre_tab_im"
+                android:padding="4dp"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="好友"
+                android:textSize="12dp"
+                android:layout_alignParentTop="false"
+                android:layout_marginTop="28dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@drawable/tab_tv"
+                />
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/mine"
             android:layout_width="wrap_content"
