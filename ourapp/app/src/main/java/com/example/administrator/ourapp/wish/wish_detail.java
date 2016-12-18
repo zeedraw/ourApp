@@ -59,13 +59,10 @@ public class wish_detail extends SwipeBackActivity {
 
 
 //TODO 解决 include问题后 取消注释
-       if(wish.getWish_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId())){
+       if(wish.getWish_user().getObjectId().equals(BmobUser.getCurrentUser(MyUser.class).getObjectId()) && !wish.is_finished()){
             completed.setVisibility(View.VISIBLE);
         }//if
 
-        if(wish.is_finished()){
-            completed.setBackgroundColor(getResources().getColor(R.color.colorGrey2));
-        }
         wish_title.setText(wish.getTitle());
         wish_content.setText(wish.getContent());
         wish_date.setText(wish.getCreatedAt());
