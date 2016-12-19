@@ -186,7 +186,7 @@ public class NearbyWish extends AppCompatActivity{
 
                    wishPopupWindow.setName(wish.getWish_user().getName());
                    wishPopupWindow.setInfo(wish.getContent());
-                   wishPopupWindow.setTime(wish.getTime());
+                   wishPopupWindow.setTime(wish.getCreatedAt());
                    LatLng latLng=new LatLng(wish.getLocation().getLatitude(),wish.getLocation().getLongitude());
                     double dis=DistanceUtil.getDistance(mylatlng, latLng);
                    wishPopupWindow.setDistance(new Double(dis).intValue()+"米");

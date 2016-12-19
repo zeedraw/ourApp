@@ -51,11 +51,7 @@
                         android:hint="填写心愿标题"
                         />
                 </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#dddddd"
-                    />
+
 
                 <View
                     android:layout_width="match_parent"
@@ -118,11 +114,7 @@
                         android:background="@null"
                         />
                 </RelativeLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#dddddd"
-                    />
+
 
 
                 <View
@@ -142,18 +134,8 @@
                 android:layout_marginTop="30dp"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#dddddd"
-                    />
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#dddddd"
-                    />
 
                 <View
                     android:layout_width="match_parent"

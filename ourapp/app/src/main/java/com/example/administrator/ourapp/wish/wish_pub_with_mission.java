@@ -137,6 +137,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
 //            wish.setLocation_abs(list);
             wish.setMission(mission);
             wish.setWish_user(BmobUser.getCurrentUser(MyUser.class));
+            wish.setLocationInfo(location.getText().toString().trim());
 //            wish.setLocation(detail_location.getText().toString().trim());
             wish.setLocation(bgp);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");

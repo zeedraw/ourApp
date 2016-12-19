@@ -19,9 +19,18 @@ public class Wish extends BmobObject {
     private Organization organization;  //所属机构
     private Mission mission;    //所属任务
     private BmobGeoPoint location;    //所在地
+    private String locationInfo;
     private String content;     //心愿详情
     private boolean is_finished;    //是否完成
     private Integer audit_status; //1正在审核 2拒绝 3通过
+
+    public String getLocationInfo() {
+        return locationInfo;
+    }
+
+    public void setLocationInfo(String locationInfo) {
+        this.locationInfo = locationInfo;
+    }
 
     public String getContact_number() {
         return contact_number;

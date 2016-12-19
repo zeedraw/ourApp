@@ -53,6 +53,7 @@ public class wish_adapter extends ArrayAdapter<Wish> {
             viewHolder.wish_title=(TextView)convertView.findViewById(R.id.wish_title);
             viewHolder.wish_content=(TextView)convertView.findViewById(R.id.wish_content);
             viewHolder.wish_date=(TextView)convertView.findViewById(R.id.date);
+            viewHolder.user_name=(TextView)convertView.findViewById(R.id.user_name);
             convertView.setTag(viewHolder);
         }
         else
@@ -94,6 +95,7 @@ public class wish_adapter extends ArrayAdapter<Wish> {
         viewHolder.wish_title.setText(wish.getTitle());
         viewHolder.wish_content.setText(wish.getContent());
         viewHolder.wish_date.setText(wish.getCreatedAt());
+        viewHolder.user_name.setText(wish.getWish_user().getName());
 
         viewHolder.user_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +118,7 @@ public class wish_adapter extends ArrayAdapter<Wish> {
         TextView wish_title;
         TextView wish_content;
         TextView wish_date;
+        TextView user_name;
 
     }
 
