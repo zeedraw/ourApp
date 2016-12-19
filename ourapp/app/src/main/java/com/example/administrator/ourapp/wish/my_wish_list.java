@@ -23,7 +23,7 @@ import cn.bmob.v3.BmobUser;
  * Created by Longze on 2016/12/7.
  */
 public class my_wish_list extends FragmentActivity implements IListener {
-    TextView commit_bt;//标题上的左右按钮
+    TextView commit_bt,return_bt;//标题上的左右按钮
     TextView info_title;//标题
 
     private Wish wish;
@@ -121,6 +121,14 @@ public class my_wish_list extends FragmentActivity implements IListener {
 //        return_bt.setTextSize(21);
         commit_bt.setText("许愿");
 //        commit_bt.setTextSize(21);
+        return_bt=(TextView)findViewById(R.id.lbt);
+        return_bt.setText("返回");
+        return_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         info_title=(TextView)findViewById(R.id.mission_title);
         info_title.setText("我的心愿");

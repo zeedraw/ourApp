@@ -2,6 +2,7 @@ package com.example.administrator.ourapp.wish;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.administrator.ourapp.MissionInfo;
 import com.example.administrator.ourapp.MyUser;
 import com.example.administrator.ourapp.R;
+import com.example.administrator.ourapp.UserInfo;
 import com.example.administrator.ourapp.question_and_answer.Mission_question;
 import com.example.administrator.ourapp.user_information.MyAccount;
 
@@ -37,6 +39,7 @@ public class wish_detail extends SwipeBackActivity {
     TextView wish_title;
     TextView wish_date;
     TextView completed;
+    TextView username,locationInfo;
     ImageView person_image;
     private Wish wish;
     @Override
@@ -54,6 +57,9 @@ public class wish_detail extends SwipeBackActivity {
         wish_date = (TextView) findViewById(R.id.wish_date);
         completed = (TextView) findViewById(R.id.completed);
         person_image = (ImageView) findViewById(R.id.person_image);
+        username=(TextView)findViewById(R.id.user_name);
+        locationInfo=(TextView)findViewById(R.id.locationInfo);
+
         Intent intent = getIntent();
         return_bt.setText("返回");
         info_title.setText("心愿详情");
@@ -105,6 +111,11 @@ public class wish_detail extends SwipeBackActivity {
         wish_title.setText(wish.getTitle());
         wish_content.setText(wish.getContent());
         wish_date.setText(wish.getCreatedAt());
+        if (wish.getLocationInfo()!=null)
+        {
+            locationInfo.setText(wish.getLocationInfo());
+        }
+        username.setText(wish.getWish_user().getName());
 
         return_bt.setOnClickListener(new View.OnClickListener() {
             @Override

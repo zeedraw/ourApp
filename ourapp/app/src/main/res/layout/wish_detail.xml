@@ -1,76 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBJ">
 
-    <include layout="@layout/header">
-        <!--左侧按钮为返回 中间文本为 编辑回答  右侧按钮为 提交-->
-    </include>
+    <include layout="@layout/header"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/wish_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/widget_margin_medium"
-        android:layout_marginRight="@dimen/widget_margin_medium"
-        android:divider="@drawable/divider"
-        android:showDividers="middle">
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:textSize="@dimen/text_size_large"
+        android:text="我的一个小小心愿"
+        android:textColor="@color/black"/>
 
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/materialGrey300"
+            />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
             android:orientation="horizontal"
+
+            android:background="@color/colorbj"
             >
 
             <ImageView
                 android:id="@+id/person_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/defaulticon"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center_vertical"
                 />
-
             <TextView
-                android:id="@+id/wish_title"
-                android:layout_width="0dp"
-                android:layout_weight="5.5"
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
+                android:text="用户名"
+                android:gravity="center"
                 android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold"
-                android:text="这个活动持续几天？管住宿么？"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/widget_margin_medium"
-            >
-
-
-
-
-            <TextView
-                android:id="@+id/wish_content"
-                android:layout_width="0dp"
-                android:layout_weight="5.5"
-                android:layout_height="150dp"
-                android:layout_marginTop="@dimen/widget_margin_medium"
-                android:gravity="top"
-                android:textSize="@dimen/text_size_medium"
-                android:textColor="@color/black"
-                android:text="活动持续三天时间，在这期间，住宿、饮食、出行都由我们同一安排，保证质量，请不要担心。"
+                android:layout_marginLeft="10dp"
                 />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/materialGrey300"
+            />
+
+    <TextView
+        android:id="@+id/locationInfo"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="该条心愿发布于中国矿业大学（北京）教学楼附近"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/materialGrey300"
+        />
+    <TextView
+        android:id="@+id/wish_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:textSize="@dimen/text_size_medium"
+        android:textColor="@color/black"
+        android:text="活动持续三天时间，在这期间，住宿、饮食、出行都由我们同一安排，保证质量，请不要担心。"
+        android:background="@color/colorbj"
+        android:padding="8dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/materialGrey300"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/materialGrey300"
+       />
+
 
 
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/wish_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,10 +119,9 @@
                 android:textColor="#FFFFFF"
                 android:background="@drawable/mybutton_press2"
                 android:visibility="invisible"
-                android:text="已完成"/>
+                android:text="完成"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
-
-</LinearLayout>
