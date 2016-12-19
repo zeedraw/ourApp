@@ -23,6 +23,17 @@ public class Wish extends BmobObject {
     private boolean is_finished;    //是否完成
     private Integer audit_status; //1正在审核 2拒绝 3通过
 
+    public String getContact_number() {
+        return contact_number;
+    }
+
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
+    }
+
+    private String contact_number;
+    private String time;
+
     public Integer getAudit_status() {
         return audit_status;
     }
@@ -32,7 +43,6 @@ public class Wish extends BmobObject {
     }
 
 
-    private String time;
 
     public String getTime() {
         return time;

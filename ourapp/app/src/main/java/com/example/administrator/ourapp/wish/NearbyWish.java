@@ -172,8 +172,8 @@ public class NearbyWish extends AppCompatActivity{
                                 case R.id.contact:
                                     Intent intent=new Intent();
                                     intent.setAction(Intent.ACTION_CALL);
-                                    intent.setData(Uri.parse("tel:" + wish.getWish_user().getMobilePhoneNumber()));
-                                    Log.i("naosumi","tel:"+wish.getWish_user().getMobilePhoneNumber());
+                                    intent.setData(Uri.parse("tel:" + wish.getContact_number()));
+                                    Log.i("naosumi","tel:"+wish.getContact_number());
                                     //开启系统拨号器
                                     startActivity(intent);
                                     break;

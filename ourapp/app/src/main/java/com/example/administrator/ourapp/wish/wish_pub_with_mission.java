@@ -143,7 +143,7 @@ public class wish_pub_with_mission extends SwipeBackActivity implements DialogIn
             wish.setType(new Integer(2)); //在任务里提出算2
             wish.setAudit_status(1);
             wish.setContent(wish_detail.getText().toString().trim());
-
+            wish.setContact_number(contact_number.getText().toString().trim());
             wish.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
