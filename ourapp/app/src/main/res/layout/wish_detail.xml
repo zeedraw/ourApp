@@ -61,7 +61,7 @@
         android:layout_marginRight="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="该条心愿发布于中国矿业大学（北京）教学楼附近"/>
+        android:text="该条心愿发布于教学楼附近"/>
 
     <View
         android:layout_width="match_parent"

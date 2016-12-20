@@ -1,5 +1,6 @@
 package com.example.administrator.ourapp.wish;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -55,8 +56,11 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
     private boolean mIsStart = true;
     private RefreshLayout refreshLayout;
 
-    public WishFrag_with_mission(Mission mission) {
-        this.mission = mission;
+
+    public final static WishFrag_with_mission newInstance(Mission mission) {
+        WishFrag_with_mission f=new WishFrag_with_mission();
+        f.setMission(mission);
+        return f;
     }
 
 
@@ -287,6 +291,11 @@ public class WishFrag_with_mission extends ProgressFragment implements IListener
 
         setContentShown(false);
         initMission();
+    }
+
+    public void setMission(Mission mission)
+    {
+        this.mission=mission;
     }
 
 }
