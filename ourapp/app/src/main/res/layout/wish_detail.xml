@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/wish_title"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:padding="10dp"
         android:textSize="@dimen/text_size_large"
         android:text="我的一个小小心愿"

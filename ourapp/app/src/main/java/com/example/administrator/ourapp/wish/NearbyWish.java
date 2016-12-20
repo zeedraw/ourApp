@@ -262,6 +262,9 @@ public class NearbyWish extends AppCompatActivity{
     {
         BmobQuery<Wish> query=new BmobQuery<Wish>();
         query.include("wish_user[name|mobilePhoneNumber].userimage");
+        query.addWhereEqualTo("type", 1);
+        query.addWhereEqualTo("audit_status", 3);
+        query.addWhereEqualTo("is_finished", false);
         query.addWhereWithinKilometers("location",new BmobGeoPoint(location.getLongitude(),location.getLatitude()),2);
         final Dialog dialog= MainActivity.createLoadingDialog(NearbyWish.this,"请稍后...");
         dialog.show();
